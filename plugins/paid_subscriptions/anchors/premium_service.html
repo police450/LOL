@@ -1,0 +1,155 @@
+<style>
+{literal}
+.package
+{
+	background:#F9F9F9;
+	border:1px solid #999;
+	padding:3px;
+	margin:5px;
+	height:50px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	-webkit-border-radius:5px;
+}
+
+.pricing{ font-family:Verdana, Geneva, sans-serif; font-size:12px}
+.package .price{color:#333; font-size:15px; font-weight:bold; font-style:italic;}
+
+.qt_field{width:50px; border:1px solid #999; height:20px; line-height:20px; margin:0px; padding:0px;outline:none}
+
+{/literal}
+</style>
+{literal}
+<script type="text/javascript">
+	var qt = 1;
+	function orderNow(pid)
+	{
+		qt = $('#prd_qt-'+pid).val();
+		if(!IsNumeric(qt))
+		{
+			alert("Please enter Numeric Value");
+			return false;
+		}
+		var url = baseurl+'/premium_service.php?mode=order&pid='+pid+'&qt='+qt;
+		window.location = url;
+	}
+	
+	function show_quantity(pid)
+	{
+		$('.qt_box').hide();
+		$('.buy_button').show();
+		$('#qt_box-'+pid).show();
+		$('#buy_button-'+pid).hide();
+	}
+	
+	function IsNumeric(sText)
+	{
+	   var ValidChars = "0123456789.";
+	   var IsNumber=true;
+	   var Char;
+	
+	 
+	   for (i = 0; i < sText.length && IsNumber == true; i++) 
+		  { 
+		  Char = sText.charAt(i); 
+		  if (ValidChars.indexOf(Char) == -1) 
+			 {
+			 IsNumber = false;
+			 }
+		  }
+	   return IsNumber;
+	   
+	   }
+
+
+
+
+</script>
+{/literal}
+<div style="width:98%; margin:auto">
+  <h2 style="margin:0px">Premium Packages</h2>
+  <div style="height:10px"></div>
+	{assign var='packages' value=$paidSub->getSubsPackages()}
+    {if $packages}
+<table width="100%" border="0" cellspacing="3" cellpadding="2" style="background-color:#06c; color:#fff">
+        	  <tr>
+        	    <td><strong>Package</strong></td>
+        	    <td width="150"><strong>Features</strong></td>
+        	    <td width="200"><strong>Price</strong></td>
+        	    <td width="300">&nbsp;</td>
+    </tr>
+  </table>
+          {assign var='bgcolor' value='#fff'}
+    	{foreach from=$packages item=package}
+        	<table width="100%" border="0" cellspacing="3" cellpadding="2" style="background-color:{$bgcolor}">
+        	  <tr>
+        	    <td valign="top"><strong>{$package.package_name}</strong><br>
+        	      {$package.package_desc}</td>
+        	    <td width="150" valign="top">
+                
+                {if $package.package_pricing_method=='price'}
+                 Days : 
+                {if $package.package_allowed_days}
+                   <strong>{$package.package_allowed_days}</strong><br>
+                {else}
+                	<strong>Unlimited</strong><br>
+                {/if}
+                
+                Videos : 
+                {if $package.package_allowed_videos}
+                    <strong>{$package.package_allowed_videos}</strong><br>
+                {else}
+                	<strong>Unlimited</strong><br>
+                {/if} 
+                Time :    
+               {if $package.package_allowed_time}
+                   <strong>{$package.package_allowed_time}</strong><br>
+               {else}
+               	<strong>Unlimited</strong><br>
+                {/if}
+               
+               
+               {/if}
+               
+               {if $package.package_pricing_method=='ppv'}
+                Pay per view
+               {/if}
+               
+                  
+                  </td>
+        	    <td width="200" valign="top" class="pricing"> {if $package.package_pricing_method=='price'}
+        <strong>{$package.package_currency|currency}{$package.package_price}</strong>
+        {/if}
+        {if $package.package_pricing_method=='duration'}
+        <strong>{$package.package_currency|currency}{$package.package_duration_price} per second</strong>
+        {/if}
+        {if $package.package_pricing_method=='ppv'}
+        <strong>{$package.package_currency|currency}{$package.package_ppv_price} per video</strong>
+        {/if}</td>
+        	    <td width="300" align="center" valign="middle">
+                
+                {if $package.package_pricing_method !='price'}
+                <a href="javascript:void(0)" onclick="show_quantity('{$package.package_id}');"><img src="{$paid_subs_url}/images/buy_now.png" border="0" class="buy_button" id="buy_button-{$package.package_id}"></a>
+<div class="qt_box" id="qt_box-{$package.package_id}" style="display:none">
+Number of {if $package.package_pricing_method =='ppv'} videos {else} seconds{/if}<br />
+<input type="text" id="prd_qt-{$package.package_id}" value="1" class="qt_field"  onkeydown="var pid = '{$package.package_id}';{literal}
+    if(event.keyCode == 13){ orderNow(pid);}
+    {/literal}" />
+<input type="submit" name="go-{$package.package_id}" id="go-{$package.package_id}" value="GO" onClick="orderNow('{$package.package_id}')"/>
+</div>
+				{else}             
+                <a href="{$baseurl}/premium_service.php?mode=order&pid={$package.package_id}"><img src="{$paid_subs_url}/images/buy_now.png" border="0" class="buy_button" id="buy_button-{$package.package_id}"></a>
+                {/if}</td>
+      	      </tr>
+      	  </table>
+          
+          {if $bgcolor=='#f2f2f2'}
+    	{assign var='bgcolor' value='#fff'}
+    {else}
+    	{assign var='bgcolor'  value='#f2f2f2'}
+    {/if}
+{/foreach}
+    {else}
+<div align="center"><em><strong>No Packages Were Found</strong></em></div>
+    {/if}
+</div>

@@ -1,0 +1,86 @@
+<div class="table-container">
+{if $channel}
+	<h2>Edit {$channel.channel_name}</h2>
+	<form method="post">
+		<input name="app_type" id="app_type" type="hidden" value="{$channel.app_type}" />
+		<input name="userid" id="userid" type="hidden" value="{$channel.userid}" />
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="channel_name">Application Name</label>
+				<input name="channel_name" id="channel_name" type="text"  class="form-control" placeholder="" required value="{$channel.channel_name}" />
+				<span class="smallText" style="font-size:11px;">e.g ClipBucket (this must be the name wowza application to be assigned )</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="userid">Is Live ?</label>
+				<select name="is_live" class="form-control">
+					<option {if $channel.is_live == 'no'} selected {/if} value="no">No</option>
+					<option {if $channel.is_live == 'yes'} selected {/if} value="yes">Yes</option>
+				</select>
+				<span class="smallText" style="font-size:11px;">e.g To Set channel Live manually. </span>
+			</div>
+			{if $channel.app_type == 'Live'}
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="userid">Recording</label>
+				<select name="recording" class="form-control">
+					<option {if $channel.recording == 'no'} selected {/if} value="no">No</option>
+					<option {if $channel.recording == 'yes'} selected {/if} value="yes">Yes</option>
+				</select>
+				<span class="smallText" style="font-size:11px;">e.g This option allows users to save their stream in clipbucket </span>
+			</div>
+			{/if}
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<input type="submit" name="update-channel" class="form-control btn btn-info btn-block" value="Update Channel"  />
+			</div>
+		</div>
+	</form>
+	
+	<div class="clearfix"></div>
+{/if}
+  	<h2>Manage Live Channels</h2>
+  	<p>Contextual classes can be used to color table rows or table cells. The classes that can be used are: .active, .success, .info, .warning, and .danger.</p>
+  	<table class="table table-striped">
+	    <thead>
+			<tr>
+				<th>Channel User</th>
+				<th>Channel Name</th>
+				<th>Channel Type</th>
+				<th>Actions</th>
+			</tr>
+	    </thead>
+	    <tbody>
+	    	{if $channels}
+		    	{foreach $channels as $channel}
+		    	{$user = $userquery->get_user_details($channel.userid)}
+					<tr>
+						<td>
+							<a target="_blank" href="{$userquery->profile_link($user)}">{Name($user)}</a>
+						</td>
+						<td>{$channel.channel_name}</td>
+						<td>{$channel.app_type}</td>
+						<td>
+							<div class="dropdown">
+								<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions
+								<span class="caret"></span></button>
+								<ul class="dropdown-menu">
+									<li>
+										<a href="{$baseurl}/admin_area/plugin.php?folder={$ls_dir_base}/admin&file=manage_channels.php&edit={$channel.live_channel_id}" >
+											Edit
+										</a>
+									</li>
+									<li>
+										<a onClick="javascript:_cb.Confirm_Delete('{$baseurl}/admin_area/plugin.php?folder={$ls_dir_base}/admin&file=manage_channels.php&remove={$channel.live_channel_id}')" href="javascript:void(0);">
+											Remove
+										</a>
+									</li>
+								</ul>
+							</div>
+						</td>
+					</tr>
+				{/foreach}
+			{/if}      
+	    </tbody>
+  </table>
+</div>
+

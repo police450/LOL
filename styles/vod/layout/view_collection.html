@@ -1,0 +1,107 @@
+<div id="main" class="container clearfix">
+	<div class="clearfix">
+		<section id="" class="clearfix">
+			<div class="clearfix leaderboard-ad ad">
+				{AD place='ad_728x90'}
+			</div>
+			<h1>
+				{$c.collection_name|capitalize}&nbsp;&nbsp;
+				{$c.total_objects}&nbsp; Episode
+				{lang code='collection' assign='object_type'}
+				{uploadButton details=$c output='link' target="_blank" class='btn btn-success pull-right'}
+			</h1>
+			{if $c.type == 'photos'}
+			{$type = 'p'}
+			{else}
+			{$type = 'v'}
+			{/if}
+
+			{if $type == 'p'} 
+			<div id="photos" class="clearfix row">
+				{section name=list loop=$objects}
+				<div class="item-photo col-lg-5 col-md-5 col-sm-6 col-xs-12">
+				{include file="$style_dir/blocks/collection.html" object=$objects[list] display_type=view_collection type=$c.type}
+				</div>
+				{sectionelse}
+				<div class="item-photo col-xs-12">
+					<div class="well well-info">
+						{$c.collection_name} has 0 items.
+					</div>
+				<div class="item-photo col-lg-5 col-md-5 col-sm-6 col-xs-6">
+				{/section}
+			</div>
+			{else}
+			<div class="videos clearfix">
+				<div class="clearfix row">
+				{if $objects}
+					{foreach $objects as $video}
+						<div class="item-video col-lg-3 col-md-3 col-sm-4 col-xs-12">
+						{include file="$style_dir/blocks/videos/video.html" display_type='collection'}
+						</div>
+					{/foreach}
+				{else}
+					<div class="well well-info">No Videos Found !</div>
+				{/if}
+				</div>
+			</div>
+			{/if}
+			<div align="center" class="clearfix">
+				{include file="$style_dir/blocks/pagination.html"}
+			</div>
+
+			<div class="clearfix fav-repo">
+				
+				<div class="video_action_result_boxes clearfix">
+					{show_flag_form id=$c.collection_id type=Collection}
+					<div class="action_box" style="display:none" id="video_action_result_cont"></div>
+				</div>
+
+				<ul class="clearfix desc-list">
+					<li>
+						<strong>{lang code="Released"}:</strong>&nbsp;{$c.date_added|niceTime}
+					</li>
+					<li>
+						<strong>{lang code="category"}:</strong>&nbsp;{$c.category|categories:collections}
+					</li>
+					<li>	
+						<strong>{lang code="cast"}:</strong>&nbsp;{$c.collection_tags|tags:collections}
+					</li>
+				</ul>
+			</div>
+		</section>
+	</div>
+	<script>
+		$(document).ready(function(){
+			function getAllComments(type,type_id,last_update,pageNum,total,object_type,admin){
+				$('#userCommentsList').html("<div style='padding:5px 0px;'>"+loading+"</div>");
+				$.ajax({
+					type: 'POST',
+					url: page,
+					data:  {
+						mode:'getComments',
+						page:pageNum,type:type,
+						type_id:type_id,
+						object_type : object_type,
+						last_update : last_update,
+						total_comments : total,
+						comments_voting : comments_voting,admin : admin
+					},
+					success: function(comments){
+						$("#userCommentsList").html(comments);
+					},
+					dataType: 'text'
+				});
+			}
+			comments_voting = 'no';
+			getAllComments('cl','{$c.collection_id}','{$c.last_commented}',1,'{$c.total_comments}','{$object_type}');
+			//
+			var adHtml = $('.ad-holder').html();
+			if(adHtml<1){
+				$('.ad-holder').parent().remove();
+				$('#photos').parent().removeClass('col-lg-10 col-md-10 col-sm-10');
+				$('#photos').parent().addClass('clearfix col-lg-12 col-md-12 col-sm-12');
+			}
+
+		});
+	</script>
+</div>

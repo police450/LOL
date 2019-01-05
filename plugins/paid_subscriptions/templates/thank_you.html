@@ -1,0 +1,21 @@
+<div  class="premium_bg br5">
+<div class="premium_vids">
+{foreach from=$premium_vids item=pvid}
+	
+    <div style="margin-bottom:10px">
+        <div style="overflow:hidden; position:relative; height:130px">
+            <img src="{get_thumb vdetails=$pvid size=big}" width="240" style="position:absolute; top:-25px" />
+        </div>
+        <div style="font-size:14px; font-weight:bold; margin-top:5px">{$pvid.title}</div>
+    </div>
+    
+{/foreach}
+
+</div>
+
+<div class="packages_div" align="center">
+	
+	<h1>Thanks for becoming our premium member!</h1>
+  <div style="font-size:14px">You are now our premium member, our system is reviewing your order, once it is verified your premium subscription will be activated, you can review your subscriptions by <a href="{$baseurl}/module.php?s=premium&p=subscriptions">clicking here</a></div></div>
+<div class="clear"></div>
+</div>

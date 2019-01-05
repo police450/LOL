@@ -1,0 +1,300 @@
+{include file="$cb_multiserver_dir/admin/header.html"}
+<div class="clearfix">
+<h2>Multi Server Testing 
+</h2>
+
+<div class="alert alert-info"  >License : {$multi_server->configs.license_key} &#8212; Domain : {$domainName} &#8212; 
+	<a href="#" data-target="#applicationKey" data-toggle="modal">View application key</a>
+</div>
+<div class="alert alert-danger" id="error_cont" style="display:none">
+
+</div>
+<div class="alert alert-success" id="msg_cont" style="display:none"></div>
+<div class="clearfix"></div>
+{assign var=servers value=$multi_server->get_servers()}
+    {if $servers}
+    <div class="panel panel-default">
+	    <table class="table table-bordered table-striped manageUsersTable">
+		    <thead>
+		      <tr class="panel-heading">
+		        <th>Server Test Mode</th>
+		      </tr>
+		    </thead>
+		      <tr>
+		      	<td>
+		      		<form class="form-inline" name="server_test" id="server_test" action="{$server_ajax}" method="post" role="form" enctype="multipart/form-data">
+						<div class="form-group">
+							<label for="server_get" class="col-sm-5 control-label no-padding-right"> SELECT SERVER</label>
+
+							<div class="col-sm-7">
+								<select name="server_get" id="server_get" class="input">
+						      		<option value="">--Select Server--</option>
+						      		{foreach from=$servers item=server}
+						      		<option value="{$server.server_id}">{$server.server_name}</option>
+						      		{/foreach}
+						      		
+						      	</select>
+							</div>
+							</div>
+							<div class="form-group">
+							<label for="server_get" class="col-sm-4 control-label no-padding-right"> SELECT File</label>
+
+							<div class="col-sm-8">
+								<select name="server_get_files" id="server_get_files" class="input">
+									<option value="">--Select File--</option>
+						      		{$options}
+						      	</select>
+							</div>
+							</div>
+							<div class="form-group">
+							
+							<div class="col-sm-7">
+								<button class="btn btn-info btn-sm" type="button" id="uploadbtn"  data-loading-text="Testing..."  onClick="upload_file()">
+									<i class="ace-icon fa fa-key bigger-110"></i>Start Testing Now</button>
+							</div>
+						</div>
+						</div>
+						<input type="hidden" name="action" id="test_file" value="test_file"/>
+					</form>
+		      	</td>
+		      </tr>
+	    </table>
+		    <div class="alert alert-info"  id="log_info" style="display:none"></div>
+	</div>
+    {/if}
+
+<div class="clearfix" style="height: 10px;"></div>
+<div class="modal fade" id="applicationKey" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+    	<div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Your website application key</h4>
+      </div>
+      <div class="modal-body">
+        
+    <p>this is key will be used to create secure connection between two servers, you have to paste this key in your 'config.php' on your content or conversion server</p>
+    <textarea style="height:70px; width:100%" onClick="$(this).select()">{$appKey}</textarea>
+     </div>
+ 
+  	</div>
+	</div>
+</div>
+<div style="height:100px"></div>
+<script type="text/javascript">
+function upload_file () {
+
+
+		$('#uploadbtn').button('loading');
+		
+		var server_get = $("#server_get").val();
+		var file =	$("#test_file").val();
+		var server_get_files =$('#server_get_files').val();
+		if(!server_get || server_get=='undefined')
+		{
+			alert("Please select Server ");
+			$('#uploadbtn').button('reset');
+			return false;
+
+		}
+		if(!server_get_files || server_get_files=='undefined')
+		{
+			alert("Please select File ");
+			$('#uploadbtn').button('reset');
+			return false;
+
+		}
+		var form = '#server_test';
+		var formVals = $(form).serializeArray();
+		var infodetail = '#log_info';
+		var res = $.post('{$server_ajax}',$(form).serialize()+'&file='+file+'&mode=upload_file',
+				function(data){ 
+					
+					if(data.success=='yes') 
+					{
+						$('#error_cont').hide();
+						$(infodetail).show();
+						temp = true;
+						conv =true;
+						vid =true;
+						log =true;
+						
+						//alert($("#server_get option:selected").text());
+						var s_server = $("#server_get option:selected").text();
+						var s_file = $("#server_get_files option:selected").text();
+						show_msg(' <b>'+s_file+' </b> File For Testing.. on Server <b> '+s_server+' </b>');
+						
+						$(infodetail).html('Server Connected.. <br> '+ data.file_name +' file uploaded successfully'); 
+						$(infodetail).append('<br/><img src="{$laoding}" class="loading_img" style="width: 49px; "/>');
+						 ajax_call(data);
+					}
+					else if(data.error)
+					{
+						show_error(data.error);
+						$(infodetail).show();
+						$(infodetail).html('Server Connected.. <br>'); 
+						$('#uploadbtn').button('reset');
+					}else{
+						
+						var error ='Connection failed';
+						show_error(error);
+						if(temp==true){
+							error = ' file not move in temp folder';
+						}
+						else if(conv==true){
+							error += ' file not move in temp folder';
+						}else if (log==true) {
+
+							error += ' log file not created ';
+						}else{
+							error += ' file problum on videos folder';
+						}
+						
+
+						$('#uploadbtn').button('reset');
+					}
+				},'json');
+
+		//alert(res.success);
+		//do your own request an handle the results
+         /*$.ajax({
+                url: '{$server_ajax}',
+                type: 'post',
+                dataType: 'json',
+                enctype: 'multipart/form-data',
+                data: $("#server_test").serialize(),
+
+                success: function(data) {
+                           $('#uploadbtn').button('reset');
+                           $('#log_info').html(data.success);
+             	}
+            });*/
+
+   
+}
+	var temp = true;
+	var conv =true;
+	var vid =true;
+	var log =true;
+	var count_file=0;
+	var html_file= '';
+function ajax_call (data) {
+
+	var infodetail = '#log_info';
+	
+	$.ajax({
+	    url: data.server_api_path+'/actions/server_test.php',
+	    type: 'post',
+	    dataType: 'json',
+	    data: ("file_name="+data.file_name+"&mode=next_temp&server_api_path="+data.server_api_path),
+	    success: function (data) {
+	    	//alert(data.temp_file);
+	    	if(data.error){
+	    		show_error(data.error);
+	    		$(infodetail).append('<p class="red"> '+ data.error +' </p>');
+	    		$('#uploadbtn').button('reset');
+	    		$('.loading_img').hide();
+	    		return false;
+
+	    	}
+	    	$('loading_img').show();
+	    	if(data.temp_file=='yes' && temp==true){
+	    		temp=false;
+	    		$(infodetail).html('Server Connected.. <br> '+ data.file_name +' file uploaded successfully');  
+	    		$(infodetail).append('<br> '+ data.file_name +' file in TEMP Folder');
+	    		$(infodetail).append('<br/><img src="{$laoding}" class="loading_img" style="width: 49px; "/>'); 
+	    		ajax_call(data);
+	    	}
+	    	else if(data.con_file=='yes' && conv==true){
+	    		temp=false;
+	    		$(infodetail).html('Server Connected.. <br> '+ data.file_name +' file uploaded successfully');  
+	    		$(infodetail).append('<br> '+ data.file_name +' file in TEMP Folder');
+	    		$(infodetail).append('<br> '+ data.file_name +' file in conversion Folder');
+	    		$(infodetail).append('<br/><img src="{$laoding}" class="loading_img" style="width: 49px; "/>');
+	    		conv=false;
+	    		ajax_call(data);
+
+	    	}
+	    	else if(data.logs_file=='yes' && log==true){
+	    		conv=false;
+	    		temp=false;
+	    		$(infodetail).html('Server Connected.. <br> '+ data.file_name +' file uploaded successfully');  
+	    		$(infodetail).append('<br> '+ data.file_name +' file in TEMP Folder');
+	    		$(infodetail).append('<br> '+ data.file_name +' file in conversion Folder');
+	    		$(infodetail).append('<br> '+ data.file_name +' Log file created successfully ');
+	    		$(infodetail).append('<br/><img src="{$laoding}" class="loading_img" style="width: 49px; "/>');
+	    		log=false;
+	    		ajax_call(data);
+
+	    	}
+	    	else if(data.vid_file=='yes' && vid==true){
+				
+				$(infodetail).html('Server Connected.. <br> '+ data.file_name +' file uploaded successfully');  
+				$(infodetail).append('<br> '+ data.file_name +' file in TEMP Folder');
+	    		$(infodetail).append('<br> '+ data.file_name +' file in conversion Folder');
+	    		$(infodetail).append('<br> '+ data.file_name +' Log file created successfully ');
+	    		$(infodetail).append('<br> '+ data.file_name +' file in videos folder ');
+	    		if(data.conversion=='yes'){
+	    			if(data.conv_logs=='undefined'|| !data.conv_logs ||data.conv_logs=='')
+	    			{
+	    				ajax_call(data);
+	    				$(infodetail).append('<br> '+ data.file_name +' file in proccessing...(Please wait)');
+	    				$(infodetail).append(' <img src="{$laoding}" class="loading_img" style="width: 49px; "/>');
+	    			}
+	    			else{
+	    			vid=false;
+	    			$(infodetail).append('<br> '+ data.file_name +' file conversion successfully completed ;)');
+	    			$(infodetail).append('<br>===== Log ==== <br/>'+ data.conv_logs +'<br/> ================');
+	    			$('#uploadbtn').button('reset');
+	    			}//alert(data.conv_logs);
+	    			
+	    		}else
+	    		{
+	    			$(infodetail).append('<br> '+ data.file_name +' file conversion faild :(');
+	    			$(infodetail).append('<br>===== Log ==== <br/>'+ data.conv_logs +'<br/> ================');
+	    		}
+
+	    		
+	    	}			    		
+	    	else{
+	    		if(vid==true || log==true){
+	    			$(infodetail).append('<br> '+ data.file_name +' file in proccessing...(Please wait)');
+	    			ajax_call(data);
+	    		}
+	    		$('#uploadbtn').button('reset');
+	    		return false;
+	    	}
+		},
+		error:function(data){
+			$('#uploadbtn').button('reset');
+		},
+		complete:function (data) {
+			$('#uploadbtn').button('reset');
+		}
+ 
+	});
+
+	return false;	
+	
+}
+function show_error(err)
+{
+	$('#error_cont').show();
+
+	$('#error_cont').html(err);
+}
+function show_msg(err)
+{
+	$('#msg_cont').show();
+	if($('#msg_cont').html()==''){
+		$('#msg_cont').html(err);	
+	}else{
+		$('#msg_cont').append('<br/>'+err);
+	}	
+}
+</script>
+<style type="text/css">
+.loading_img{
+	height: 27px;
+}
+</style>

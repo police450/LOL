@@ -1,0 +1,40 @@
+<form name="paypal_checkout" method="post" id="paypal_checkout" 
+    action="{$paypalGw->gatewayUrl}">
+    <img src="{$paid_subs_url}/images/paypal_checkout.png"style="margin-right:7px;cursor:pointer;margin-bottom:10px;"
+     {if $type=='renew'}
+     onclick="confirm_{$type}('{$package.package_id}','{$sub.subscription_id}','paypal_checkout','paypal')"
+     {else}
+     onclick="confirm_{$type}('{$package.package_id}','paypal_checkout','paypal')"
+     {/if}>  
+    
+    <!-- Order ID will be updated when ajax request is completed -->
+    <input type="hidden" name="item_numer" id="paypal_checkout_order_id" value="some_number" />
+    <!-- Invoice Number -->
+    <input type="hidden" name="invoice" id="paypal_checkout_invoice_id" value="" />
+    
+    <input type="hidden" name="notify_url" value="{$paid_subs_url}/ipn/ipn.php?ipn=paypal" />
+    
+    <!-- PayPal Settings -->
+    <input type="hidden" name="cmd" value="_xclick" id="paypal_cmd">
+    <input type="hidden" name="custom" value="" id="paypal_checkout_custom" />
+    <input type="hidden" name="item_name" value="{$package.pkg_title}" />
+    <input type="hidden" name="amount" value="{$package.pkg_price}" />
+    
+    {if $package.pkg_days}
+    <input type="hidden" name="a3" value="{$package.pkg_price}">
+    <input type="hidden" name="p3" value="{$package.pkg_days|days_type:true}">
+    <input type="hidden" name="t3" value="{$package.pkg_days|days_type}">
+    <input type="hidden" name="src" value="1" />
+    <input type="hidden" name="sra" value="5" />
+    {/if}
+    
+    <input type="hidden" name="currency_code" value="{$paidSub->currency}" />
+    <input type="hidden" name="return" value="{$baseurl}/module.php?s=premium&p=thank_you" />
+    
+    {if $paidSub->configs.test_mode=='enabled'}
+    <input type="hidden" name="business" value="{$paidSub->configs.paypal_sandbox_email}" />
+    {else}
+    <input type="hidden" name="business" value="{$paidSub->configs.paypal_email}" />
+    {/if}
+        
+</form>

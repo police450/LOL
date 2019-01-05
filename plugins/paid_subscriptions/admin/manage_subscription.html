@@ -1,0 +1,294 @@
+<h2>Search Subscriptions</h2>
+<form action="{$_link}" method="post" enctype="multipart/form-data"  class="search_box well">
+<fieldset class="fieldset" style="border:none; padding:0px; margin:0px">
+<table width="100%" border="0" cellpadding="2" cellspacing="0" class="block">
+<tr>
+<td width="301" valign="top"><strong>
+  Packages</strong></td>
+<td width="813" valign="top">
+  <select name="pid" id="pid">
+  	<option value=""></option>
+      {if $packages}
+      	{foreach from=$packages item=package}
+        	<option value="{$package.package_id}" {if $smarty.post.pid==$package.package_id} 
+            selected="selected"{/if}>{$package.pkg_title}</option>
+        {/foreach} 
+      {/if}
+      </select></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Userid or Username</strong></td>
+  <td valign="top">
+    <input type="text" name="uid" id="uid" value="{'uid'|post}"/>
+  </td>
+</tr>
+<tr>
+  <td valign="top"><strong>Active</strong></td>
+  <td valign="top">
+    <select name="active" id="active">
+      <option value=""></option>
+      <option value="yes" {if $smarty.post.active=='yes'} selected="selected"{/if}>Yes</option>
+      <option value="no" {if $smarty.post.active=='no'} selected="selected"{/if}>No</option>
+    </select></td>
+</tr>
+</table>
+<div align="left"><input type="submit" class="btn btn-success btn-sm" value="Search" name="search" id="search" /></div>
+</fieldset>
+
+</form>
+<div style="height:10px;"></div>
+<style>
+{literal}
+.green{color:#060;}
+.red{colo:#ed00000}
+.yellow{color:#C90}
+  #ui-datepicker-div
+    {
+        z-index: 9999999;
+    }
+
+</style>
+
+<script type="text/javascript">
+$(function() {
+	//$(".date_field").datepicker();
+});
+</script>
+{/literal}
+
+{if $call_form}
+<script type="text/javascript">
+	{literal}
+	$(function() {
+		$('#add_new_form').dialog({modal: true,buttons: {'Add Subscription' : function(){$('form[id=form-add]').submit()}},height:340,width:600})
+		});
+	{/literal}
+	</script>
+{/if}
+
+<table width="100%">
+<tr>
+<td align="left">
+<h2>Manage Subscriptions</h2> 
+{assign var='packages' value=$paidSub->getPackages()}
+</td>
+<td align="right">
+<div style="margin-top:5px; height:25px" align="right" >
+<form name="add_subscription" {if $call_form!='add_form'}style="display:none"{/if} id="add_subs_form" class="" method="post">
+  <fieldset class="fieldset" style="border:none; padding:0px;margin:0px;height:55px;padding-left:-30px;"> <label> UserID/Username 
+     <input type="text" name="userid" value="" style="width:100px"/></label> 
+   
+   Package
+  	  
+      <select name="pid" id="pid">
+      {if $packages}
+      	{foreach from=$packages item=package}
+        	<option value="{$package.package_id}" {if $smarty.post.pid==$package.package_id} 
+            selected="selected"{/if}>{$package.pkg_title}</option>
+        {/foreach} 
+      {/if}
+      </select>
+      <input type="hidden" name="add_subs" value="yes" />
+     <label> <input type="checkbox"  name="gen_invoice" value="yes" /> Generate Invoice </label>
+     <label><input type="checkbox" name="active" checked="checked" value="yes" /> Activate </label></fieldset>
+</form>
+</div>
+</td>
+</tr>
+</table>
+
+
+
+<div style="height:10px"></div>
+
+{* Getting list of subscritons *}
+
+<form name="subscriptions" method="post" action="">
+
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+  <tr>
+   
+    <td height="50">
+     		<input type="submit" name="activate_selected" value="Activate"  class="btn btn-primary btn-xs"/>
+            <input type="submit" name="deactivate_selected" value="Deactivate" class="btn btn-primary btn-xs" />
+            <input type="submit" name="delete_selected" value="Delete"  class="btn btn-primary btn-xs" onclick="return confirm_it('Are you sure you want to delete selected subscriptions(s)')"/>
+    
+    </td>
+    <td align="right" style="padding-left:15px">
+    <div class="add_subs_buttons" {if $call_form=='add_form'}style="display:none"{/if}>
+    <input type="button" class="btn btn-success btn-sm" value="+ Add New" onClick="$('#add_subs_form').toggle();$('.add_subs_buttons').toggle()" />
+    </div>
+    
+    <div class="add_subs_buttons" {if $call_form!='add_form'}style="display:none;"{/if}>
+    	<input type="button" class="btn btn-success btn-sm" value="Add" onClick="$('#add_subs_form').submit();" />
+    	<input type="button" class="btn btn-primary btn-sm" value="Cancel" onClick="$('#add_subs_form').toggle();$('.add_subs_buttons').toggle()" />
+    </div>
+</td>
+    </tr>
+</table>
+
+
+
+<div class="">
+  <!-- Default panel contents -->
+ 
+  <!-- Table -->
+  <table class="table table-stripped" style="border-bottom: 1px solid #ccc;">
+  <tr>
+    <td width="20"><input type="checkbox" name="checkall" onclick="checkUncheckAll(this);"/></td>
+    <td width="20"><strong>ID</strong></td>
+    <td><strong>Subscription</strong></td>
+    <td width="149"><strong>Amount</strong></td>
+    <td width="200"><strong>Status</strong></td>
+    <td width="200"><strong>Actions</strong></td>
+  </tr>
+  </table>
+ {assign var='bgcolor' value='#fff'}
+{if $subs}
+{foreach from=$subs item=sub}
+{assign var=order value=""}
+
+{assign var=order value=$paidSub->getSubsOrderDetails($sub.subscription_id)}
+
+<table width="100%" class="table" style="background-color:{$bgcolor}">
+  <tr>
+    <td width="20" valign="top"><input name="check_subs[]" type="checkbox" id="check_video" value="{$sub.subscription_id}" /></td>
+    <td width="20" valign="top">{$sub.subscription_id}</td>
+    <td valign="top"><span class="label label-info">{$sub.pkg_title}</span><br>
+      <strong>{$sub.username}</strong> {$sub.date_added|niceTime}</td>
+    
+    <td width="149" valign="top">
+    
+    {if $order.amount_recieved} <strong>{$sub.package_currency|currency}{$order.amount_recieved}</strong>{/if}
+     {assign var=order_status orderStatus($order)}
+     <span class="label label-{$order_status.class}" style="margin-bottom:10px;">{$order_status.status}</span>
+     
+     <br />
+     {if $order_status.status == 'Paid'}
+      <a href="javascript:void(0)" onclick="window.open(baseurl+'/module.php?s=premium&p=view_invoice&sid={$sub.subscription_id}','View Invoice','width=700,height=280')"><span class="btn btn-default btn-xs">view order invoice</span></a></td>
+      {/if}
+    
+    <td width="200" valign="top">Active : <strong>{$sub.active}</strong><br>
+     Videos Watched :<strong> {$sub.watched}</strong><br>
+      Duration Watched : <strong>{$sub.watched_time|SetTime}</strong><br>
+      Days Left :    <strong>{$sub.end_date|daysLeft|number_format} </strong>  <br></td>
+    <td width="200" valign="top">
+     <div class="dropdown">
+                    <button id="dropdownMenu1" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                        Actions <i class="caret"></i></button>
+                    <ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1" role="menu">
+                        <li><a href="javascript:void(0)" onClick="$('#form-{$sub.subscription_id}').slideToggle()" >Edit</a></li>
+                        {if $sub.active=="no"} 
+                        <li> <a href="{$_link}&activate={$sub.subscription_id}">Activate</a></li>
+                        {else}
+                        <li><a href="{$_link}&deactivate={$sub.subscription_id}">Deactivate</a>
+                        </li>
+                        {/if}
+                        <li class="divider"></li>
+                        <li>  <a href="{$_link}&delete={$sub.subscription_id}">Delete </a></li>
+                       
+                    </ul>
+                </div>
+    </td>
+  </tr>
+</table>
+
+<div id="form-{$sub.subscription_id}"  style="margin:20px 0px; display:none">
+    <form name="Subscript Form" class="sub_edit_form" method="post" id="form-{$sub.subscription_id}" action="">
+<div class="panel panel-default">
+  <div  class="panel-heading" ><h3>Edit Subscriptions</h3>
+    <div align="right"  style="margin-top:-38px;">
+      <button onClick="$('#form-{$sub.subscription_id}').slideToggle()"  type="button" class="btn btn-danger btn-sm">
+      <span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+      Close
+      </button>
+    </div>
+  </div>
+  <table class="table">
+    <tr> 
+    <td valign="top">Package</td>
+    <td valign="top">{$sub.pkg_title}</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#EFEFEF">User</td>
+    <td valign="top" bgcolor="#EFEFEF">{$sub.username}</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">Start Date</td>
+    <td valign="top" bgcolor="#FFFFFF"><input name="start_date" type="text" id="start_date" value="{$sub.start_date}" />
+      <br />
+      {$sub.start_date|niceTime}
+      <label for="textfield"></label></td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#EFEFEF">End Date</td>
+    <td valign="top" bgcolor="#EFEFEF"><input name="end_date" type="text" id="end_date" value="{$sub.end_date}" />
+      <br />
+      {$sub.end_date|niceTime}</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">Number of videos watched</td>
+    <td valign="top" bgcolor="#FFFFFF"><input name="total_watched" type="text" id="total_watched" value="{$sub.watched}" /></td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#EFEFEF">Number of PPV videos watched</td>
+    <td valign="top" bgcolor="#EFEFEF"><input name="total_watched_ppv" type="text" id="total_watched2" value="{$sub.watched_ppv}" /></td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">Total Time Watched</td>
+    <td valign="top" bgcolor="#FFFFFF"><input name="total_watched_time" type="text" id="total_watched_time" value="{$sub.watched_time}" /></td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#EFEFEF">Credits</td>
+    <td valign="top" bgcolor="#EFEFEF"><input name="credits_used" type="text" id="credits_used" value="{$sub.credits_used}" /></td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">Active</td>
+    <td valign="top" bgcolor="#FFFFFF"><label for="select"></label>
+      <select name="active" id="active">
+        <option value="yes" {if $sub.active=='yes'} selected="selected" {/if}>Yes</option>
+        <option value="no" {if $sub.active=='no'} selected="selected" {/if}>No</option>
+      </select></td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+    <td valign="top" bgcolor="#FFFFFF">&nbsp;</td>
+  </tr>
+  <tr>
+    <td valign="top" bgcolor="#FFFFFF"><input type="submit" name="update_subs" id="button" class="btn btn-primary btn-sm" value="Update Subscription" /></td> 
+  </tr>
+  <input type="hidden" value="{$sub.subscription_id}" name="subscription_id" />
+  </table>
+</div>
+</form>
+</div>
+{if $bgcolor=='#f2f2f2'}
+    {assign var='bgcolor' value='#fff'}
+{else}
+    {assign var='bgcolor'  value='#f2f2f2'}
+{/if}
+{/foreach}
+
+<table class="table">
+  <tr>
+    <td height="50" style="">
+        <input type="submit" name="activate_selected" value="Activate"  class="btn btn-primary btn-xs"/>
+            <input type="submit" name="deactivate_selected" value="Deactivate" class="btn btn-primary btn-xs" />
+            <input type="submit" name="delete_selected" value="Delete"  class="btn btn-primary btn-xs" onclick="return confirm_it('Are you sure you want to delete selected subscriptions(s)')"/>
+    
+    </td>
+  </tr>
+</table>
+</div>
+</form>
+
+{else}
+<div align="center"><em><strong>No Subscription Found</strong></em></div>
+{/if}
+
+
+
+
+
+<!-- DIsplaying Videos Ends-->
+{include file="$style_dir/blocks/pagination.html" }

@@ -1,0 +1,100 @@
+{if is_installed('revshare')}
+<script src="{$baseurl}/js/jquery.amcharts.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.11/serial.js"></script>
+<script src="//cdn.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<link  type="text/css" href="//cdn.amcharts.com/lib/3/plugins/export/export.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.11/plugins/export/libs/FileSaver.js/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.11/plugins/export/libs/jszip/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/amcharts/3.21.11/plugins/export/libs/fabric.js/fabric.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.34/vfs_fonts.js"></script>
+{/if}
+
+
+<div id="main">
+ <div class="cb-box container">
+ <div class="">
+	
+ 	<h1>Here are your earning stats.</h1>
+ 	<!-- {pr($user_stats,true)} -->
+
+<script type="text/javascript">
+	AmCharts.makeChart("chartdiv",
+	{
+		"type": "serial",
+		"pathToImages": "https://www.amcharts.com/lib/3/images/",
+		"categoryField": "date",
+		"dataDateFormat": "YYYY-MM-DD",
+		"categoryAxis": {
+			"parseDates": true
+		},
+		"chartCursor": {
+			"enabled": true
+		},
+		"chartScrollbar": {
+			"enabled": true
+		},
+		"trendLines": [],
+		"graphs": [
+		{
+			"bullet": "round",
+			"id": "AmGraph-1",
+			"title": "Views",
+			"valueField": "views"
+		},
+		{
+			"bullet": "square",
+			"id": "AmGraph-2",
+			"title": "Earnings",
+			"valueField": "earnings"
+		}
+		],
+		"guides": [],
+		"valueAxes": [
+		{
+			"id": "ValueAxis-1",
+			"title": "Views  -  or  -  Earnings"
+		}
+		],
+		"allLabels": [],
+		"balloon": {},
+		"legend": {
+			"enabled": true,
+			"useGraphSettings": true
+		},
+		"titles": [
+		{
+			"id": "Title-1",
+			"size": 15,
+			"text": "Views and earning overall stats of {userid()|get_username}"
+		}
+		],
+		"dataProvider": {$user_stats},
+		"export": {
+			"enabled": true,
+			"menu": [ {
+				"class": "export-main",
+				"menu": [ {
+					"label": "Download",
+					"menu": [ "PNG", "JPG", "CSV","PDF" ]
+				}, {
+					"label": "Annotate",
+					"action": "draw",
+					"menu": [ {
+						"class": "export-drawing",
+						"menu": [ "PNG", "JPG" ]
+					} ]
+				} ]
+			} ]
+		}
+	}
+	);
+
+</script>
+<div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
+
+    <div class="clear"></div>
+</div>
+	<div class="clear"></div>
+</div>
+</div>

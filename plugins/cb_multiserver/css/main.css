@@ -1,0 +1,72 @@
+
+/* CSS Document */
+
+
+.msStats{text-align:right; font-size:11px; font-weight:bold; font-family:tahoma; color:#333; margin-bottom:3px}
+
+.serverTables{border:1px #999 solid ; border-bottom:0px}
+.serverTables td{padding:3px; border-bottom:1px solid #999}
+.serverTables .tblHead { background-repeat:repeat-x; background-image:url(../images/grads.png); font-size:10px; font-weight:bold;}
+.serverTables tr:hover{background-color:#E6FFFF}
+.serverTables select{border:0px; padding:3px; font-size:10px; background-color:transparent}
+
+.serverBarCont{ width:100px; height:15px; display:block; border:1px solid #ddd;
+
+background: #39bc25; /* Old browsers */
+background: -moz-linear-gradient(left, #39bc25 0%, #f2e52e 50%, #ff0000 100%); /* FF3.6+ */
+background: -webkit-gradient(linear, left top, right top, color-stop(0%,#39bc25), color-stop(50%,#f2e52e), color-stop(100%,#ff0000)); /* Chrome,Safari4+ */
+background: -webkit-linear-gradient(left, #39bc25 0%,#f2e52e 50%,#ff0000 100%); /* Chrome10+,Safari5.1+ */
+background: -o-linear-gradient(left, #39bc25 0%,#f2e52e 50%,#ff0000 100%); /* Opera11.10+ */
+background: -ms-linear-gradient(left, #39bc25 0%,#f2e52e 50%,#ff0000 100%); /* IE10+ */
+filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#39bc25', endColorstr='#ff0000',GradientType=1 ); /* IE6-9 */
+background: linear-gradient(left, #39bc25 0%,#f2e52e 50%,#ff0000 100%); /* W3C */
+
+
+ background-position:bottom }
+
+.serverBarCont .serverBar{height:100%; display:block; background-color:#FFFFFF; background-position:top; float:right}
+
+.
+{
+	border-radius:5px; -webkit-border-radius:5px; -moz-border-radius:5px;
+}
+.radius_top_5{border-radius:5px 5px 0px 0px; -webkit-border-radius:5px 5px 0px 0px; -moz-border-radius:5px 5px 0px 0px ; }
+
+.serverBttn{width:123px; height:27px; background-image:url(../images/button.png); display:block; text-align:center; line-height:27px; color:#fff; font-family:tahoma; font-weight:bold; background-position:top; border:0px; font-size:11px; padding:0px; cursor:pointer}
+.serverBttn:hover{ color:#FFF; background-position:bottom}
+
+.buttonOnCont{background-color:#F4F4F4; padding:3px; border:#999 1px solid; display:inline-block; border-bottom:0px; z-index:5px}
+
+.addServerForm{font-size:13px; font-weight:bold; font-family:Arial, Helvetica, sans-serif}
+.addServerForm .label{width:140px; display:inline-block;}
+.addServerForm select,.addServerForm input[type='text']{border:1px solid #bbb; padding:2px; width:200px}
+.addServerForm input[type='text']:focus{background-color:#FFFDCA}
+.addServerForm .hint{font-size:10px; font-family:tahoma; font-weight:normal}
+.addServerForm .sep{height:8px}
+.addServerForm select{width:auto; !important}
+
+.action_option{display:none}
+
+.server_error
+{
+	padding:5px; margin:10px 0px;
+	background-color:#FFFDCA;
+	border:1px solid #FA7C80;
+}
+
+.server_msg
+{
+	padding:5px; margin:10px 0px;
+	background-color:#FFFDCA;
+	border:1px solid #006600;
+	color:#006600;
+}
+
+.serverSwitch a{background-color:#09c; display:inline-block; padding:3px 5px; margin-bottom:10px; color:#fff; font-family:Arial, Helvetica, sans-serif; font-size:13px; font-weight:bold}
+
+.serverSwitch a.selected{background-color: #666666 !important;
+    border-color: #777777;}
+
+.block label{font-size:12px; font-weight:normal}
+.block .txt{margin-right:10px}
+.block .sep{clear:both}

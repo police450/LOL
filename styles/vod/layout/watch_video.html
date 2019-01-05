@@ -1,0 +1,344 @@
+{$video=$vdo}
+{$type='video'}
+
+{if $smarty.get.play_list}
+
+	{foreach $items as  $key => $item}
+	{if $item.videokey == $vdo.videokey}
+	{$current_key = $key}
+	{/if}
+	{/foreach}
+
+	{$next_item_key = $current_key+1}
+	{$prev_item_key = $current_key-1}
+	{assign var=count_index value=count($items)}
+	
+	{if $next_item_key==$count_index}
+	{$next_videoLink = '#'}
+	{else}
+	{$next_videoLink = videoLink($items.$next_item_key)}
+	{/if}
+
+	{if $items.$prev_item_key==0}
+	{$prev_videoLink = '#'}
+	{else}
+	{$prev_videoLink = videoLink($items.$prev_item_key)}
+	{/if}
+
+	{$vdo.next_playlist_link = $next_videoLink}
+{/if}
+<!-- {pr($video,true)}
+	{pr($vdo,true)} -->
+	{$channel = $userquery->get_user_details($video.userid)}
+	<div id="main" class="clearfix">
+		<div class="clearfix">
+			<div id="messageFav" class="alert alert-info marginTop" style="display:none"></div>
+			<!-- *********Watch_video_header_section******* -->
+			<section class="clearfix video bg-watch-vid">
+				<!-- *********slider_03_playlist******* -->
+				<!-- *********Watch_video******* -->
+				<div class="container-watch clearfix">
+					<!--*********** watch_video_page_header_area*********** -->
+					<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 cb_holder">
+						<div id="cb_player" class="cb_player col-lg-9 col-md-9 col-sm-12 col-xs-12">
+							{FlashPlayer vdetails=$vdo width='100%' height='100%'}
+						</div><!-- cb_player end -->
+						<div class="col-xs-12 hidden-lg hidden-md hidden-sm">
+
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- *********Watch_Video_detial_section******* -->
+			<div class="container clearfix">
+				<div class="whatch__video__detail col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+					<div class="Whatch__video__Holder">
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xm-12 col">
+							<h2 class="title__video">{$vdo.title|ucfirst}</h2>
+							<div class="video__dit">
+								<p>
+									<span class="icon-eye"></span> &nbsp;{( $vdo.views )}&nbsp;Views
+								</p>
+								&nbsp;
+<!-- 								<p>
+									<span class="icon-bubbles32"></span>
+									&nbsp;{$vdo.comments_count} Comment
+									</p> -->
+								&nbsp;
+								<p> 
+									<span class="icon-clock2"></span>
+									&nbsp;{$vdo.date_added|nicetime} Upload
+								</p>
+							</div>
+							<div class="col col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								<div class="deatil__vid__btn col-lg-12 col-md-12 col-sm-12 col-xm-12">
+									<!-- left_area -->
+									<div class="btn__area__bn col-lg-6 col-md-6 col-sm-12sm col-xs-12">
+										<button {if !$disable} onclick="_cb.rateNew('{$vdo.videoid}','5','video')"{/if} href="javascript:void(0)" class="btn btn-primary" data-toggle="tooltip" data-placement="top"  title=" like video">
+											<i class="icon-if_like_outline_309057"></i>
+											like
+											<span>{$vdo.rated_by}</span>
+										</button>
+									</div>
+								</div>
+								<div class="col more_detail col-lg-12 col-md-12 col-sm-12 col-xm-12">
+									<div class="des__vid">
+										<p>{AutoLinkUrls($vdo.description|unescape:"html")}</p>
+										<ul>
+											<li>
+												<h3>{lang code='category'}&nbsp;:</h3>
+												<p>{$vdo.category|categories:video}</p>
+											</li>
+											<li>
+												<h3>{lang('Cast')}&nbsp;:</h3>
+												<a href="#">{$vdo.tags|tags:videos}</a>
+											</li>
+											<li>
+												<h3>Released&nbsp;:&nbsp;</h3>
+												<a href="#">October 9, 2017 </a>
+											</li>
+										</ul>
+									</div>
+								</div>
+								<hr></hr>
+							</div>
+							<!--******comment_area******-->
+							<div class="comment_area col col-lg-12 col-md-12 col-sm-12 col-xm-12" id="comments-block">
+								<span class="commet_total">
+									<p>{$vdo.comments_count} {lang code='comments'}</p> 
+								</span>
+								<!-- comments listing -->
+								<div class="clearfix">
+									<div class="holder_area">
+										<div class="form-group clearfix">
+											<div class="clearfix">
+												<section class="comment">
+													<div class="comment_bg show_comment">
+														<div class="clearfix">
+															<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 col">
+																<div class="bg_comment_inner">
+																	<!-- listing comments here -->
+																	<div class="comments-box">
+																	<div id="userCommentsList">
+																		<div class="comments clearfix">
+																			<ul id="comments-ul">
+																			</ul>
+																		</div>
+																	</div>
+																	</div>
+
+																	<!-- listing comments end here -->
+																</div>
+															</div>
+														</div>
+													</div>
+												</section>	
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- comments listing ended -->
+								{if $vdo.comments_count > 10}
+								<div class="clearfix text-center">
+									<button class="btn btn-loadmore" id="load-more-comments" page="2">{lang code='load_more'}</button>
+								</div>
+								{/if}
+								<!-- comments-block -->
+								<div id="test1"></div>
+								<div id="reply" class="clearfix"> 
+									<div  class="addComment clearfix">
+										{if $myquery->is_commentable($vdo,'v')}
+											<div class="clearfix">
+												<div class="holder_area">
+													<div class="form-group clearfix">
+														<div class="clearfix">
+															{include file="$style_dir/blocks/comments/add_comment.html" id=$vdo.videoid type=v}
+														</div>
+													</div>
+												</div>
+											</div>
+											{else}
+											<div class="alert alert-warning">
+												{lang code='comm_disabled_for_vid'}
+											</div>
+										{/if}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--*********ad_728x90********* -->
+			<div class="clearfix leaderboard-ad ad">
+				{AD place='ad_728x90'}
+			</div>
+			
+		</div>
+	</div>
+
+
+<script>
+	/*Cookie based comments backup start*/
+	var current_video = "{$video.videoid}",
+	cookieToSave = 'comment_data_u'+userid+"v"+current_video,
+	commentDataCheck = $.cookie(cookieToSave);
+
+	if (commentDataCheck !== null) {
+	$('#comment_box').val(commentDataCheck);
+	}
+	$('#comment_box').on('keyup', function() {
+	var comment_data = $('#comment_box').val();
+	$.cookie(cookieToSave, comment_data, { expires : 10, path : "/" });
+	});
+
+	$('#add_comment_button').on("click",function(){
+	$.cookie(cookieToSave, null, { path : "/" });
+	});
+	/*Cookie based comments backup end*/
+
+	var playlist_total = "{$total_items}";
+	$('#ShareUsers').on("keyup",function(){
+	var typed = $(this).val();
+	$.ajax({
+	url: baseurl+'/ajax.php',
+	type: 'post',
+	dataType: 'html',
+	data: {
+	"mode":'user_suggest',
+	"typed": typed
+	},
+	beforeSend: function() {
+	},
+
+	success: function(data) {
+	$('#suggested_users').html('');
+	var jsoned = $.parseJSON(data);
+	$( jsoned.matching_users ).each(function( index, element ) {
+		$('#suggested_users').append("<option label='"+element+"' value='"+element+"'>");
+	});
+	}
+	});
+	});
+
+	/*Playlist load more start*/
+	var playlist_total = "{$total_items}";
+	$('#playlist-pull').on("click",function(){
+	var __this = $(this);
+	loadHit = $(this).attr('dataHit');
+	loadLimit = $(this).attr('dataLimit');
+	playlist = $(this).attr('dataList');
+
+	$.ajax({
+	url: baseurl+'/ajax/watch.php',
+	type: 'post',
+	dataType: 'html',
+	data: {
+	"mode":'playlistMore',
+	"loadHit":loadHit,
+	"loadLimit":loadLimit,
+	"playlist": playlist
+	},
+	beforeSend: function() {
+	$(__this).text("loading");
+	},
+
+	success: function(data) {
+	var loaded = loadLimit * loadHit;
+	if (playlist_total <= loaded) {
+		$(__this).remove();
+	} else {
+		$(__this).text("Load More");
+	}
+	if (data == 'none') {
+		$('#playlist-pull').remove();
+	}
+	$(data).appendTo('#playlist_items').fadeIn('slow');
+	$('#playlist-pull').attr('dataHit', parseInt(loadHit) + 1);
+	}
+	});
+	});
+
+	/*Playlist load more end*/
+
+	// var aspect_ratio = 1.77778
+	// var $cb_player = $("#cb_player");
+
+	$(document).ready(function(){
+	// $cb_player.height( $cb_player.width() / aspect_ratio );
+
+	var videoInfo = $("#videoDescription").text();
+	var newInfo = videoInfo.replace(/(((https?:\/\/)|([\s\t]))(www.)?([a-z0-9]+)\.[a-z]+)/g, '<a href="$1">$1</a>');
+	$("#videoDescription").html(newInfo);
+
+	comments_voting = '{$vdo.comment_voting}';
+	_cb.getCommentsNew(
+	'{$type}',
+	'{$vdo.videoid}',
+	'{$vdo.last_commented}',1,
+	'{$vdo.comments_count}',
+	'{$object_type}'
+	);
+
+	$("#reportVideo").on({
+	click : function(e){
+	e.preventDefault();
+	$("#flag_item").show();
+	}
+	});
+
+	$("#subscribeUser").on({
+	click: function(e){
+	e.preventDefault();
+	_cb.subscribeToChannelNew('{$video.userid}','subscribe_user');
+	}
+	});
+	var adHtml = $('.ad-holder').html();
+	if(adHtml<1){
+	$('.ad-holder').remove();
+	}
+
+	$('.text_1').on('click', () => {
+	$('.text_1').text('Copied!')
+	$( ".text_1" ).addClass( "active" );
+	});
+	});
+	//***********sub_comment*******//
+	$('.more_view').on('click', function() {
+	if($('.Sub-comments-box').hasClass('active')) {
+		$('.Sub-comments-box').removeClass('active');
+	} else {
+		$('.Sub-comments-box').addClass('active');
+	}
+	});
+	//***********copyToClipbucket*******//
+	function copyToClipboard(element) {
+	var $temp = $("<input>");
+	$("body").append($temp);
+	$temp.val($(element).text()).select();
+	document.execCommand("copy");
+	$temp.remove();
+	}
+	$(document).on('click','#load-more-comments',function(){
+	var page = $(this).attr('page');
+	page = parseInt(page);
+	nextPage = page + 1;
+	$(this).text("Loading comments..")
+	_cb.getCommentsNew(
+		'{$type}',
+		'{$vdo.videoid}',
+		'{$vdo.last_commented}',page,
+		'{$vdo.comments_count}',
+		'{$object_type}'
+		);
+	$(this).attr('page', nextPage);
+	$(this).text("Load More")
+	});
+
+ //    var resizePlayer =  _cb.debounce(function() {
+ //          $cb_player.height( $cb_player.width() / aspect_ratio );
+ //     }, 500, false);
+	
+	// $(window).resize(resizePlayer);
+	
+</script>

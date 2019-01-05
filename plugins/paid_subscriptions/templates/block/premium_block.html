@@ -1,0 +1,55 @@
+<div class="panel panel-default">
+  
+  <div class="panel-heading">Package Details</div>
+
+    <table class="table">
+       <tr>
+            <td ><strong>#</strong></td>
+            <td ><strong>title</strong></td>
+            <td ><strong>Description</strong></td>
+            {if $package.pkg_type!='ppv' && $package.pkg_type!='mins' }<td ><strong>Videos</strong></td>{/if}
+            {if $package.pkg_type=='ppv' ||  $package.pkg_ppv!=0}<td  ><strong>PPV</strong></td>{/if}  
+            {if $package.pkg_credits} <td ><strong>Credits</strong></td>{/if}
+            {if $package.pkg_mins}<td ><strong>Minutes</strong> </td>{/if}
+            <td ><strong>days</strong></td>
+            <td ><strong>price</strong></td>
+            <td ><strong>videos in this package</strong></td>
+        </tr>
+        <tr>
+            <td >
+                <span class="pkg_title">
+                <input type="radio" name="premium_package" id="subs_package_{$package.package_id}" value="{$package.package_id}"/>
+                </span>
+            </td>
+            <td >{$package.pkg_title}</td>
+            <td >{$package.pkg_desc}</td>
+            {if $package.pkg_type!='ppv' && $package.pkg_type!='mins' }
+             <td > <span class="">{if $package.pkg_vids}{$package.pkg_vids}{else}&#8734;{/if}</span></td>
+            {/if}
+            {if $package.pkg_type=='ppv' ||  $package.pkg_ppv!=0}
+            <td  ><span class="">{if $package.pkg_ppv>0}{$package.pkg_ppv}{else}&#8734;{/if}</span></td>
+                {/if}
+                {if $package.pkg_credits}
+                <td >  <span class="">{$package.pkg_credits}</span> </td>
+                {/if}
+                {if $package.pkg_mins}
+                <td >  <span class="">{$package.pkg_mins}</span>  </td>
+                {/if}
+          
+            <td >{if $package.pkg_days}{$package.pkg_days}{else}&#8734;{/if}</td>
+            <td >{$paidSub->currency|currency}{$package.pkg_price}</td>
+            <td >
+                {if $package.is_collection=='yes'}
+                <span class="btn btn-success btn-xs" onclick="window.location='module.php?s=premium&amp;p=buy&amp;view_vids={$package.package_id}'">View</span>
+                {else}
+                <span class="btn btn-success btn-xs">N/A</span>
+                {/if}
+            </td>
+        </tr>
+    </table>
+</div>
+
+
+
+
+

@@ -1,0 +1,135 @@
+<div id="main">
+<div class="cb-box container">
+  <div class="col-md-12">
+    <div class="col-md-3 clearfix" style="margin-left:-30px;">
+    {$myAccountLinks = $userquery->my_account_links()}
+     {include file="$style_dir/blocks/manage/userMenuLeft.html"}
+    </div>
+<div class="col-md-9">
+  <h2>Subscriptions</h2>
+  {if $subs}
+  <div class="panel panel-default">
+    <div class="panel-heading">Subscriptions</div>
+    <table class="table">
+      <tr>
+        <td width="25" ><strong>&#35;</strong></td>
+        <td><strong>{lang code='title'}</strong></td>
+        <td width="100" ><strong>{lang code='date_added'}</strong></td>
+        <td width="100" ><strong>{lang code='status'}</strong></td>
+      </tr>
+    </table>
+    {assign var='bg' value='fff'}
+    {foreach from=$subs item=sub}
+    <table class="table">
+    <tr>
+    <td width="25">{$sub.subscription_id}</td>
+    <td>
+      <a href="javascript:void(0);" onclick="$('#subs_details-{$sub.subscription_id}').slideToggle();">
+        <span class="btn btn-warning btn-sm test-class"><i class="glyphicon  glyphicon-eye-open glyphicon-eye-close "></i> &nbsp;{$sub.pkg_title}</span></a>
+        <script>
+$(document).ready(function(){
+  $( ".test-class" ).click(function() {
+  $( ".glyphicon" ).toggleClass( "glyphicon-eye-close" );
+});
+});
+</script>
+      |
+     <a href="module.php?s=premium&amp;p=renew&amp;sid={$sub.subscription_id}">
+      <span class="btn btn-success btn-xs">renew</span></a>
+      |
+      <a onclick="Confirm_Delete('module.php?s=premium&amp;p=subscriptions&amp;delete={$sub.subscription_id}')"><span class="btn btn-danger btn-xs">Cancel</span> </a>
+    </td>
+    <td width="100">{$sub.date_added|date_format:"%Y-%m-%d"}</td>
+    <td width="100" >{if $sub.active=='yes'}<label class="label label-success">Active</label>{else}
+    <label class="label label-danger">Inactive</label>{/if}</td>
+    </tr>
+    </table>
+     <div style="{if $smarty.get.sid!=$sub.subscription_id}display:none; {/if}padding:5px; margin-bottom:5px" 
+     id="subs_details-{$sub.subscription_id}">
+      <div class="none">
+      Purchased <label class="label label-primary"><strong>{$sub.date_added|niceTime}</strong> </label>- {if $sub.end_date}{if $sub.end_date|daysLeft > 0}<strong>{$sub.end_date|daysLeft|number_format}</strong> days left{else}<strong>Subscription has Expired</strong>{/if}{else}<strong>Valid for unlimit days</strong>{/if}
+      </div>
+      <div style="border-top:1px #CCC solid; margin:2px 0px"></div>
+      <h4><label class="label label-primary">Package Details</label></h4>
+      <div style="border-top:1px #CCC solid; margin:2px 0px"></div>
+      <table border="0" cellspacing="0" cellpadding="0" style="margin-top:5px">
+
+      <tr>
+        <td width="90"><strong>Service</strong></td>
+        <td width="130"><strong>Allowed</strong></td>
+        <td width="130"><strong>Used</strong></td>
+        <td width="130"><strong>Left</strong></td>
+      </tr>
+        
+      {if $sub.pkg_type!='ppv' && $sub.pkg_type!='mins' } 
+      <tr>
+        <td>Videos</td>
+        <td>{if $sub.pkg_vids}{$sub.pkg_vids}{else}unlimited{/if}</td>
+        <td>{$sub.watched}</td>
+        <td>{if $sub.pkg_vids < '1'}Unlimited{else}{math equation="x-y" x=$sub.pkg_vids y=$sub.watched}{/if}</td>
+      </tr>
+      {/if}
+      
+
+      {if $sub.pkg_type=='ppv' ||  $sub.pkg_ppv!=0}
+      <tr>
+      <td>PPV</td>
+        <td>Yes {if $sub.pkg_ppv== -1}(unlimited){elseif $sub.pkg_ppv>0}({$sub.pkg_ppv}){/if}</td>
+        <td>{$sub.watched_ppv}</td>
+        <td>{if $sub.pkg_ppv<'0' || $sub.pkg_type=='ppv'}Unlimited{elseif $sub.pkg_ppv>0}{math equation="x-y" x=$sub.pkg_ppv y=$sub.watched_ppv}{/if}</td>
+      </tr>
+      {/if}
+
+      {if $sub.pkg_credits}
+      <tr>
+        <td>Credits</td>
+        <td>{$sub.pkg_credits}</td>
+        <td>{$sub.credits_used}</td>
+        <td>{math equation="x-y" x=$sub.pkg_credits y=$sub.credits_used}</td>
+      </tr>
+      {/if}
+
+      {if $sub.pkg_mins}
+          {assign var=seconds_total value=$sub.pkg_mins*60}
+          {assign var=seconds_used value=$sub.watched_time}
+          {assign var=timeleft value=$seconds_total-$seconds_used}
+      <tr>
+        <td>Minutes</td>
+        <td>{$seconds_total|SetTime}</td>
+        <td>{$sub.watched_time|SetTime}</td>
+        <td>{$timeleft|setTime}</td>
+      </tr>
+      {/if}
+
+      </table><br/>
+   <div style="border-top:1px #CCC solid; margin:2px 0px"></div>      {assign var=subVids value=$paidSub->getSubsVids($sub,20)}
+    
+      <strong style="padding-top:5px; display:block">Videos In this package (<a href="?s=premium&p=videos&sid={$sub.subscription_id}">View all</a>)</strong>
+      <div style="padding:5px 0px;">
+      {if $subVids}
+        {foreach from=$subVids item=video}
+          <div class="sub_vid_cont"><a href="{videoLink vdetails=$video}">
+              <img src="{getThumb vdetails=$video}" width="50" height="38" border="0" alt="{$video.title}" title="{$video.title}"/></a></div>
+          {/foreach}
+          {else}
+          <em><strong>Currently there is no video in this package</strong></em>{/if}
+      </div>
+
+      {if $bg=='fff'}
+      {assign var='bg' value='EFF5F8'}
+      {else}
+      {assign var='bg' value='fff'}
+      {/if}
+     
+      </div>
+    {/foreach}
+
+  </div>
+  {else}
+  <div align="center"><em><strong>You don't have any subscription</strong></em></div>
+  {/if}
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+</div>

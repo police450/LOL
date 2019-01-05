@@ -1,0 +1,120 @@
+{literal}
+<style>
+.sub_vid_cont
+{
+	padding:2px; margin:2px; display:inline-block
+}
+.sub_vid_cont a{border:1px solid #000; display:inline-block}
+.sub_vid_cont a:hover{border:1px solid #06c}
+
+</style>
+{/literal}
+<div>
+ {include file="$style_dir/blocks/manage/account_left.html"}
+ <div class="account_box clearfix">
+ {include file="$style_dir/blocks/manage/account_head.html" user=$user}
+ 
+ {if $show=='transactons'}
+ 	<h2>View Transaction</h2>
+ {else}
+ 	<h2>View Premium Subscriptions</h2>
+    {getSubscriptions uid=$userquery->udetails.userid assign="subs"}
+    
+    {if $subs}
+    <div style="background-color:#06c; color:#fff; font-weight:bold">
+    <table width="100%" border="0" cellspacing="2" cellpadding="2">
+    <tr>
+    <td width="25">&nbsp;</td>
+    <td>{lang code='title'}</td>
+    <td width="100">{lang code='date_added'}</td>
+    <td width="100" class="last_td">{lang code='status'}</td>
+    </tr>
+    </table>
+    </div>
+    {assign var='bg' value='fff'}
+    {foreach from=$subs item=sub}
+    <div style="background-color:#{$bg}">
+    <table width="100%" border="0" cellspacing="2" cellpadding="2">
+    <tr>
+    <td width="25">{$sub.subscription_id}</td>
+    <td><a href="javascript:void(0);" onclick="$('#subs_details-{$sub.subscription_id}').slideToggle();">{$sub.package_name}</a> ({$sub.package_quantity}) - 
+    <strong>{if $sub.package_pricing_method=='price'}{$sub.package_currency|currency}{$sub.package_price}{/if}
+    {if $sub.package_pricing_method=='duration'}{$sub.package_currency|currency}{$sub.package_duration_price}/sec{/if}
+    {if $sub.package_pricing_method=='ppv'}{$sub.package_currency|currency}{$sub.package_ppv_price}/video{/if}</strong> (<a href="javascript:void(0)" onclick="window.open(baseurl+'/premium_service.php?mode=invoice&id={$sub.subscription_id}','View Invoice','width=600,height=280')">view invoice</a>)</td>
+    <td width="100">{$sub.date_added|date_format:"%Y-%m-%d"}</td>
+    <td width="100" class="last_td">{if $sub.active=='yes'}<strong style="color:#090">Active</strong>{else}<strong style="color:#ed0000">Inactive</strong>{/if}</td>
+    </tr>
+    </table>
+    <div style="display:none; background-color:#F2F2F2; padding:5px; margin-bottom:5px" id="subs_details-{$sub.subscription_id}">
+	Purchased <strong>{$sub.date_added|niceTime}</strong><br />
+	<div style="border-top:1px #CCC solid; margin:2px 0px"></div>
+    - Package Details
+    <div style="border-top:1px #CCC solid; margin:2px 0px"></div>
+	
+  	<table border="0" cellspacing="0" cellpadding="0" style="margin-top:5px">
+  	  <tr>
+  	    <td width="90"><strong>Service</strong></td>
+  	    <td width="130"><strong>Allowed</strong></td>
+  	    <td width="130"><strong>Used</strong></td>
+  	    <td width="130"><strong>Left</strong></td>
+	    </tr>
+        
+        
+  	  <tr>
+  	    <td>Videos</td>
+        {math equation="x * y" x=$sub.package_quantity y=$sub.package_allowed_videos assign="package_allowed_videos"}
+  	    <td>{if $sub.package_allowed_videos}{$package_allowed_videos}{else}unlimited{/if}</td>
+  	    <td>{$sub.subscription_total_watched}</td>
+  	    <td>
+        {if $sub.package_allowed_videos}
+        {math equation="x - y" x=$package_allowed_videos y=$sub.subscription_total_watched}
+        {else}Unlimited{/if}</td>
+	    </tr>
+  	  <tr>
+      
+      
+  	    <td>Duration</td>
+        {math equation="x * y" x=$sub.package_quantity y=$sub.package_allowed_time assign="allowed_time"}
+  	    <td>{if $sub.package_allowed_time}{$allowed_time|SetTime}{else}unlimited{/if}</td>
+  	    <td>{$sub.subscription_total_watched_time|SetTime}</td>
+  	    <td>
+        {if $sub.package_allowed_time}
+        {math equation="x - y" x=$allowed_time y=$sub.subscription_total_watched_time assign='timeLeftNow'}
+        {$timeLeftNow|SetTime}
+        {else}Unlimited{/if}
+        </td>
+	    </tr>
+	  </table><br />
+
+      {if $sub.subscription_end_date}
+  	{if $sub.subscription_end_date|daysLeft > 0}<strong>{$sub.subscription_end_date|daysLeft|number_format}</strong> days left{else}<strong>Subscription has Expired</strong>{/if}{else}<strong>Valid for unlimit days</strong>{/if}<br />
+    {assign var=subVids value=$paidSub->getSubsVids($sub)}
+    {if $subVids}
+    <strong style="padding-top:5px; display:block">Videos Watched</strong>
+    <div style="padding:5px 0px;">
+    	{foreach from=$subVids item=video}
+  			<div class="sub_vid_cont"><a href="{videoLink vdetails=$video}">
+            <img src="{getThumb vdetails=$video}" 
+            	width="50" height="38" border="0" 
+                	alt="{$video.title}" title="{$video.title}"/></a></div>
+        {/foreach}
+    </div>
+    {/if} 
+    <br />
+    </div>
+    </div>
+    {if $bg=='fff'}
+    {assign var='bg' value='EFF5F8'}
+    {else}
+    {assign var='bg' value='fff'}
+    {/if}
+    
+    {/foreach}
+    {else}
+   	<div align="center"><em><strong>You don't have any subscription</strong></em></div>
+    {/if}
+ {/if}
+
+ </div>
+ <div class="clear"></div>
+</div>

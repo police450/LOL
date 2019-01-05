@@ -1,0 +1,76 @@
+<link rel="stylesheet" type="text/css" href="{$ninja_html_url}/styles/css/all.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700' rel='stylesheet' type='text/css'>
+<script src="{$ninja_html_url}/styles/js/main.js"></script>
+<section class="clearfix form-elements cb-uikit">
+                    <section class="cover clearfix text-center">
+                <div class="cb-logo">
+                    <img src="{$ninja_html_url}/styles/images/cb-logo.png" alt="" class="img-responsive">
+                </div>
+                <h1><em>SEO Ninja</em></h1>
+            </section>
+                <!-- <header class="clearfix">
+                    <h3 class="bluecolor4">Website Configuration</h3>
+                </header> -->
+                <form name="seo_ninja_configs" id="seo_ninja_configs" class="form-horizontal" action="#">
+                    <div class="clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                              <h4 class="greycolor4">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  General Settings
+                                </a>
+                              </h4>
+                              <div id="seo_errs" class="alert alert-danger" style="display:none"></div>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                              <div class="panel-body">
+                                <div class="form-group">
+                                 <label for="reqtxt" class="col-sm-2 control-label">Sumit Sitemap</label>
+                                    <div class="padding-top form-group clearfix">
+                                        <div class="custom-elements no-yes col-lg-3 col-md-3 col-sm-6">
+                                            <a href="{$smarty.server.REQUEST_URI}&map=submit" target="_blank">Submit to Google, Bing</a>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div id="beats_config_msg"></div>
+                    <div class="clearfix">
+                        <button type="submit" id="ninja_webconf_submit" class="btn btn-success" value="update">Update Settings</button>
+                    </div>
+                </form>
+            </section>
+
+<script type="text/javascript">
+	var ajax_file = '{$ninja_ajax}';
+
+    $('#ninja_webconf_submit').css("margin-top","10px");
+	 $('#ninja_webconf_submit').on("click",function(e){
+        e.preventDefault();
+        $('#beats_config_msg').hide();
+        
+    	 $.ajax({
+    	 	url: ajax_file,
+    	 	type: "POST",
+    	 	data: form_fields,
+    	 	 success: function(result){
+    	 	 
+        	$("#beats_config_msg").html("<div class='alert alert-success'>"+result+"</div>");
+            $('#beats_config_msg').fadeIn("slow");
+    	}});
+    });
+
+    if ($('#seo_errs').text().length)
+    {
+        $('#seo_errs').fadeIn('slow');
+    }
+
+
+
+</script>

@@ -1,0 +1,4 @@
+=== 2.6 ===
+Fixed : HQ Conversion Stucked
+Fixed : HD Name fixed
+Added : Conversion Lock Lifted

@@ -1,0 +1,504 @@
+<!-- {pr($userid,true)} -->
+{if $mode=='pay_now'}
+<div class="heading">
+	<h2>Pay user</h2>
+</div>
+<h4>User current earnings</h4>
+<div class="row" style="margin-top:20px;margin-bottom:20px;">
+	<div class="col-md-10 search-box">
+		<table class="table table-hover" width="">
+			<thead>
+				<tr>
+					<th>Username</th>
+					<th>User channel</th>
+					<th>Earning Views Views</th>
+					<th>Estimated earnings</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr> 
+					<td><a href="view_user.php?uid={$userid}" target="_blank">{$userid|get_username}<a></td>
+						<td><a href="{$baseurl}/view_channel.php?user={$userid|get_username}" target="_blank" class="btn btn-xs btn-default">View channel<a></td>
+							<td>{$revshare->get_eu_views($userid)}</td>
+							<td>{$revshare->get_eu_earnings($userid)}</td>
+						</tr>
+					</tbody>
+				</table>
+				<!-- {pr($eu_bank_acc,true)} -->
+				<h5 class="alert alert-info">You are about to pay <a href="view_user.php?uid={$userid}" target="_blank">{$userid|get_username}</a></h5>
+				<a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#acc_Modal"><i class="glyphicon glyphicon-credit-card"></i> View bank details</a>
+				<a class="btn btn-primary btn-sm" data-toggle="modal" data-target="#pp_Modal"><i class="glyphicon glyphicon-qrcode"></i> Paypal</a>
+	</div>
+</div>
+<div id="acc_Modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<table class="table table-bordered">
+					<thead>
+						<tr>
+							<th colspan='2'>Users Bank details</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><h6><strong>Bank Account Number</strong></h6></td>
+							<td><h6>
+								{if $eu_bank_acc}
+								{$eu_bank_acc}
+								{else}
+								No bank account added please contact user
+								{/if}
+							</h6></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="modal-footer">
+				<form action="" method="post">
+					<input type="hidden" name="userid" value="{$userid}"/>
+					<button class="btn btn-primary btn-sm" type="submit" name="mark_paid" onclick="return confirm('Are you sure you want to mark these earnings paid?');"><i class="glyphicon glyphicon-ok"></i> Mark Paid</button>
+					<button type="button" class="btn btn-default btn-sm" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Close</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div id="pp_Modal" class="modal fade" role="dialog">
+	<div class="modal-dialog">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-body">
+				<h4 id="pp_modal_title">Are you sure you want to pay user via paypal?</h4>
+				<h5 id="pp_modal_subtitle">Important! Once you proceed you can not cancle it.</h5>
+			</div>
+			<div id="overlay" style="display: none;">
+				<div id="loading"></div>
+			</div>
+
+			<div class="modal-footer">
+				<form action="" style="float: left;" id="pp_form" method="post">
+					<input type="hidden" name="userid" value="{$userid}"/>
+					<button class="btn btn-primary btn-sm" type="submit" name="pay_via_paypal" id="proceed1" onclick="return aniSubmitFunction();"><i class="glyphicon glyphicon-ok"></i> Proceed With Paypal</button>
+					<button type="button" class="btn btn-default btn-sm" id="cancle1" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i> Cancle</button>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<script>
+	function aniSubmitFunction() {
+	    document.getElementById("overlay").style.display = "block";
+	    document.getElementById("cancle1").disabled = true;
+	    document.getElementById("pp_modal_title").innerHTML = "Please wait...";
+	    document.getElementById("pp_modal_subtitle").innerHTML = "Tansaction under process.";
+	    document.getElementById("pp_form").submit();
+	    return true;
+	}
+
+</script>
+<style>
+#loading {
+    width:100px;
+    height:100px;
+    border:5px solid #ccc;
+    border-top-color:#0973a5;
+    border-radius:100%;
+
+/* here we center it*/
+    position:fixed;
+    top:0;
+    right:0;
+    left:0;
+    bottom:0;
+    margin:auto;
+    
+/* Tha animation*/
+    animation: round 1s linear infinite;
+}
+@keyframes round {
+    from{
+    	transform: rotate(0deg)
+    }
+    to{
+    	transform: rotate(360deg)
+    }
+}
+#overlay {
+    height:100%;
+    width:100%;
+   	opacity:1;
+    left:0;
+    top:0;
+    z-index:10;
+}	
+</style>
+{elseif $mode=='stats'}
+<div class="heading">
+	<h2>Stats</h2>
+</div>
+<h4>User current earnings stats</h4>
+<!-- {pr($user_graph_data,true)} -->
+<div class="row" style="margin-top:20px;margin-bottom:20px;">
+	<div class="col-md-12 search-box">
+
+		<script type="text/javascript">
+			AmCharts.makeChart("chartdiv",
+			{
+				"type": "serial",
+				"pathToImages": "https://www.amcharts.com/lib/3/images/",
+				"categoryField": "date",
+				"dataDateFormat": "YYYY-MM-DD",
+				"categoryAxis": {
+					"parseDates": true
+				},
+				"chartCursor": {
+					"enabled": true
+				},
+				"chartScrollbar": {
+					"enabled": true
+				},
+				"trendLines": [],
+				"graphs": [
+				{
+					"bullet": "round",
+					"id": "AmGraph-1",
+					"title": "Views",
+					"valueField": "views"
+				},
+				{
+					"bullet": "square",
+					"id": "AmGraph-2",
+					"title": "Earnings",
+					"valueField": "earnings"
+				}
+				],
+				"guides": [],
+				"valueAxes": [
+				{
+					"id": "ValueAxis-1",
+					"title": "Views  -  or  -  Earnings"
+				}
+				],
+				"allLabels": [],
+				"balloon": {},
+				"legend": {
+					"enabled": true,
+					"useGraphSettings": true
+				},
+				"titles": [
+				{
+					"id": "Title-1",
+					"size": 15,
+					"text": "Views and earning stats of {$userid|get_username}"
+				}
+				],
+				"dataProvider": {$user_graph_data},
+				"export": {
+					"enabled": true,
+					"menu": [ {
+						"class": "export-main",
+						"menu": [ {
+							"label": "Download",
+							"menu": [ "PNG", "JPG", "CSV","PDF" ]
+						}, {
+							"label": "Annotate",
+							"action": "draw",
+							"menu": [ {
+								"class": "export-drawing",
+								"menu": [ "PNG", "JPG" ]
+							} ]
+						} ]
+					} ]
+				}
+			}
+			);
+		</script>
+
+
+		<div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
+
+		<h5 class="alert alert-info">Click here to views details of <a href="view_user.php?uid={$userid}" target="_blank">{$userid|get_username}<a></h5>
+		</div>
+	</div>
+	{elseif $mode=='payment_history'}
+	<div class="heading">
+		<h2>User payment history</h2>
+	</div>
+	<!-- {pr($payment_history,true)} -->
+	<table class="table table-bordered">
+		<thead>
+			<tr>
+				<th>Payment id</th>
+				<th>Userid</th>
+				<th>Amount</th>
+				<th>Date time</th>
+				<th>Receiver email</th>
+				<th>Receiver bank acc</th>
+				<th>Sent via</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if !empty($payment_history)}
+			{foreach from=$payment_history item=item}
+			<tr>
+				<td>{$item['payment_id']}</td>
+				<td>{$item['userid']}</td>
+				<td>{$item['amount']}</td>
+				<td>{$item['date_time']}</td>
+				<td>{$item['receiver_email']}</td>
+				<td>{$item['receiver_bank_acc']}</td>
+				<td>{$item['sent_via']}</td>
+			</tr>
+			{/foreach}
+			{else}
+			<tr><td colspan="7"><center>No payment histroy found for this user!</center></td></tr>
+			{/if}
+		</tbody>
+	</table>
+
+	{elseif $mode=='view_details'}
+	<div class="heading">
+		<h2>User details</h2>
+	</div>
+	<h4>Earning user details</h4>
+	<div class="row" style="margin-top:20px;margin-bottom:20px;">
+		<div class="col-md-8 search-box">
+			<table class="table table-hover">
+
+				{if ($eu_details!=NULL)}
+				<tbody>
+					<form action="" method="post">
+						{foreach from=$eu_details item=item} 
+						<input type="hidden" name="userid" value="{$item['userid']}" />
+						<tr><th>User</th><td><a href="view_user.php?uid={$userid}" target="_blank">{$item['userid']|get_username}</a></td></tr>
+						<tr><th>Status</th>{if $item['status']==1}<td>Active</td>{else}<td>Inactive</td>{/if}</tr>
+						<tr><th>Earning user from</th><td>{$item['earning_user_from']}</td></tr>
+						<tr><th>Website</th><td><a href="#">{$item['publisher_website']}</a></td></tr>
+						<tr><th>Country</th><td>{$item['country']}</td></tr>
+						<tr><th>Phone</th><td><input type="text" name="phone_no" class="form-control" value="{$item['phone_no']}" ></td></tr>
+						<tr><th>Paypal email</th><td><input type="text" name="eu_email" class="form-control" value="{$item['paypal_email']}" ></td></tr>
+						<tr><th>Bank account number</th><td><input type="text" name="eu_bankacc_no" class="form-control" value="{$item['bank_acc_no']}" ></td></tr>
+						<tr><th></th><td><input type="submit" class="btn btn-primary btn-sm" name="update_eu_info" value="Update info"></td></tr>
+						{/foreach}
+						
+					</form>
+				</tbody>
+				{else}
+				<tbody>
+					<tr>
+						<td colspan="14" rowspan="" class="text-center"><h5 style="padding-top:10px;">There are no user datails set yet!</h5></td>
+					</tr>
+				</tbody>
+				{/if}			
+			</table>
+
+		</div>
+	</div>
+	{elseif $mode=='set_rpm'}
+	<!-- {pr($rpms,true)} -->
+	<div class="heading">
+		<h2>Set/update user rpm</h2>
+	</div>
+	<div style="margin-top:20px;margin-bottom:20px;">
+		<form name="rpm_form" method="post" action="">
+			<input type="hidden" name="userid" value="{$userid}" placeholder="">
+			<input type="hidden" name="rpm_idd" id="rpm_idd" value="" placeholder="">
+
+
+			<fieldset class="fieldset">
+				<div class="row">
+					<div class="col-md-3">
+						<label for="prasecode">Tier name</label>
+						<input type="text" name="tier_name" id="tier_name" class="form-control" required="">
+					</div>
+					<div class="col-md-3">
+						<label for="language">RPM (rate per matrix)</label>
+						<input type="text" name="rpm" id="rpm" class="form-control" required="">
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-6">
+						<div class="form-group">
+							<label for="phrasetext">Countries</label>
+							<textarea name="countries" class="form-control" id="countries" cols="45" rows="5" required=""></textarea>
+							<span class="smallText" style="font-size:11px;">Make sure you only add ISO2 country codes.<br>Separated by commas eg. pk,in,af.</span>
+						</div>
+					</div>
+				</div>   
+				<div class="form-group">
+					<input type="submit" name="add_rpm" id="add_rpm" value="Add RPM" class="btn btn-primary btn-sm">
+				</div>
+			</fieldset>
+		</form>
+	</div>
+	<table class="table table-hover" width="">
+		<thead>
+			<tr>
+				<th>Rpm ID</th>
+				<th>Tier name</th>
+				<th>Rpm</th>
+				<th>Countries</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		{if ($rpms!=NULL)}
+		<tbody>
+
+			{foreach from=$rpms item=item} 
+			<form action="" method="post">
+				<input type="hidden" name="userid" value="{$item['userid']}" />
+				<input type="hidden" name="rpm_id" value="{$item['rpm_id']}" />
+				<tr> 
+					<td>{$item['rpm_id']}</td>  
+					<td>{$item['tier_name']}</td>
+					<td>${$item['rpm']}</td>
+					<td>{$item['countries']}</td>
+					<td>
+						{if $item['userid']!=0}
+						<div class="dropdown">
+							<button id="dropdownMenu1" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">Actions <i class="caret"></i></button>
+							<ul class="dropdown-menu " aria-labelledby="dropdownMenu1" role="menu">
+
+								<li><a class="btn pull-left btn-link editlink" href='javascript:void(0)' data-id="{$item['rpm_id']}" title="Edit/Update" style="font-size: 14px;">Edit/Update</a></li>
+
+								<li><input type="submit" name="remove_tier" value="Remove tier" class="btn btn-link" onclick="return confirm('Are you sure you want to remove this tier?');"></li>
+							</ul>
+						</div>
+						{/if}
+					</td> 
+				</tr>
+			</form> 
+			{/foreach}
+
+		</tbody>
+		{else}
+		<tbody>
+			<tr>
+				<td colspan="14" rowspan="" class="text-center"><h5 style="padding-top:10px;">There are no rpms set yet!</h5></td>
+			</tr>
+		</tbody>
+		{/if}			
+	</table>
+	<!-- {pr($userid,true)} -->
+	<h5 style="padding-top:10px;">you are looking at Rpms associated to <a href="view_user.php?uid={$userid}" target="_blank">{$userid|get_username}<a></h5>
+
+
+		<script>
+			$(document).ready(function() {
+
+				$('.editlink').on('click', function(){
+
+					var id = $(this).data('id');
+
+					$.ajax({
+
+						method: "GET",
+
+						url: "{$baseurl}/admin_area/plugin.php?folder=revenue_sharing/admin&file=manage_earningusers.php&mode=update_rpm",
+
+						data: { rpm_id:  id },
+
+					}).done(function( data ) {
+						data = data;
+						data = $.parseJSON(data);
+						console.log(data['rpm_id']);
+						$('#rpm_idd').val(data['rpm_id']);
+						$('#tier_name').val(data['tier_name']);
+						$('#rpm').val(data['rpm']);
+						$('#countries').val(data['countries']);
+						$("#add_rpm").val('Update RPM');
+						$("#add_rpm").attr("name", "update_rpm");
+
+					});
+
+				});
+
+			});
+		</script>      
+
+
+		{else}
+		<div class="heading">
+			<h2>Manage earning users</h2>
+		</div>
+		<!-- {pr($earning_users,true)} -->
+		<div class="row" style="margin-top:20px;margin-bottom:20px;">
+			<div class="col-md-12 search-box">
+				<table class="table table-hover" width="">
+					<thead>
+						<tr>
+							<th>User ID</th>
+							<th>Username</th>
+							<th>Earnings</th>
+							<th>Earning Views</th>
+							<th>Status</th>
+							<!-- <th>Last payment done</th> -->
+							<th>Action</th>
+						</tr>
+					</thead>
+					{if ($earning_users!=NULL)}
+					<tbody>
+
+						{foreach from=$earning_users item=item} 
+						<form action="" method="post">
+							<input type="hidden" name="userid" value="{$item['userid']}" />
+							<tr> 
+								<td>{$item['userid']}</td>  
+								<td><a href="view_user.php?uid={$item['userid']}" target="_blank">{$item['userid']|get_username}<a></td>
+									<!-- <td><a href="{$baseurl}/view_channel.php?user={$item['userid']|get_username}" target="_blank" class="btn btn-xs btn-default">View channel<a></td> -->
+
+										<td>{$revshare->get_eu_earnings($item['userid'])}</td>
+										<td>{$revshare->get_eu_views($item['userid'])}</td>
+
+
+										{if {$item['status']}==1}
+										<td>active</td>
+										{else}
+										<td>Inactive</td>
+										{/if}
+
+										<!-- <td>{$item['last_payment_done']}</td> -->
+										<td>
+											<div class="dropdown">
+												<button id="dropdownMenu1" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">Actions <i class="caret"></i></button>
+												<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" role="menu">
+
+													<li><a class="btn pull-left btn-link" href="plugin.php?folder=revenue_sharing/admin&file=manage_earningusers.php&amp;mode=pay_now&amp;userid={$item['userid']}" title="Pay now" style="font-size: 15px;">Pay now</a></li>
+
+													<li><a class="btn pull-left btn-link" href="plugin.php?folder=revenue_sharing/admin&file=manage_earningusers.php&amp;mode=stats&amp;userid={$item['userid']}" title="Earning stats" style="font-size: 15px;">Earning stats</a></li>
+
+													<li><a class="btn pull-left btn-link" href="plugin.php?folder=revenue_sharing/admin&file=manage_earningusers.php&amp;mode=payment_history&amp;userid={$item['userid']}" title="Earning stats" style="font-size: 15px;">Payment history</a></li>
+
+													<li><a class="btn pull-left btn-link" href="plugin.php?folder=revenue_sharing/admin&file=manage_earningusers.php&amp;mode=view_details&amp;userid={$item['userid']}" title="View user details" style="font-size: 15px;">View user details</a></li>
+
+													<li><a class="btn pull-left btn-link" href="plugin.php?folder=revenue_sharing/admin&file=manage_earningusers.php&amp;mode=set_rpm&amp;userid={$item['userid']}" title="Set/update rpm" style="font-size: 15px;">Set/update Rpm</a></li>
+
+													<!-- <li class="divider"></li> -->
+													{if {$item['status']}==1}
+													<li><input type="submit" name="deactivate" value="Deactivate" class="btn btn-link" onclick="return confirm('Are you sure you want to deactivate this user?');"></li>
+													{else}
+													<li><input type="submit" name="activate" value="Activate" class="btn btn-link" onclick="return confirm('Are you sure you want to activate this user?');"></li>
+													{/if}
+													<!-- <li><input type="submit" name="delete" value="Delete from list" class="btn btn-link" onclick="return confirm('Are you sure you want to remove this user?');"></li> -->
+
+												</ul>
+											</div>
+										</td> 
+									</tr>
+								</form> 
+								{/foreach}
+
+							</tbody>
+							{else}
+							<tbody>
+								<tr>
+									<td colspan="14" rowspan="" class="text-center"><h5 style="padding-top:10px;">There are no earning users yet!</h5></td>
+								</tr>
+							</tbody>
+							{/if}			
+						</table>
+					</div>
+				</div>
+				{/if}

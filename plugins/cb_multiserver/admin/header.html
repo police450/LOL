@@ -1,0 +1,433 @@
+<link media="screen" rel="stylesheet" href="{$cb_multiserver_url}/css/all.css" />
+<link media="screen" rel="stylesheet" href="{$cb_multiserver_url}/css/main.css" />
+<script src="{$theme_url}/assets/js/jquery.colorbox-min.js"></script>
+<script src="{$cb_multiserver_url}/js/jquery.main.js"></script>
+<script> var cb_multiserver_url = '{$cb_multiserver_url}'; </script>
+{literal}
+<script>
+	var loadingImg = '<img src="'+cb_multiserver_url+'/images/ajax-loader.gif" >';
+	function verifyMultiserver(modeType)
+	{
+		//alert(modeType);
+		$('#error_cont').hide();
+		$('#msg_cont').hide();
+		var form = '#addServerForm';
+		var formVals = $(form).serializeArray();
+		var vals = Array();
+		$(formVals).each(function(i,fd) {
+			//vals[$(this).attr('name')] = $(this).val();
+			vals[fd.name] = fd.value;
+		});
+		
+		var servUploading = $('#server_type_0:checked').val();
+		var servConversion = $('#server_type_1:checked').val();
+		var servStreaming = $('#server_type_2:checked').val();
+	
+		var convServVal  = $('#assoc_server_id option:selected').val();
+		
+		if(!vals.server_name)
+		{
+			show_error("Please enter server name");
+			$('#server_name').focus();
+		}else if(!vals.server_ip)
+		{
+			show_error("Please enter server ip");
+			$('#server_ip').focus();
+		}else if(!vals.api_path)
+		{
+			show_error("Please enter server ip");
+			$('#api_path').focus();
+		}else if(!vals.server_action)
+		{
+			show_error("Please select proper server action");
+		}else if(vals.server_action==2 && !convServVal)
+		{
+			show_error("Please select a streaming server");
+		}else if(!vals.secret_key)
+		{
+			show_error("Please enter server secret");
+			$('#secret_key').focus();
+		}else if(!vals.secret_key)
+		{
+			show_error("Please enter server secret");
+			$('#secret_key').focus();
+		}else if(!vals.max_usage)
+		{
+			show_error("Please set space allowed on this server");
+			$('#max_usage').focus();
+		}
+		else
+		{
+			
+		
+			
+			if(modeType=='add')
+			{
+				$('#servLoading').html('connecting to server '+loadingImg);
+				$.post(cb_multiserver_url+'/connect.php',$(form).serialize()+'&assoc_server_id='+convServVal+'&mode=add',
+				function(data){ 
+					$('#servLoading').html('');
+					if(data.err) 
+					{
+						show_error(data.err) 
+					}
+					else 
+					{
+						$('#addServerForm').submit();
+						show_msg(data.msg) 
+
+					}
+				},'json');
+			}else
+			{
+				$('#servLoading').html('updating server '+loadingImg);
+				
+				$.post(cb_multiserver_url+'/connect.php',$(form).serialize()+'&assoc_server_id='+convServVal+'&mode=update',
+				function(data){ 
+				$('#servLoading').html('');
+					if(data.err) 
+					{
+						show_error(data.err) 
+					}
+					else 
+					{
+						show_msg(data.msg) 
+					}
+				},'json');
+			}
+		}	
+	}
+	
+	function show_error(err)
+	{
+		$('#error_cont').show();
+		$('#error_cont').html(err);
+	}
+
+	
+	function show_msg(err)
+	{
+		$('#msg_cont').show();
+		$('#msg_cont').html(err);
+	}
+	
+	
+	function actionCheck()
+	{
+		var servUploading = $('#server_type_0:checked').val();
+		var servConversion = $('#server_type_1:checked').val();
+		var servStreaming = $('#server_type_2:checked').val();
+		
+		$('input[alt=serveraction]').attr('disabled','disabled');
+		
+		if(servStreaming && servConversion)
+			$('#server_action_0').attr('disabled','');
+			
+		if(servUploading)
+		{
+			$('#server_action_2').attr('disabled','');
+		}
+		
+		if(servConversion)
+		{
+			$('#server_action_1').attr('disabled','');
+		}
+		
+		if(servStreaming)
+		{
+			$('#server_action_3').attr('disabled','');
+		}
+		
+	}
+	
+	var assoc_server = false;
+	function showActionServ()
+	{
+		assoc_server = false;
+		$('.action_option').hide();
+		
+		var serverVal = $('input[name=server_action]:checked').val();
+		if(serverVal==2)
+		{
+			assoc_server = 2;
+			$('#convServer').show();
+			// $("#convServer").attr("disabled","");
+		}
+		if(serverVal==1)
+		{
+			assoc_server = 3;
+			
+			$('#streamServer').show();
+			//$('#streamServer').attr('disabled','');
+		}
+	}
+	
+	function servAction(obj)
+	{
+	
+		var $obj = $('#'+obj+' option:selected');
+		var $url = $obj.val();
+		var $rel = $obj.attr('rel');
+		
+		if(!$url)
+			return false;
+		
+		if($rel=='delete')
+		{
+			if(confirm_it("Are you sure you want to delete this server?"))
+				window.location = $url;
+			else
+				$('#'+obj+" option:first").attr("selected","selected");
+		}else
+		window.location = $url;
+	}
+	
+	
+	
+	function updaeServerConfigs()
+	{
+		$('#error_cont').hide();
+		$('#msg_cont').hide();
+		var form = '#editConfigurations';
+		var formVals = $(form).serializeArray();
+		
+		$('#servLoading').html('connecting to server '+loadingImg);
+		var configurations_url = cb_multiserver_url+'/configure.php';
+		
+		$.post(configurations_url,$(form).serialize(),
+		function(data){ 
+		$('#servLoading').html('');
+			if(data.err) 
+			{
+				show_error(data.err) 
+			}
+			else 
+			{
+				show_msg(data.msg) 
+				$(form).submit();
+			}
+		},'json');
+	}
+	
+	
+	function fetchStats()
+	{
+		var yearData = $('#statsYear').val();
+		var monthData = $('#statsMonth option:selected').val();
+		var dayData = $('#statsDay option:selected').val();
+		
+		var type = 'year';
+		typeTitle = "Months";
+		
+		if(dayData && monthData)
+		{
+			type = 'day';
+			typeTitle = "Hours";
+		
+		}if(!dayData && monthData)
+		{
+			typeTitle = "Days";
+			type = 'month';
+		}
+		
+		if(!monthData)
+			monthData = 01;
+		if(!dayData)
+			dayData = 01;
+			
+		var theDate = yearData+'-'+monthData+'-'+dayData;
+		
+		$.ajax(
+		{
+			type : 'post',
+			url : server_url,
+			data : {mode:'gen_stats',date:theDate,type:type,server:server_api_path},
+			success : function(statsData)
+			{
+			
+				barsOptions = {width: '800', height: 240, title: msname+' stats',
+					hAxis: {title: typeTitle}
+				  };
+				  
+			 	var data = new google.visualization.DataTable();			
+				data.addColumn('string', 'Day');
+				data.addColumn('number', 'Uploads');
+				data.addColumn('number', 'MBs');    
+				data.addRows(statsData);
+				new google.visualization.ColumnChart(document.getElementById(stats_div)).
+			  	draw(data,
+				   barsOptions
+			  );
+		
+			},
+			dataType:'json'
+		}
+		);	
+	}
+
+	/* For Configuration Servers*/
+$(document).ready(function(){
+	
+
+	
+	$('#convProfile').change(function
+	(){
+		var value = $("#convProfile option:selected").val();
+		if(value>0)
+			setVdoSettings(value);
+	});
+	
+	function setVdoSettings(inType)
+	{
+		switch(inType)
+		{
+
+			
+			case '1':
+			{
+				var convConfigs = { 
+				  'video_codec': 'libx264', 
+				  'audio_codec': 'libfdk_aac' ,
+				  'vrate' : '30',
+		          'vbrate_1080' : '640000',
+		          'vbrate_720' : '560000',
+		          'vbrate_480' : '480000',
+		          'vbrate_360' : '400000',
+		          'vbrate_240' : '320000',
+				  'srate' : '44100',
+				  'sbrate' : '320000',
+				}; 
+			}
+			break;
+			
+			case '2':
+			{
+				var convConfigs = { 
+				  'video_codec': 'libx264', 
+				  'audio_codec': 'libfdk_aac' ,
+				  'vrate' : '25',
+  				  'vbrate_1080' : '512000',
+		          'vbrate_720' : '432000',
+		          'vbrate_480' : '352000',
+		          'vbrate_360' : '272000',
+		          'vbrate_240' : '192000',
+				  'srate' : '22050',
+				  'sbrate' : '256000',
+				}; 
+			}
+			break;
+			
+			case '3':
+			{
+				var convConfigs = { 
+				  'video_codec': 'libx264', 
+				  'audio_codec': 'aac' ,
+				  'vrate' : '25',
+  				  'vbrate_1080' : '352000',
+	              'vbrate_720' : '272000',
+	              'vbrate_480' : '192000',
+	              'vbrate_360' : '176000',
+	              'vbrate_240' : '96000',
+				  'srate' : '22050',
+				  'sbrate' : '128000',
+				}; 
+			}
+			break;
+
+			default:
+			{
+				var convConfigs = { 
+				  'video_codec': 'libx264', 
+				  'audio_codec': 'libfdk_aac' ,
+				  'vrate' : '25',
+  				  'vbrate_1080' : '512000',
+		          'vbrate_720' : '432000',
+		          'vbrate_480' : '352000',
+		          'vbrate_360' : '272000',
+		          'vbrate_240' : '192000',
+				  'srate' : '22050',
+				  'sbrate' : '256000',
+				}; 
+			}
+			break;
+			
+		}
+		
+		$.each(convConfigs,function(index,value){
+			$('#'+index).val(value);
+		});	
+			
+	}
+	
+});
+
+var curType = 'video'
+
+function switchConf(type)
+{
+	if(curType==type)
+		return false;
+	
+	curType = type;
+	
+	if(type=='photo')
+	{
+		$('#photoConf').addClass('selected');
+		$('#videoConf').removeClass('selected');
+		
+		$('#vidConfCont').hide();
+		$('#photoConfCont').show();
+
+	}else
+	{
+		$('#photoConf').removeClass('selected');
+		$('#videoConf').addClass('selected');
+		
+		$('#vidConfCont').show();
+		$('#photoConfCont').hide();
+	}
+}
+/*End For Configuration Servers*/
+	
+</script>
+
+{/literal}
+
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$(function () {
+		  $('[data-toggle="tooltip"]').tooltip();
+		});
+	});
+</script>
+<script>
+
+
+  $(document).ready(function(){
+    
+    var waterMarkVal = $('#use_watermark').val();
+
+      console.log( waterMarkVal )
+
+      if (waterMarkVal == 'yes') {
+        $("#uploadimg").css("display", "block");
+      }else 
+      {
+        $("#uploadimg").css("display", "none");
+      }
+      
+      $('#use_watermark').change(function(){
+          if(this.checked){
+              // $('#uploadimg').fadeIn('slow');
+            $("#uploadimg").css("display", "block");
+          }else{
+              // $('#uploadimg').fadeOut('slow');
+              $("#uploadimg").css("display", "none");
+            }
+            
+
+      });
+
+    });
+</script>

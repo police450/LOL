@@ -1,0 +1,35 @@
+<div class="item {if $smarty.section.e_list.rownum == 1}active{/if} clearfix">
+	<a href="{videoLink($video)}">
+		<div class="video_hover"></div>
+		<img class="img_" src="{getThumb vdetails=$video size='768x432'}">
+	</a>
+	<div class="caption_detial col-lg-4 col-md-4 col-sm-12 col-xs-12">
+		<h2>{$video.title|truncate:35}</h2>
+		<div class="inner-detial">
+			<p>{AutoLinkUrls($video.description|unescape:"html")}</p>
+			<span class="">
+				<p>{lang code='category'}&nbsp;:</p>
+				{$video.category|categories:video}&nbsp;
+			</span>
+			<span class="">
+				<p>{lang code='cast'}&nbsp;:</p>
+				{$video.tags|tags:videos}
+			</span>
+			<span class="">
+				<p> Released&nbsp;:</p>
+				<h1>{lang code='October 9, 2017'}</h1>
+			</span>
+			<span class="">
+				{lang code='views'}&nbsp;{$video.views}			
+			</span>
+			<button class="like btn btn-primary">
+				<p class="icon-heart2"></p>
+				like 55
+			</button>
+			<a href="{videoLink($video)}" class="Comment btn btn-primary">
+				Watch Now
+			</a>
+		</div>
+
+	</div>
+</div>

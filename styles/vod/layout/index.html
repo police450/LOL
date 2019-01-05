@@ -1,0 +1,273 @@
+{lang code='no_featured_videos_found' assign='no_found_fe'}
+{$vae = {lang code="no_featured_videos_found"}}
+{$no_recent = {lang code="no_recent_videos_found"}}
+{$loadMoreLang ={lang code="load_more"}}
+{ANCHOR place="display_head_sec"}
+
+<div id="messageFav" class="alert alert-info marginTop" style="display:none; height:66px;"></div>
+<section class="full_video_picker clearfix">
+	{if is_installed('editorspick')}
+		{if $editor_picks}
+			<div class="clearfix banner-full">
+				<div class="editorpick">
+					<div class="editorpick-container">
+						<div id="banner" class="carousel slide banner" data-ride="carousel">
+							<!-- Wrapper for slides -->
+							<div class="carousel-inner">
+								
+								{section name=e_list loop=$editor_picks}
+									{include file="$style_dir/blocks/editor_pick/editer_slider.html" video=$editor_picks[e_list]}
+								{/section}
+								
+							</div>
+							<!-- Controls -->
+							<a class="left carousel-control arow" href="#banner" data-slide="prev">
+								<span class="fa fa-chevron-left" aria-hidden="true"></span>
+							</a>
+							<a class="right carousel-control arow" href="#banner" data-slide="next">
+								<span class="fa fa-chevron-right" aria-hidden="true"></span>
+							</a>
+							<ol class="carousel-indicators">
+								{section name=e_list loop=$editor_picks}
+								{$count = $smarty.section.e_list.rownum}
+								{$count = $count - 1}
+									<li data-target="#banner" data-slide-to="{$count}" class="{if $count == 0}active{/if}"></li>
+								
+								{/section}
+							</ol>
+						</div>
+					</div>
+				</div>
+			</div>
+		{/if}
+	{/if}
+</section>
+<section id="main" class="">
+	{ANCHOR place='global'} 
+	<!-- cb_editerpicker -->
+	<div class="clearfix hide old_video_picker">
+		<div class="scroll_pickerc clearfix cb_editerpicker">
+			{$row = $myquery->Get_Website_Details()}
+			{if is_installed('editorspick')}
+			{if $editor_picks}
+				<div class="clearfix editorpick">
+					<div class="editorpick-holder">
+						<!-- Editor Pick Video Main Container START //-->
+						<div class="absolute-div">
+							<div id="ep_video_container">
+								{if is_installed('editorspick')}
+								{section name=e_list loop=$editor_picks max=1}
+								{*include file="$style_dir/blocks/editor_pick/video_block.html" video=$editor_picks[e_list]}
+								{sectionelse*}
+								There is no video in editor's pick, Please Add Videos In Editor's Pick<br />Videos Manager > Add to editor's pick
+								{/section}
+								{/if}
+							</div>
+						</div>
+						<!-- Editor Pick Video Main Container END //-->
+						<img src="{$theme}/images/player-ratio.png" class="playerRatio">
+					</div>
+
+					<!-- Editor Pick Videos Slider Container START //-->
+					<div class="editorpick-videos custom-elements">
+						<div class="scrollable-area vscrollable">
+							{section name=e_list loop=$editor_picks}
+							{include file="$style_dir/blocks/editor_pick/index_featured_video.html" video=$editor_picks[e_list]}
+							{/section}
+						</div>
+					</div>
+					<!-- Editor Pick Videos Slider Container END //-->
+				</div>
+			{/if}
+			{/if}
+		</div>
+	</div>
+
+	<!-- ******************************************* -->
+	<!-- ************video_slider_trending************ -->
+	<!-- ******************************************* -->
+	{$popular=$cbvid->get_videos(["popular"=>"yes"])}
+	{if $popular}
+		<section class="video_slider_trending">
+			<h1>{lang code="Trending Now"}</h1>
+			<a href="#" class="btn see-more">See More</a>
+			<div class="videos-mask">
+				<div class="clearfix videos-slideset">
+					<div class="inner-mask">
+						{assign var=count value=0}
+						{foreach $popular as $video}
+							{include file="$style_dir/blocks/videos/video.html" display_type='trendingdHome'}
+							{assign var=count value=$count+1}
+							{if $count>15}
+							{break}
+							{/if}
+						{/foreach}
+
+					</div>
+
+				</div>
+				<a href="javascript:void(0)" id="btn-left" class="arrow-btn arrow-left">
+					<i class="fa fa-chevron-left" aria-hidden="true"></i>
+				</a>
+				<a href="javascript:void(0)" id="btn-right" class="arrow-btn arrow-right">
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+				</a>
+			</div>					
+		</section>
+	{/if}
+	{$popular=$cbvid->get_videos(["popular"=>"yes"])}
+	{if $popular}
+		<section id="detial" class="detial_video_thumb collapse">
+			<span class="icon-cancel"></span>
+			{assign var=count value=0}
+			{foreach $popular as $video}
+				{include file="$style_dir/blocks/videos/video.html" display_type='trendingdHomemore'}
+				{assign var=count value=$count+1}
+				{if $count>15}
+				{break}
+				{/if}
+			{/foreach}
+		</section>
+	{/if}
+
+	{$categories = pullCategories('videos',true)}
+	{if $categories}
+		{foreach $categories as $category}
+			{$cat_id=$category.category_id}
+			<div class="jcarousel-skin-default category_slider">
+				{$videos=get_videos(["category"=>$cat_id])}
+				{if count($videos) < 1}
+					{continue}
+				{/if}
+				<h1>{$category.category_name}</h1>
+				<a href="#" class="btn see-more">See More</a>
+				<a href="#" class="jcarousel-prev chevron">
+					<i class="fa fa-chevron-left" aria-hidden="true"></i>
+				</a>
+				<a href="#" class="jcarousel-next chevron"> 
+					<i class="fa fa-chevron-right" aria-hidden="true"></i>
+				</a>
+				<div class="jcarousel" id="jcarousel1">
+					<ul>
+					{foreach $videos as $video}
+						{include file="$style_dir/blocks/videos/video.html" display_type='catvideo'}
+					{/foreach}
+				</ul>
+				</div>
+			</div>
+				<section id="catvideo" class="detial_video_thumb collapse">
+					<span class="icon-cancel"></span>
+					{foreach $videos as $video}
+						{include file="$style_dir/blocks/videos/video.html" display_type='catvideodtl'}
+					{/foreach}
+				</section>
+		{/foreach}
+	{else}
+	{/if}
+
+
+
+</section>
+
+
+<script type="text/javascript">
+	$(function() {
+	    $('.jcarousel').jcarousel({
+	        //wrap: 'circular'
+	    });
+		$(".jcarousel-prev").jcarouselControl({ target: '-=2' });
+		$(".jcarousel-next").jcarouselControl({ target: '+=2' });
+	});
+	// selected_thumb_slider
+	$('.actionac').on('click',function(){
+	  $('.tile-white-selected').addClass('tile-white-is-selected');
+	});
+	// remove_movie_detials
+	$('.icon-cancel').on('click',function(){
+	  $('.tile-white-selected').removeClass('tile-white-is-selected');
+	});
+
+	// remove_movie_detials
+	$('.icon-cancel').on('click',function(){
+	  $('.detial_video_thumb').removeClass('in');
+	});
+
+
+
+	// handles initial and load more
+	// for home page videos
+	var langCo = "{$vae}";
+	var noRecent = "{$no_recent}";
+	var loadMoreLang = "{$loadMoreLang}";
+
+	//console.log(langCo);
+	homePageVideos("{$got_qlitems}");
+	//
+	/* player height and editerpick videos height */
+	var WinWidHome = "";
+	function editpickVideos(){
+		WinWidHome = $(window).width();
+		if(WinWidHome > 991)
+		{
+			//console.log("height "+WinWidHome);
+			var bannerHeight = $(".editorpick-holder").height();
+			bannerHeight = bannerHeight - 12;
+			//console.log("height "+bannerHeight);
+			$(".editorpick-videos .scrollable-area").css({
+				"height" : bannerHeight+"px",
+			});
+		}
+		else
+		{
+			console.log("height "+WinWidHome);
+			
+			$(".editorpick-videos .scrollable-area").css("height","auto");
+		}
+	}
+
+	$(document).ready(function(){
+		var MaskWidth = $(".videos-mask").outerWidth();
+		var InnerMaskWidth = $(".inner-mask").outerWidth();
+		var MaskMargin = 0;
+		if(MaskWidth < InnerMaskWidth){
+			var i = 1;
+			$(".arrow-right").show();
+			$(document).on("click", ".arrow-right", function(){
+				if(MaskMargin < InnerMaskWidth/2 ){
+					MaskMargin = MaskWidth * i;
+					$(".videos-slideset").css("margin-left","-"+MaskMargin+"px");
+					i++;
+					
+					$(".arrow-right").show();
+					$(".arrow-left").show();
+				} else{
+					$(".arrow-right").show();
+					$(".arrow-left").show();
+				}
+				
+			});
+
+			$(document).on("click", ".arrow-left", function(){
+				if((-1*MaskMargin) <= (-1*MaskWidth)){
+					i--;
+					MaskMargin = MaskWidth * i;
+					$(".videos-slideset").css("margin-left","-"+MaskMargin+"px");
+
+					$(".arrow-left").show();
+					$(".arrow-right").show();
+				} else{
+					$(".arrow-right").show();
+					$(".arrow-left").show();
+				}
+			});
+		}
+	});
+
+	$('.playerRatio').load(function(){
+		editpickVideos();
+	});
+	$(window).resize(function() {
+		editpickVideos();
+	});
+</script>
+

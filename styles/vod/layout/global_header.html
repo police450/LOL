@@ -1,0 +1,275 @@
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		{if in_dev()}
+			{$cache_buster=microtime(true)}
+		{else}
+			{$cache_buster=$Cbucket->version}
+		{/if}
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+		<!-- ClipBucket v{$Cbucket->version} -->
+		<meta name="copyright" content="ClipBucket - Integrated Units 2007 - {$smarty.now|date_format:"%Y"}">
+		<link rel="icon" type="image/ico" href="{$baseurl}/favicon.ico">
+
+		<!-- RSS FEEDS -->
+		{rss_feeds link_tag=true}
+		{if isset($ninja_fighting)}
+            {ANCHOR place='seo_ninja'}
+        {else}
+        	<meta name="keywords" content="{$Cbucket->configs.keywords}">
+			<meta name="description" content="{$Cbucket->configs.description}">
+			<meta name="distribution" content="global">
+
+
+			<title>{cbtitle}</title>
+        {/if}
+
+		<link rel="stylesheet" href="{$theme}/css/bootstrap.min.css?cache={$cache_buster}">
+
+		<link rel="stylesheet" href="{$theme}/css/font-awesome.min.css?cache={$cache_buster}">
+
+		<link rel="stylesheet" href="{$theme}/css/icon-font.css?cache={$cache_buster}">
+
+		<link rel="stylesheet" href="{$theme}/css/custom-elements.css?cache={$cache_buster}">
+
+		{*if !in_dev()*}
+		<link rel="stylesheet" href="{$theme}/css/all.css?cache={$cache_buster}">
+		{*/if*}
+
+		<script src="{$theme}/js/jquery-1.11.3.min.js"></script>
+		{if isset($__devmsgs)}
+			<link rel="stylesheet" href="{$baseurl}/styles/global/jquery_ui.css">
+		{else}
+			<link rel="stylesheet" href="{$baseurl}/styles/global/jquery_ui.min.css">
+		{/if}
+
+		<script>
+			var loadingImg = '<i class="glyphicon glyphicon-refresh animate-spin"></i>';
+			var loading = '<i class="glyphicon glyphicon-refresh animate-spin"></i> {lang code="loading"}...';
+			var baseurl = "{$baseurl}",
+			imageurl = "{$imageurl}",
+			userid = "{userid()}",
+			THIS_PAGE = "{$smarty.const.THIS_PAGE}";
+		</script>
+		{if isset($__devmsgs)}
+			<script  src="{$theme}/js/custom.js"></script>
+		{else}
+			<script  src="{$theme}/js/custom.min.js"></script>
+		{/if}
+
+		<script  src="{$theme}/js/bootstrap.min.js"></script>
+		
+		<script  src="{$theme}/js/ui_plugins.min.js"></script>
+		{if $smarty.const.THIS_PAGE == 'upload' || $smarty.const.THIS_PAGE == 'edit_video'}
+			
+			<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/css/bootstrap-select.css">
+			<script  src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.4/js/bootstrap-select.js'></script>
+
+		{/if}
+		<!-- <script src="{$baseurl}/js/clipbucket.js"></script> -->
+		{if isset($__devmsgs)}
+		<script  src="{$baseurl}/js/clipbucket.js"></script>
+		{else}
+		<script  src="{$baseurl}/js/clipbucket.min.js"></script>
+		{/if} 
+		<script async src="{$theme}/js/uslider_js/jquery.mousewheel.js"></script>
+		<script async src='https://www.google.com/recaptcha/api.js'></script>
+	
+		<!-- Script For Video slider //-->
+		<script async type="text/javascript" src="{$baseurl}/js/jquery.cycle.all.js"></script>
+		<!-- Script For Home Page Videos Slider //-->
+		<script type="text/javascript" src="{$theme}/js/uslider_js/core.js"></script>
+		<script type="text/javascript" src="{$theme}/js/uslider_js/core_plugin.js"></script>
+		<script type="text/javascript" src="{$theme}/js/uslider_js/control.js"></script>
+		<!-- Getting quicklist videos and assigning -->
+		{assign var=qlist_videos value=get_fast_qlist()}
+		{assign var=litems_count value=$qlist_videos|@count}
+		{if $litems_count >= 1} 
+			{assign var=got_qlitems value="yes"}	
+		{else}
+			{assign var=got_qlitems value="false"}	
+		{/if}
+
+		<script>
+			var fastQitems = "{$got_qlitems}";
+			$(document).ready(function(){
+
+				loading = '<i class="glyphicon glyphicon-refresh animate-spin"></i> {lang code="loading"}...';
+				$( 'ul#photos li:visible' ).each( function( i ){
+					$( this )[ (1&i) ? 'addClass' : 'removeClass' ]( 'photo-land-no' );
+				})
+			})
+			var pageNow = "{$smarty.const.THIS_PAGE}";
+		$(document).ready(function () {
+		    var itemsMainDiv = ('.MultiCarousel');
+		    var itemsDiv = ('.MultiCarousel-inner');
+		    var itemWidth = "";
+
+		    $('.leftLst, .rightLst').click(function () {
+		        var condition = $(this).hasClass("leftLst");
+		        if (condition)
+		            click(0, this);
+		        else
+		            click(1, this)
+		   } );
+
+		    ResCarouselSize();
+
+
+
+
+		    $(window).resize(function () {
+		        ResCarouselSize();
+		    });
+
+		    //this function define the size of the items
+		    function ResCarouselSize() {
+		        var incno = 0;
+		        var dataItems = ("data-items");
+		        var itemClass = ('.item');
+		        var id = 0;
+		        var btnParentSb = '';
+		        var itemsSplit = '';
+		        var sampwidth = $(itemsMainDiv).width();
+		        var bodyWidth = $('body').width();
+		        $(itemsDiv).each(function () {
+		            id = id + 1;
+		            var itemNumbers = $(this).find(itemClass).length;
+		            btnParentSb = $(this).parent().attr(dataItems);
+		            itemsSplit = btnParentSb.split(',');
+		            $(this).parent().attr("id", "MultiCarousel" + id);
+
+
+		            if (bodyWidth >= 1200) {
+		                incno = itemsSplit[3];
+		                itemWidth = sampwidth / incno;
+		            }
+		            else if (bodyWidth >= 992) {
+		                incno = itemsSplit[2];
+		                itemWidth = sampwidth / incno;
+		            }
+		            else if (bodyWidth >= 768) {
+		                incno = itemsSplit[1];
+		                itemWidth = sampwidth / incno;
+		            }
+		            else {
+		                incno = itemsSplit[0];
+		                itemWidth = sampwidth / incno;
+		            }
+		            $(this).css({ 'transform': 'translateX(0px)', 'width': itemWidth * itemNumbers });
+		            $(this).find(itemClass).each(function () {
+		                $(this).outerWidth(itemWidth);
+		            });
+
+		            $(".leftLst").addClass("over");
+		            $(".rightLst").removeClass("over");
+
+		        });
+		    }
+
+
+		    //this function used to move the items
+		    function ResCarousel(e, el, s) {
+		        var leftBtn = ('.leftLst');
+		        var rightBtn = ('.rightLst');
+		        var translateXval = '';
+		        var divStyle = $(el + ' ' + itemsDiv).css('transform');
+		        var values = divStyle.match(/-?[\d\.]+/g);
+		        var xds = Math.abs(values[4]);
+		        if (e == 0) {
+		            translateXval = parseInt(xds) - parseInt(itemWidth * s);
+		            $(el + ' ' + rightBtn).removeClass("over");
+
+		            if (translateXval <= itemWidth / 2) {
+		                translateXval = 0;
+		                $(el + ' ' + leftBtn).addClass("over");
+		            }
+		        }
+		        else if (e == 1) {
+		            var itemsCondition = $(el).find(itemsDiv).width() - $(el).width();
+		            translateXval = parseInt(xds) + parseInt(itemWidth * s);
+		            $(el + ' ' + leftBtn).removeClass("over");
+
+		            if (translateXval >= itemsCondition - itemWidth / 2) {
+		                translateXval = itemsCondition;
+		                $(el + ' ' + rightBtn).addClass("over");
+		            }
+		        }
+		        $(el + ' ' + itemsDiv).css('transform', 'translateX(' + -translateXval + 'px)');
+		    }
+
+		    //It is used to get some elements from btn
+		    function click(ell, ee) {
+		        var Parent = "#" + $(ee).parent().attr("id");
+		        var slide = $(Parent).attr("data-slide");
+		        ResCarousel(ell, Parent, slide);
+		    }
+		    
+		    move();
+
+		});
+
+		function move() {
+			var elem = document.getElementById("load_page");   
+			var width = 1;
+			var id = setInterval(frame, 10);
+			function frame() {
+				if (width >= 100) {
+					clearInterval(id);
+				} else {
+					width++; 
+					elem.style.width = width + '%'; 
+				}
+			}
+		}
+	
+
+	</script>
+		<!-- qlist to be hidden -->
+		
+		{include file="$style_dir/blocks/quicklist/qlist_main.html"}
+		{if isset($__devmsgs)}
+			<script async type="text/javascript" src="{$theme}/js/fast_qlist.js"></script>
+		{else}
+			<script async type="text/javascript" src="{$theme}/js/fast_qlist.min.js"></script>
+		{/if}
+		<!-- <script async type="text/javascript" src="{$theme}/js/uslider_js/jquery.mousewheel.js"></script> -->
+		{include_header file='global_header'}
+		{if $Cbucket->header_files}
+		    <!-- Including Headers -->
+		    {foreach from=$Cbucket->header_files key=file item=type}
+		        {include_header type=$type file=$file}
+		    {/foreach}
+		    <!-- Ending Headers -->
+		{/if}
+
+	</head>
+
+	<style type="text/css">
+		#slideshow_circle {     
+			width: 100%;
+		    height: 100%;
+		    overflow: hidden;
+	    }
+		#slideshow_circle img { 
+			width: 100% !important; 
+			height: 100% !important; 
+		}
+		.showDiv { 
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			top: 0;
+			left: 0;
+			display: none;
+		}
+		.thumbs-rotate:hover .showDiv{
+			display: block;
+			z-index: 2;
+			cursor: pointer;
+		}
+	</style>
+	
+	

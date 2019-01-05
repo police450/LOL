@@ -1,0 +1,1046 @@
+@font-face {
+	font-family: 'source_sans_probold';
+	src: url('../fonts/sourcesanspro-bold-webfont.eot');
+	src: url('../fonts/sourcesanspro-bold-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../fonts/sourcesanspro-bold-webfont.woff2') format('woff2'),
+		 url('../fonts/sourcesanspro-bold-webfont.woff') format('woff'),
+		 url('../fonts/sourcesanspro-bold-webfont.ttf') format('truetype'),
+		 url('../fonts/sourcesanspro-bold-webfont.svg#source_sans_probold') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'source_sans_prolight';
+	src: url('../fonts/sourcesanspro-light-webfont.eot');
+	src: url('../fonts/sourcesanspro-light-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../fonts/sourcesanspro-light-webfont.woff2') format('woff2'),
+		 url('../fonts/sourcesanspro-light-webfont.woff') format('woff'),
+		 url('../fonts/sourcesanspro-light-webfont.ttf') format('truetype'),
+		 url('../fonts/sourcesanspro-light-webfont.svg#source_sans_prolight') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'source_sans_proregular';
+	src: url('../fonts/sourcesanspro-regular-webfont.eot');
+	src: url('../fonts/sourcesanspro-regular-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../fonts/sourcesanspro-regular-webfont.woff2') format('woff2'),
+		 url('../fonts/sourcesanspro-regular-webfont.woff') format('woff'),
+		 url('../fonts/sourcesanspro-regular-webfont.ttf') format('truetype'),
+		 url('../fonts/sourcesanspro-regular-webfont.svg#source_sans_proregular') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'source_sans_prosemibold';
+	src: url('../fonts/sourcesanspro-semibold-webfont.eot');
+	src: url('../fonts/sourcesanspro-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+		 url('../fonts/sourcesanspro-semibold-webfont.woff2') format('woff2'),
+		 url('../fonts/sourcesanspro-semibold-webfont.woff') format('woff'),
+		 url('../fonts/sourcesanspro-semibold-webfont.ttf') format('truetype'),
+		 url('../fonts/sourcesanspro-semibold-webfont.svg#source_sans_prosemibold') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face {
+	font-family: 'icomoon';
+	src:    url('../fonts/icomoon.eot');
+	src:    url('../fonts/icomoon.eot') format('embedded-opentype'),
+		url('../fonts/icomoon.ttf') format('truetype'),
+		url('../fonts/icomoon.woff') format('woff'),
+		url('../fonts/icomoon.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: 'icomoon' !important;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+/* variables */
+
+$textcolor:#b0b0b0;
+$black:#000;
+$title_cb:#0F3860;
+$grey-txt:#A9A9A9;
+$comment-bg:#f8f8f8;
+$com-color:#2d2d2d;
+$white:#fff;
+$header:#e9e9e9;
+$editer_bg:#eaeaea;
+$editer_sl:#dfdfdf;
+$search-txt:#a8a8a8;
+$bg-theme:#17181a;
+$lt-grey:#f9f9f9;
+$photo-btn-color:#f3f3f3;
+$green: #00C851;
+$sing-green: #77ff7c;
+$sidebar-color:#1a1e21;
+$orange:#ffbb33;
+$dark-btn:#17181a;
+$header-btn:#262727;
+$dropdown-bg:#424242;
+$opacity:0.6;
+$blue:#007fb3;
+$blue-hover:#0096c9;
+$drop_hover:#0080b4;
+$drop_boder:#6fc4e6;
+$body-bg:#f5f5f5;
+$block-color:#333;
+$heading-color:#666;
+$search-toggle:#999;
+$pop-bg:rgba(0, 0, 0, 0.78);
+$base-font:'source_sans_proregular', sans-serif;
+$bold-font:'source_sans_probold', sans-serif;
+$semibold-font:'source_sans_prosemibold', sans-serif;
+$light-font:'source_sans_prolight', sans-serif;
+$base-color:$black;
+$font-icon: 'icomoon';
+$bordercolor:#d9d9d9;
+$default-border:1px solid $bordercolor;
+$fb-color:#2b4b90;
+$tw-color:#1c95d0;
+$gplus-color:#d34332;
+$linkedin-color:#007bb5;
+$border:1px solid #e0e0e0;
+$probox-bg: #f8f8f8;
+$input-bg: #f6f6f6;
+$error-color:#f44336;
+$text-hvr:#00eaff;
+$btn_color:#b7b7b7;
+$sub-text:#686868;
+$share_text:#9d9d9d;
+$button-color: #EE3769;
+$width:10em;
+$alert_dg:#ff4444;
+$alert_sc:#00C851;
+$alert_war:#ffbb33;
+$movie_basic:#212121;
+$movie_basic_hover:#2E2E2E;
+$movie_hover:#3c3c3c;
+$movie_text_hover:#f44336;
+$movie_theme:#b71c1c;
+$movie_btn:#b71c1c;
+$movie_hover_btn:#e53935;
+
+/**/
+.icon-thumbs-down:before {
+  content: "\e941";
+}
+.icon-thumbs-up:before {
+  content: "\e944";
+}
+.icon-cb:before {
+  content: "\e600";
+}
+.icon-togglescreen:before {
+  content: "\e601";
+}
+.icon-fullscreen:before {
+  content: "\e602";
+}
+.icon-hd:before {
+  content: "\e603";
+}
+.icon-pause:before {
+  content: "\e604";
+}
+.icon-pause-big:before {
+  content: "\e605";
+}
+.icon-play:before {
+  content: "\e606";
+}
+.icon-play-big:before {
+  content: "\e607";
+}
+.icon-volume1:before {
+  content: "\e608";
+}
+.icon-volume2:before {
+  content: "\e609";
+}
+.icon-volume3:before {
+  content: "\e60a";
+}
+.icon-pause2:before {
+  content: "\e60b";
+}
+.icon-pause3:before {
+  content: "\e60c";
+}
+.icon-play22:before {
+  content: "\e60d";
+}
+.icon-play222:before {
+  content: "\e60e";
+}
+.icon-volume12:before {
+  content: "\e60f";
+}
+.icon-volume22:before {
+  content: "\e610";
+}
+.icon-volumefull:before {
+  content: "\e611";
+}
+.icon-volumemute:before {
+  content: "\e612";
+}
+.icon-setting:before {
+  content: "\e613";
+}
+.icon-cloud-upload:before {
+  content: "\e900";
+}
+.icon-eye:before {
+  content: "\e901";
+}
+.icon-attachment2:before {
+  content: "\e902";
+}
+.icon-bell2:before {
+  content: "\e903";
+}
+.icon-bin3:before {
+  content: "\e904";
+}
+.icon-bin22:before {
+  content: "\e905";
+}
+.icon-bubbles32:before {
+  content: "\e906";
+}
+.icon-camera:before {
+  content: "\e907";
+}
+.icon-circle-down:before {
+  content: "\e908";
+}
+.icon-clock2:before {
+  content: "\e909";
+}
+.icon-clock22:before {
+  content: "\e90a";
+}
+.icon-cloud-download2:before {
+  content: "\e90b";
+}
+.icon-cog2:before {
+  content: "\e90c";
+}
+.icon-cogs2:before {
+  content: "\e90d";
+}
+.icon-compass2:before {
+  content: "\e90e";
+}
+.icon-envelop:before {
+  content: "\e90f";
+}
+.icon-equalizer:before {
+  content: "\e910";
+}
+.icon-equalizer2:before {
+  content: "\e911";
+}
+.icon-file-text22:before {
+  content: "\e912";
+}
+.icon-flag2:before {
+  content: "\e913";
+}
+.icon-google-plus2:before {
+  content: "\e914";
+}
+.icon-headphones2:before {
+  content: "\e915";
+}
+.icon-heart2:before {
+  content: "\e916";
+}
+.icon-heart-broken:before {
+  content: "\e917";
+}
+.icon-home2:before {
+  content: "\e918";
+}
+.icon-image:before {
+  content: "\e919";
+}
+.icon-images:before {
+  content: "\e91a";
+}
+.icon-indent-increase2:before {
+  content: "\e91b";
+}
+.icon-instagram2:before {
+  content: "\e91c";
+}
+.icon-link:before {
+  content: "\e91d";
+}
+.icon-linkedin3:before {
+  content: "\e91e";
+}
+.icon-linkedin22:before {
+  content: "\e91f";
+}
+.icon-list22:before {
+  content: "\e920";
+}
+.icon-mic:before {
+  content: "\e921";
+}
+.icon-minus2:before {
+  content: "\e922";
+}
+.icon-file-text2:before {
+  content: "\e923";
+}
+.icon-profile2:before {
+  content: "\e924";
+}
+.icon-music2:before {
+  content: "\e925";
+}
+.icon-pencil2:before {
+  content: "\e926";
+}
+.icon-play2:before {
+  content: "\e927";
+}
+.icon-play32:before {
+  content: "\e928";
+}
+.icon-plus2:before {
+  content: "\e929";
+}
+.icon-price-tag2:before {
+  content: "\e92a";
+}
+.icon-profile22:before {
+  content: "\e92b";
+}
+.icon-rss2:before {
+  content: "\e92c";
+}
+.icon-search:before {
+  content: "\e92d";
+}
+.icon-share22:before {
+  content: "\e92e";
+}
+.icon-stack2:before {
+  content: "\e92f";
+}
+.icon-star-full:before {
+  content: "\e930";
+}
+.icon-twitter2:before {
+  content: "\e931";
+}
+.icon-whatsapp2:before {
+  content: "\e932";
+}
+.icon-wrench2:before {
+  content: "\e933";
+}
+.icon-arrow_drop_down:before {
+  content: "\e934";
+}
+.icon-if_like_outline_309057:before {
+  content: "\e935";
+}
+.icon-cc:before {
+  content: "\e936";
+}
+.icon-next:before {
+  content: "\e937";
+}
+.icon-pause22:before {
+  content: "\e938";
+}
+.icon-plus3:before {
+  content: "\e939";
+}
+.icon-prev:before {
+  content: "\e93a";
+}
+.icon-shuffle:before {
+  content: "\e93b";
+}
+.icon-svg:before {
+  content: "\e93c";
+}
+.icon-audio-volume1:before {
+  content: "\e93d";
+}
+.icon-audio-volume2:before {
+  content: "\e93e";
+}
+.icon-audio-volume3:before {
+  content: "\e93f";
+}
+.icon-eye2:before {
+  content: "\e940";
+}
+.icon-phone2:before {
+  content: "\e943";
+}
+.icon-plus:before {
+  content: "\ea0a";
+}
+.icon-minus:before {
+  content: "\ea0b";
+}
+.icon-checkmark:before {
+  content: "\ea10";
+}
+.icon-radio-checked:before {
+  content: "\ea54";
+}
+.icon-prev2:before {
+  content: "\e9a1";
+}
+.icon-related:before {
+  content: "\e9a2";
+}
+.icon-next2:before {
+  content: "\e9aa";
+}
+.icon-volume-mute:before {
+  content: "\f104";
+}
+.icon-volume-low:before {
+  content: "\f105";
+}
+.icon-volume-mid:before {
+  content: "\f106";
+}
+.icon-volume-high:before {
+  content: "\f107";
+}
+.icon-fullscreen-enter:before {
+  content: "\f108";
+}
+.icon-fullscreen-exit:before {
+  content: "\f109";
+}
+.icon-spinner:before {
+  content: "\f10b";
+}
+.icon-captions:before {
+  content: "\f10d";
+}
+.icon-cancel:before {
+  content: "\f115";
+}
+.icon-facebook:before {
+  content: "\f117";
+}
+.icon-tumblr:before {
+  content: "\f11b";
+}
+.icon-pinterest:before {
+  content: "\f11c";
+}
+.icon-audio-description:before {
+  content: "\f11d";
+}
+.icon-audio:before {
+  content: "\f11e";
+}
+.icon-podcast:before {
+  content: "\e945";
+}
+.icon-file-picture:before {
+  content: "\e946";
+}
+.icon-file-music:before {
+  content: "\e947";
+}
+.icon-file-play:before {
+  content: "\e948";
+}
+.icon-file-video:before {
+  content: "\e949";
+}
+.icon-phone:before {
+  content: "\e942";
+}
+.icon-happy2:before {
+  content: "\e9e0";
+}
+.icon-smile2:before {
+  content: "\e9e2";
+}
+.icon-sad2:before {
+  content: "\e9e6";
+}
+.icon-cool:before {
+  content: "\e9eb";
+}
+.icon-blocked:before {
+  content: "\ea0e";
+}
+.icon-circle-up:before {
+  content: "\ea41";
+}
+.icon-circle-right:before {
+  content: "\ea42";
+}
+.icon-circle-left:before {
+  content: "\ea44";
+}
+.icon-shift:before {
+  content: "\ea4f";
+}
+.icon-radio-checked2:before {
+  content: "\ea55";
+}
+.icon-radio-checked22:before {
+  content: "\ea56";
+}
+.icon-radio-unchecked:before {
+  content: "\ea57";
+}
+.icon-facebook2:before {
+  content: "\ea91";
+}
+
+
+
+
+@mixin center {
+  position:absolute;
+  margin: auto;
+}
+@mixin overlaybg($color, $opacity){
+	background: rgba($color, $opacity);
+}
+@mixin txtinput(){
+	color:$base-color;
+	background: $input-bg;
+	border-color: $bordercolor;
+	font-size: 15px;
+	line-height: 28px;
+	height: 42px;
+	/* placeholder input styles */
+	input[type="text"]::-webkit-input-placeholder { /* WebKit browsers */
+			color: lighten($base-color,74%);
+	}
+	input[type="text"]:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+		color: lighten($base-color,74%);
+	}
+	input[type="text"]::-moz-placeholder { /* Mozilla Firefox 19+ */
+		color: lighten($base-color,74%);
+		opacity: 1;
+	}
+	input[type="text"]:-ms-input-placeholder { /* Internet Explorer 10+ */
+		color: lighten($base-color,74%);
+	}
+}
+
+@mixin gradient-bg(){
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0.6+0,0.59+43,0.55+49,0.26+70,0.12+82,0.05+90,0.01+100 */
+	background: -moz-linear-gradient(top,  rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.59) 43%, rgba(0,0,0,0.55) 49%, rgba(0,0,0,0.26) 70%, rgba(0,0,0,0.12) 82%, rgba(0,0,0,0.05) 90%, rgba(0,0,0,0.01) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.59) 43%,rgba(0,0,0,0.55) 49%,rgba(0,0,0,0.26) 70%,rgba(0,0,0,0.12) 82%,rgba(0,0,0,0.05) 90%,rgba(0,0,0,0.01) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(0,0,0,0.6) 0%,rgba(0,0,0,0.59) 43%,rgba(0,0,0,0.55) 49%,rgba(0,0,0,0.26) 70%,rgba(0,0,0,0.12) 82%,rgba(0,0,0,0.05) 90%,rgba(0,0,0,0.01) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#99000000', endColorstr='#03000000',GradientType=0 ); /* IE6-9 */
+}
+@mixin gradientbottom-bg(){
+	/* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#000000+0,000000+100&0+0,0.01+9,0.07+21,0.24+36,0.53+55,0.78+76,0.8+81,0.8+100 */
+	background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.01) 9%, rgba(0,0,0,0.07) 21%, rgba(0,0,0,0.24) 36%, rgba(0,0,0,0.53) 55%, rgba(0,0,0,0.78) 76%, rgba(0,0,0,0.8) 81%, rgba(0,0,0,0.8) 100%); /* FF3.6-15 */
+	background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.01) 9%,rgba(0,0,0,0.07) 21%,rgba(0,0,0,0.24) 36%,rgba(0,0,0,0.53) 55%,rgba(0,0,0,0.78) 76%,rgba(0,0,0,0.8) 81%,rgba(0,0,0,0.8) 100%); /* Chrome10-25,Safari5.1-6 */
+	background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.01) 9%,rgba(0,0,0,0.07) 21%,rgba(0,0,0,0.24) 36%,rgba(0,0,0,0.53) 55%,rgba(0,0,0,0.78) 76%,rgba(0,0,0,0.8) 81%,rgba(0,0,0,0.8) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+	background: rgba(0,0,0,0.8) url("../images/playicon.png") no-repeat 50% 50%;
+	&:hover{
+		background:rgba(0,0,0,0.4) url("../images/playhvr.png") no-repeat 50% 50% !important;
+	}
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#cc000000',GradientType=0 ); /* IE6-9 */
+}
+@mixin after(){
+	display: block;
+	clear: both;
+	content: "";
+}
+@mixin list-style(){
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+@mixin transition-property($transitionProperty){
+	-webkit-transition-property: $transitionProperty;
+	-moz-transition-property: $transitionProperty;
+	-ms-transition-property: $transitionProperty;
+	-o-transition-property: $transitionProperty;
+	transition-property: $transitionProperty;
+}
+@mixin alltransition($ease-property, $ease-time, $ease){
+	-webkit-transition: $ease-property $ease-time $ease;
+	-moz-transition: $ease-property $ease-time $ease;
+	-ms-transition: $ease-property $ease-time $ease;
+	-o-transition: $ease-property $ease-time $ease;
+	transition: $ease-property $ease-time $ease;
+}
+@mixin transition($transition) {
+	-webkit-transition: $transition;  
+	-moz-transition:    $transition;
+	-ms-transition:     $transition; 
+	-o-transition:      $transition;
+}
+@mixin boxsizing(){
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+@mixin text-replacement(){
+	text-indent:-9999px;
+	overflow: hidden;
+}
+@mixin pro-box-mix(){
+	background: $probox-bg;
+	border:1px solid #e1e1e1;
+}
+
+@mixin img-thumb(){
+	.row{
+		margin: 0 -10px;
+	}
+	.img-holder{
+		padding: 0 10px;
+		margin: 0 auto 20px;
+		img{
+			width: 100%;
+		}
+	}
+}
+@mixin play_video(){
+	
+}
+@mixin icon-view(){
+	background:url("../images/icons_sprite.png") no-repeat 0 0;
+	width: 28px;
+	height: 22px;
+	@include vertical-bottom();
+	margin:0 5px 0 0;
+}
+@mixin icon-views(){
+	background:url("../images/icons_sprite.png") no-repeat -92px 0;
+	width: 20px;
+	height: 20px;
+	@include vertical-bottom();
+	margin:0 5px 0 0;
+}
+@mixin icon-mth(){
+	background:url("../images/icons_sprite.png") no-repeat -30px 0;
+	width: 28px;
+	height: 22px;
+	@include vertical-bottom();
+	margin:0 3px 0 0;
+}
+@mixin icon-mths(){
+	background:url("../images/icons_sprite.png") no-repeat -111px 0;
+	width: 20px;
+	height: 20px;
+	@include vertical-bottom();
+	margin:0 3px 0 0;
+}
+@mixin icon-comment() {
+	background:url("../images/icons_sprite.png") no-repeat -133px 0;
+	width: 20px;
+	height: 20px;
+	@include vertical-bottom();
+	margin:0 3px 0 0;	
+}
+@mixin icon-like() {
+	background:url("../images/icons_sprite.png") no-repeat -186px 4px;
+	width: 30px;
+	height: 30px;
+	@include vertical-bottom();
+	margin:0 3px 0 0;	
+}
+@mixin icon-dislike() {
+	background:url("../images/icons_sprite.png") no-repeat -155px 4px;
+	width: 30px;
+	height: 30px;
+	@include vertical-bottom();
+	margin:0 3px 0 0;	
+}
+@mixin icon-addlist() {
+	background:url("../images/icons_sprite.png") no-repeat -212px 16px;
+	width: 50px;
+	height: 50px;
+	@include vertical-bottom();
+	margin:0 3px 0 0;	
+}
+@mixin icon-addshare() {
+	background:url("../images/icons_sprite.png") no-repeat -264px 4px;
+	width:47px;
+	height:48px;
+	@include vertical-bottom();
+	margin:0 3px 0 0;	
+}
+@mixin icon-addreport() {
+	background:url("../images/icons_sprite.png") no-repeat -307px 4px;
+	width:50px;
+	height:55px;
+	@include vertical-bottom();
+	margin:0 3px 0 0;	
+}
+@mixin bg_playlist() {
+	background:url("../images/playkist_hover.png") no-repeat;
+	width:69px;
+	height:55px;
+	background-size:contain;
+	z-index: 1;
+    content: "";
+    position: absolute;
+    right:-1px;
+    bottom: 0;
+    border-radius:0 0 4px 0px;
+}
+@mixin icon_add_frnd() {
+	background:#27f1ea url("../images/icons_sprite.png") no-repeat 5px -25px;
+    border-radius: 50%;
+    display: inline-block;
+    height: 42px;
+    margin: 2px;
+    padding: 2px;
+    width: 42px;
+}
+
+@mixin icon_cnl_frnd() {
+	background:#fe6262 url("../images/icons_sprite.png") no-repeat -30px -27px;
+    border-radius: 50%;
+    display: inline-block;
+    height: 42px;
+    margin: 2px;
+    padding: 2px;
+    width: 42px;
+    border:2px solid #fe6262;
+}
+
+@mixin icon_un_frnd() {
+	background:#fe6262 url("../images/icons_sprite.png") no-repeat -67px -28px;
+    border-radius: 50%;
+    display: inline-block;
+    height: 42px;
+    margin: 2px;
+    padding: 2px;
+    width: 42px;
+    border:2px solid #fe6262;
+}
+@mixin icon_ac_frnd() {
+	background:#2bdd72 url("../images/icons_sprite.png") no-repeat -102px -29px;
+    border-radius: 50%;
+    display: inline-block;
+    height: 42px;
+    margin: 2px;
+    padding: 2px;
+    width: 42px;
+    border:2px solid #fe6262;
+}
+@mixin icon_sub_frnd() {
+	background:#27f1ea url("../images/icons_sprite.png") no-repeat -307px 4px;
+	width:69px;
+	height:55px;
+}
+@mixin icon_rpt_user() {
+	background:$black url("../images/icons_sprite.png") no-repeat -181px -30px;
+    border-radius: 50%;
+    display:inline-block;
+    height: 36px;
+    margin:0;
+    padding:0;
+    width: 36px;
+}
+
+@mixin icon_cover_frnd() {
+	background:#27f1ea url("../images/icons_sprite.png") no-repeat -307px 4px;
+	width:69px;
+	height:55px;
+}
+
+@mixin porfile_01() {
+	background: rgba(0, 0, 0, 0) linear-gradient(transparent, rgba(0, 0, 0, 0.6) 50%, rgba(0, 0, 0, 0.6) 100%) repeat scroll 0 0;
+	
+}
+// @mixin play-icon() {
+// 	background:rgba(0, 0, 0, 0.25) url("../images/playicon.png") no-repeat 50% 50%;
+// 	display:inline-block;
+// 	vertical-align:middle;
+// 	height:100%;
+// 	width:100%;
+// }
+@mixin vertical-in(){
+	display:inline-block;
+	vertical-align:inherit;
+}
+@mixin vertical-top(){
+	display: inline-block;
+	vertical-align: top;
+}
+
+@mixin vertical-middle(){
+	display: inline-block;
+	vertical-align: middle;
+}
+@mixin vertical-bottom(){
+	display: inline-block;
+	vertical-align: bottom;
+}
+/**/
+@mixin text-shadow ($string: 0 1px 3px rgba(0, 0, 0, 0.25)) {
+	text-shadow: $string;
+}
+@mixin box-shadow ($string) {
+	-webkit-box-shadow: $string;
+	-moz-box-shadow:    $string;
+	box-shadow:         $string;
+}
+@mixin drop-shadow ($x: 0, $y: 1px, $blur: 2px, $spread: 0, $alpha: 0.25) {
+	-webkit-box-shadow:	$x $y $blur $spread rgba(0, 0, 0, $alpha);
+	-moz-box-shadow:	$x $y $blur $spread rgba(0, 0, 0, $alpha);
+	box-shadow:		$x $y $blur $spread rgba(0, 0, 0, $alpha);
+}
+@mixin inner-shadow ($x: 0, $y: 1px, $blur: 2px, $spread: 0, $alpha: 0.25) {
+	-webkit-box-shadow: inset $x $y $blur $spread rgba(0, 0, 0, $alpha);
+	-moz-box-shadow:    inset $x $y $blur $spread rgba(0, 0, 0, $alpha);
+	box-shadow:         inset $x $y $blur $spread rgba(0, 0, 0, $alpha);
+}
+@mixin gradient ($startColor: #eee, $endColor: white) {
+	background-color: $startColor;
+	background: -webkit-gradient(linear, left top, left bottom, from($startColor), to($endColor));
+	background: -webkit-linear-gradient(top, $startColor, $endColor);
+	background: -moz-linear-gradient(top, $startColor, $endColor);
+	background: -ms-linear-gradient(top, $startColor, $endColor);
+	background: -o-linear-gradient(top, $startColor, $endColor);
+}
+@mixin horizontal-gradient ($startColor: #eee, $endColor: white) {
+	background-color: $startColor;
+	background-image: -webkit-gradient(linear, left top, right top, from($startColor), to($endColor));
+	background-image: -webkit-linear-gradient(left, $startColor, $endColor);
+	background-image: -moz-linear-gradient(left, $startColor, $endColor);
+	background-image: -ms-linear-gradient(left, $startColor, $endColor);
+	background-image: -o-linear-gradient(left, $startColor, $endColor);
+}
+@mixin myanimation ($name, $duration, $ease) {
+	-webkit-animation: $name $duration $ease;
+	-moz-animation:    $name $duration $ease;
+	-ms-animation:     $name $duration $ease;
+	-o-animation: $name $duration $ease;
+	animation: $name $duration $ease;
+}
+
+@mixin transform($string){
+	-webkit-transform: $string;
+	-moz-transform: 	 $string;
+	-ms-transform: 		 $string;
+	-o-transform: 		 $string;
+}
+@mixin scale ($factor) {
+	-webkit-transform: scale($factor);
+	-moz-transform: 	 scale($factor);
+	-ms-transform: 		 scale($factor);
+	-o-transform: 		 scale($factor);
+}
+@mixin rotate ($deg) {
+	-webkit-transform: rotate($deg);
+	-moz-transform: 	 rotate($deg);
+	-ms-transform: 		 rotate($deg);
+	-o-transform: 		 rotate($deg);
+}
+@mixin skew ($deg, $deg2) {
+	-webkit-transform:       skew($deg, $deg2);
+	-moz-transform: 	 skew($deg, $deg2);
+	-ms-transform: 		 skew($deg, $deg2);
+	-o-transform: 		 skew($deg, $deg2);
+}
+@mixin translate ($x, $y:0) {
+	-webkit-transform:       translate($x, $y);
+	-moz-transform: 	 translate($x, $y);
+	-ms-transform: 		 translate($x, $y);
+	-o-transform: 		 translate($x, $y);
+}
+@mixin translate3d ($x, $y: 0, $z: 0) {
+	-webkit-transform:       translate3d($x, $y, $z);
+	-moz-transform: 	 translate3d($x, $y, $z);
+	-ms-transform: 		 translate3d($x, $y, $z);
+	-o-transform: 		 translate3d($x, $y, $z);
+}
+@mixin perspective ($value: 1000) {
+	-webkit-perspective: 	$value;
+	-moz-perspective: 	$value;
+	-ms-perspective: 	$value;
+	perspective: 		$value;
+}
+@mixin transform-origin ($x:center, $y:center) {
+	-webkit-transform-origin: $x $y;
+	-moz-transform-origin:    $x $y;
+	-ms-transform-origin:     $x $y;
+	-o-transform-origin:      $x $y;
+}
+/* buttons */
+.btn-default{
+	background:darken($lt-grey,5%);
+	border-color: darken($lt-grey,5%);
+	font-family:$base-font;
+	color: $black;
+	&:hover,
+	&:active{
+		background:darken($lt-grey,5%);
+		border-color: darken($lt-grey,5%);
+	}
+}
+.btn-ghost{
+	background: $white;
+	border: 2px solid $black;
+	padding: 5px 10px;
+	font-family:$base-font;
+	font-size: 15px;
+	line-height: 21px;
+	color:$black;
+	&.btn-lg{
+		font-size: 18px;
+		line-height: 36px;
+	}
+	&:hover,
+	&:active{
+		background:$movie_theme;
+		border-color:$movie_theme;
+		color:$white;
+	}
+}
+.btn-primary{
+	background:$movie_theme;
+	border-color:$movie_theme;
+	font-family:$base-font;
+	color:$white;
+	&:hover,
+	&:active{
+		background:$movie_hover_btn;
+		border-color:$movie_hover_btn;
+		color:$white;
+	}
+}
+.btn-success{
+	background:$green;
+	border-color:$green;
+	font-family:$base-font;
+	color:$white;
+	&:hover,
+	&:active{
+		background:$green;
+		border-color:$green;
+		color:$white;
+	}
+}
+.btn-black{
+	background: lighten($black,13%);
+	border-color:lighten($black,13%);
+	font-family:$base-font;
+	font-size: 15px;
+	color:$white;
+	&:hover,
+	&:active{
+		background: lighten($black,13%);
+		border-color:lighten($black,13%);
+		color:$white;
+	}
+}
+/* form elements */
+.form-control{
+	@include txtinput();
+}
+/* error messages */
+/* error animations */
+@mixin error-animation ($name:bounce, $duration:800ms, $ease:ease-out){
+	-webkit-animation: $name $duration $ease;
+	-moz-animation:    $name $duration $ease;
+	-ms-animation:     $name $duration $ease;
+	-o-animation: $name $duration $ease;
+	animation: $name $duration $ease;
+}
+@mixin animatetop(){
+	0% {
+		transform:translateY(-100%);
+		opacity: 0;
+	}
+	5% {
+		transform:translateY(-100%);
+		opacity: 0;
+	}
+	15% {
+		transform:translateY(0);
+		padding-bottom: 5px;
+	}
+	30% {
+		transform:translateY(-50%);
+	}
+	40% {
+		transform:translateY(0%);
+		padding-bottom: 6px;
+	}
+	50% {
+		transform:translateY(-30%);
+	}
+	70% {
+		transform:translateY(0%);
+		padding-bottom: 7px;
+	}
+	80% {
+		transform:translateY(-15%);
+ 	}
+	90% {
+		transform:translateY(0%);
+		padding-bottom: 8px;
+	}
+	95% {
+		transform:translateY(-7%);
+	}
+	97% {
+		transform:translateY(0%);
+		padding-bottom: 9px;
+	}
+	99% {
+		transform:translateY(-3%);
+	}
+	100% {
+		transform:translateY(0);
+		padding-bottom: 9px;
+		opacity: 1;
+	}
+}
+@-webkit-keyframes bounce {
+	@include animatetop();
+}
+
+@-moz-keyframes bounce {
+	@include animatetop();
+}
+@-o-keyframes bounce {
+	@include animatetop();
+}
+@keyframes bounce {
+	@include animatetop();
+}
+.alert-msg-holder {
+	margin: 0 auto;
+	text-align: center;
+	max-width: 1170px !important;
+}
+.alert-ajax {
+	@include error-animation();
+}

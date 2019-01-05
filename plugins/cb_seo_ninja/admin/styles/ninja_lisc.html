@@ -1,0 +1,48 @@
+<link rel="stylesheet" type="text/css" href="{$ninja_html_url}/styles/css/all.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700' rel='stylesheet' type='text/css'>
+<script src="{$ninja_html_url}/styles/js/main.js"></script>
+<section class="clearfix form-elements cb-uikit">
+                    <section class="cover clearfix text-center">
+                <div class="cb-logo">
+                    <img src="{$ninja_html_url}/styles/images/cb-logo.png" alt="" class="img-responsive">
+                </div>
+                <h1><em>SEO Ninja</em></h1>
+            </section>
+                <header class="clearfix">
+                    <h3 class="bluecolor4">License Configurations</h3>
+                </header>
+                <form name="ninja_lisc" id="ninja_lisc" class="form-horizontal" action="" method="post">
+                    <div class="clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                              <h4 class="greycolor4">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  <i class="fa fa-facebook"></i> Liscense Key
+                                </a>
+                              </h4>
+                            </div>
+
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                              <div class="panel-body">
+                              <div class="form-group">
+                                    <label for="reqtxt" class="col-sm-2 control-label">Liscense Key </label>
+                                    <div class="col-sm-10">
+                                        <div class="required-field-block">
+                                            <textarea name="lisc_key" id="lisc_key" class="form-control" placeholder="Lisc key that you recieved from ClipBucket" title="Your Liscense key goes here">{$lisc_key}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div id="beats_config_msg"></div>
+                    <div class="clearfix">
+                        <button type="submit" id="ninja_lisc_key" class="btn btn-success" value="update">Update Settings</button>
+                    </div>
+                </form>
+            </section>

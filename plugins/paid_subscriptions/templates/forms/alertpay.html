@@ -1,0 +1,40 @@
+<form name="alertpay_checkout" method="post" id="alertpay_checkout" 
+    action="{$alertpayGw->gatewayUrl}">
+   <img src="{$paid_subs_url}/images/payza-checkout.png"style="margin-right:7px; cursor:pointer"
+     {if $type=='renew'}
+     onclick="confirm_{$type}('{$package.package_id}','{$sub.subscription_id}','alertpay_checkout','alertpay')"
+     {else}
+     onclick="confirm_{$type}('{$package.package_id}','alertpay_checkout','alertpay')"
+     {/if}>  
+    
+    <!-- Order ID will be updated when ajax request is completed -->
+    <input type="hidden" name="ap_itemcode" id="alertpay_checkout_order_id" value="some_number" />
+    <!-- Invoice Number -->
+    <input type="hidden" name="apc_1" id="alertpay_checkout_invoice_id" value="" />
+    
+    <input type="hidden" name="ap_alerturl" value="{$paid_subs_url}/ipn/ipn.php?ipn=alertpay" />
+       
+    
+    <!-- AlertPay Settings -->
+    <input type="hidden" name="ap_purchasetype" value="service" id="alert_pay_type"/>
+    <input type="hidden" name="ap_itemname" value="{$package.pkg_title}"/>
+    <input type="hidden" name="ap_amount" value="{$package.pkg_price}"/>
+    
+    {if $package.pkg_days}
+    <input type="hidden" name="ap_periodlength" value="{$package.pkg_days|days_type:true:alertpay}">
+    <input type="hidden" name="ap_timeunit" value="{$package.pkg_days|days_type:false:alertpay}">
+    <input type="hidden" name="ap_periodcount" value="0" />
+    <input type="hidden" name="ap_setupamount" value="0" />
+    {/if}
+    
+    <input type="hidden" name="ap_currency" value="{$paidSub->currency}"/>
+    <input type="hidden" name="ap_returnurl" value="{$baseurl}/module.php?s=premium&p=thank_you" />
+    
+
+    {if $paidSub->configs.test_mode=='enabled'}
+    	<input type="hidden" name="ap_merchant" value="{$paidSub->configs.alertpay_email}"/>
+    {else}
+    	<input type="hidden" name="ap_merchant" value="{$paidSub->configs.alertpay_email}"/>
+    {/if}
+        
+</form>

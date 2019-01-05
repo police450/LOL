@@ -1,0 +1,106 @@
+<link type="text/css" rel="stylesheet" href="{$paid_subs_url}/admin/style.css">
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+    var loading_img = "<img style='vertical-align:middle' src='"+imageurl+"/ajax-loader.gif'>";
+    var prem_ajax = '{$paid_subs_url}/ajax.php';
+      // Load the Visualization API and the piechart package.
+      google.load('visualization', '1.0', {ldelim}'packages':['corechart']{rdelim});	  
+	  
+	  {literal}
+	  function shw_credits(shw,id)
+	  {
+		  if(shw=='yes')
+		  {
+			  $('#credits_'+id).show();
+		  }else
+		  {
+			  $('#credits_'+id).hide();
+		  }
+	  }
+	  
+	  
+	  function remove_prem_video(vid,pid)
+	  {
+			
+			
+			//Sending request to prem ajax
+			//To add order and return orderID
+			$.ajax({url:prem_ajax,
+			type:"POST",data:{"vid":vid,"pid":pid,"mode":"remove_package_video"},
+			dataType : 'json',
+			beforeSend : function() { $('.video_output_'+pid+'_'+vid).append(loading_img) },
+			success : function(data)
+			{ //success
+				if(data.err)
+				{
+					$('.video_output_'+pid+'_'+vid).html(data.err);
+				}else
+				{
+					$('#pkg_vid_'+pid+'_'+vid).hide('slow');
+					$('.video_output_'+pid+'_'+vid).html(data.msg);
+					$('.remain_'+vid).on("click", function(){
+					 	$('.unpremium_'+vid).hide("slow");
+					 	$(this).hide("slow");
+					});
+					setTimeout(function(){ $('.removed').hide("slow"); }, 1000);
+				}		
+			} //success ends
+			
+			});
+	  }
+	  
+
+	  function remove_from_prem(vid)
+	  {
+			
+			
+			//Sending request to prem ajax
+			//To add order and return orderID
+			$.ajax({url:prem_ajax,
+			type:"POST",data:{"vid":vid,"mode":"remove_from_prem"},
+			dataType : 'json',
+            beforeSend : function() { $('.unpremium_'+vid).append(loading_img) },
+			success : function(data)
+			{ //success
+				if(data.err)
+				{
+					$('.paid_output_'+vid).html(data.err);
+				}else
+				{
+					$('.unpremium_'+vid).hide();
+					$('.remain_'+vid).hide();
+					$('.paid_output_'+vid).html(data.msg);
+					setTimeout(function(){ $('.paid_output_'+vid).hide(); }, 5000);
+				}		
+			} //success ends
+			
+			});
+	  }
+	  
+	function add_to_package_link(vid)
+	{
+		var pid = $('#pkg_vid_'+vid+' option:selected').val();
+	
+		//Sending request to prem ajax
+		//To add order and return orderID
+		$.ajax({url:prem_ajax,
+		type:"POST",data:{"vid":vid,"pid":pid,"mode":"add_to_package"},
+		dataType : 'json',
+		success : function(data)
+		{ //success
+			if(data.err)
+			{
+				alert(data.err);
+			}else
+			{
+				$('#pkg_span_'+vid).html(data.msg).css({'background-color':'#fff7e3','font-weight':'bold'});
+			}		
+		} //success ends
+		
+		});
+	}
+	  
+	  {/literal}
+	</script>
+    
+    

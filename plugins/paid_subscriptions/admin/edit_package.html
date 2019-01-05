@@ -1,0 +1,195 @@
+<form name="edit_package-{$package.package_id}" method="post">
+<div class="premium_plugin">
+
+<div class="pkg_form_new" id="pkg_form_subs" >
+	<div class="pkg_title pkg_shdw">
+    	<div style="display:inline-block; float:left">Edit package &laquo; {$package.pkg_title} [{$package.pkg_type|pkg_type_name}]</div>
+        <div style="display:inline-block; float:right">
+      <em><a href="{$queryString}" style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:12px">
+      <span class="btn btn-primary">&#8249;&#8212; Back to manage packages</span></a></em></div>
+    <div class="clearfix" ></div>
+    <div  style="height:25px;"></div>
+    </div>
+    
+    
+    
+    <div class="pkg_option">
+		<div class="pkg_option_title pkg_shdw">
+        	<strong>Title</strong><br />Set a unique title of your package
+        </div>
+        <div class="pkg_option_field">
+        	<input type="text" class="pkg_textfield pkg_br" name="title" value="{$package.pkg_title}" />
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    
+    
+    <div class="pkg_option">
+		<div class="pkg_option_title pkg_shdw">
+        	<strong>Description</strong><br />Enter brief description of your package to tell users what features it has
+        </div>
+        <div class="pkg_option_field">
+        	<textarea class="pkg_textfield pkg_br" name="desc">{$package.pkg_desc}</textarea>
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    
+    {if ({$package.pkg_type}=='subs')}
+        
+            <div class="pkg_option">
+                <div class="">
+
+                    <div class="pkg_option">
+                        <div class="pkg_option_title pkg_shdw"><label><strong>Frequency </strong><br />Time frame</label></div>
+                        <select class="selectpicker" id="frequency" required="required" onchange="calculate()">
+                            <option value="1" >Daily</option>
+                            <option value="7" >Weekly</option>
+                            <option value="30" >Monthly</option>
+                            <option value="365" >Yearly</option>
+                        </select>
+                    </div>
+                    
+                    <div class="pkg_option ">
+                        <div class="pkg_option_title pkg_shdw"><label><strong>Interval </strong><br />how many?</label></div>
+                        <select class=" selectpicker" id="interval" required="required" onchange="calculate()">
+                            {for $foo=1 to 12}
+                            <option value="{$foo}" >{$foo}</option>
+                            {/for}
+                        </select>                
+                    </div>
+
+                    <div class="pkg_option ">
+                        <div class="pkg_option_title pkg_shdw"><label><strong>Total Days</strong><br />Enter number days till subscription get expired e.g 7 days equals to 1 week, set 0 to make it unlimited</label></div>
+                        <input name="days" type="text" class="pkg_textfield disabled pkg_br" readonly id="days" value="{$package.pkg_days}" required="required"/>
+                    </div>
+
+                    <div class="clearfix"></div>   
+                </div>
+            </div>
+        
+    {else}
+
+    <div class="pkg_option">
+		<div class="pkg_option_title pkg_shdw">
+        	<strong>Days</strong><br />Enter number days till subscription get expired e.g 7 days equals to 1 week, set 0 to make it unlimited
+        </div>
+        <div class="pkg_option_field">
+        	<input name="days" type="text" class="pkg_textfield pkg_br" id="days" value="{$package.pkg_days}" />
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    {/if}
+    
+    
+    
+    <div class="pkg_option">
+		<div class="pkg_option_title pkg_shdw">
+        	<strong>Price</strong><br />Set price for your subscription package           
+        </div>
+        <div class="pkg_option_field">
+        	<input name="price" type="text" class="pkg_textfield pkg_br pkg_{$paidSub->currency|strtolower}" id="price" value="{$package.pkg_price}" style="padding-left:18px;"/>
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    
+    
+    
+    {if $package.pkg_type !='ppv' && $package.pkg_type !='mins'}
+    <div class="pkg_option">
+		<div class="pkg_option_title pkg_shdw">
+        	<strong>Limit videos</strong><br />Limit number of videos user can watch, set 0 to make unlimit           
+        </div>
+        <div class="pkg_option_field">
+        	<input name="vids" type="text" class="pkg_textfield pkg_br" id="vids" value="{$package.pkg_vids}" />
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    {/if}
+    
+    {if $package.pkg_type=='mins'}
+    <div class="pkg_option">
+		<div class="pkg_option_title pkg_shdw">
+        	<strong>Minutes in this package</strong><br />Set minutes for this package that user will get after buying it       
+        </div>
+        <div class="pkg_option_field">
+        	<input type="text" class="pkg_textfield pkg_br" name="mins"  value="{$package.pkg_mins}"/>
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    {/if}
+    
+    {if $package.pkg_type=='ppv'}
+    <div class="pkg_option">
+		<div class="pkg_option_title pkg_shdw">
+        	<strong>Number of credits</strong><br />Enter number of credits for this PPV package        
+        </div>
+        <div class="pkg_option_field">
+        	<input name="credits" type="text" class="pkg_textfield pkg_br" id="credits" value="{$package.pkg_credits}" />
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    {/if}
+    
+    
+    {if $package.pkg_type!='ppv'}
+    <div class="pkg_option">
+        <div class="pkg_option_title pkg_shdw">
+            <strong>Include PPV</strong><br />allow users to watch ppv videos, set 0 to disable, set -1 for unlimit or enter digits to limit ppv videos           
+        </div>
+        <div class="pkg_option_field">
+            <input name="ppv" type="text" class="pkg_textfield pkg_br" id="ppv" value="{if !$package.pkg_ppv}0{else}{$package.pkg_ppv}{/if}"/>
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    {/if}
+    
+    
+    <div class="pkg_option">
+        <div class="pkg_option_title pkg_shdw">
+            <strong>Active Status</strong><br />change package status set either 'active' or 'inactive'
+        </div>
+        <div class="pkg_option_field">
+            <select name="active" class="pkg_textfield pkg_br" id="is_collection" style="padding:5px 5px; height:30px">
+            	<option value="yes" {if $package.active=='yes'} selected="selected"{/if}>Active</option>
+                <option value="no"  {if $package.active!='yes'} selected="selected"{/if}>Inactive</option>
+            </select>
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    
+    {if $package.pkg_type=='vids'}
+    <div class="pkg_option">
+        <div class="pkg_option_title pkg_shdw">
+            <strong>Make collection</strong><br />Make this package a collection of videos, user will get all videos that will be included in collection of this package           
+        </div>
+        <div class="pkg_option_field">
+            <select name="is_collection" class="pkg_textfield pkg_br" id="is_collection" style="padding:5px 5px; height:30px">
+            	<option value="yes" {if $package.is_collection=='yes'} selected="selected"{/if}>Yes</option>
+                <option value="no"  {if $package.is_collection!='yes'} selected="selected"{/if}>No</option>
+            </select>
+        </div>
+        <div class="clearfix"></div>   
+    </div>
+    {/if}
+    
+    <input type="hidden" name="type" value="{$package.pkg_type}" />
+    <input type="hidden" name="pkgid" value="{$package.package_id}" />
+    <input type="submit" class="btn btn-primary btn-sm" value="Update package" name="edit_package" />
+
+</div>
+
+</div>
+
+</form>
+<script>
+
+    function calculate() {
+        var frequency = document.getElementById('frequency').value; 
+        var interval = document.getElementById('interval').value;
+        var result = document.getElementById('days'); 
+        var myResult = frequency * interval;
+        result.value = myResult;
+    }
+</script>
+
+

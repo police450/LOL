@@ -1,0 +1,91 @@
+<link rel="stylesheet" type="text/css" href="{$HONEY_CAPT_HTML_URL}/styles/css/all.css">
+<link rel="stylesheet" type="text/css" href="{$HONEY_CAPT_HTML_URL}/style.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700' rel='stylesheet' type='text/css'>
+<script src="{$HONEY_CAPT_HTML_URL}/styles/js/jquery.main.js"></script>
+<section class="clearfix form-elements cb-uikit">
+         <section class="cover clearfix text-center">
+                <div class="cb-logo">
+                    <img src="{$HONEY_CAPT_HTML_URL}/styles/images/cb-logo.png" alt="" class="img-responsive">
+                </div>
+                <h1><em>CB Subtitles</em></h1>
+            </section>
+                <header class="clearfix">
+                    <h2 class="bluecolor4">Documentation</h2>
+                </header>
+            <div class="clearfix">
+                <h3 class="greycolor text_cent">Information About Plugin</h3>
+                <ul>
+                    <li><strong>Created:</strong> 6th, November, 2015</li>
+                    <li><strong>Author:</strong> Saqib Razzaq</li>
+                    <li><strong>Author Website:</strong> http://clip-bucket.com</li>
+                    <li><strong>Version:</strong> 1.0</li>
+                    <li><strong>ClipBucket Version:</strong> 2.8.x</li>
+                </ul>
+            </div>
+             <div class="clearfix">
+                <h3 class="greycolor text_cent">Why You Need Honey Caption</h3>
+                <p>CB Subtitles allows you to upload unlimited number of subtitle files for your videos in more 30 different languages. Users can then decide what caption file they need to use and language / caption   file will be switched on the fly without any pauses. Admin can control main aspects of plugin from backed such as maximum subtitle files, maximum subtitle file size, minimum video duration etc.</p>
+            </div>
+            <div class="clearfix">
+                <h3 class="greycolor text_cent">How To Install CB Subtitles Plugin</h3>
+                <p>Plugin installation is as simple as possible. Follow the steps below and you will have CB Subtitles up and running in matter of moments.</p>
+                <ol class="align_ol">
+                    <li>Unzip plugin file that you downloaded from ClipBucket webiste</li>
+                    <li>Move the folder that got after unzipping into <strong>your_cb_root_directory / plugins</strong></li>
+                    <li>Now Login to Admin area by going to <strong>http://your_website.com/admin_area</strong></li>
+                    <li>Go to plugin manager and select Honey Caption then click <strong>Install</strong></li>
+                    <li>This will install your plugin but you won't be able to use it yet</li>
+                    <li>Now Click on <strong>CB Subtitles</strong> menu appearing in your admin area and click on <strong>License Configurations</strong></li>
+                    <li>Now add your License Key and update settings</li>
+                    <li>Your plugin has been installed and ready to run. </li>
+                </ol>
+                <p> After successful installation you will see changes in 3 different places. There will be a new upload field in video upload section, new filed in Admin Area video editor as well as in user's video editor.</p>
+            </div>
+            <div class="clearfix">
+                <h3 class="greycolor text_cent">Honey Caption Configurations</h3>
+                <p>This plugin gives admin control over its functionality. You can have a look at below settings to make this plugin according to your needs.</p>
+                <ol class="align_ol">
+                    <li><strong>Enable Captions</strong></li>
+                    <ul>
+                        <li><strong>Value:</strong> Yes / No</li>
+                        <li><strong>Default:</strong> Yes</li>
+                    </ul>
+                    <p class="align_ol">It is  a simple switch. If you disable captions from here, they will be hidden all across your website. Users will be able to watch videos with captions normally but captions won't be available. Uploading of captions will also be disabled. </p>
+
+
+                    <li><strong>Maximum Files</strong></li>
+                    <ul>
+                        <li><strong>Value:</strong> Number of files </li>
+                        <li><strong>Default:</strong> 2</li>
+                    </ul>
+                    <p class="align_ol">You can limit the number of subtitle files one can upload per video. Setting this field to 0 enables subtitles for videos of all durations.</p>
+
+
+                    <li><strong>Maximum File Size</strong></li>
+                    <ul>
+                        <li><strong>Value:</strong> Size in Kbs</li>
+                        <li><strong>Default:</strong> 100</li>
+                    </ul>
+                    <p class="align_ol">You limit the file size for subtitle files by changing this value. Enter a size in Kilobytes and it will take effect immediately. </p>
+
+                    <li><strong>Minimum Video Length</strong></li>
+                    <ul>
+                        <li><strong>Value:</strong> Duration in seconds</li>
+                        <li><strong>Default:</strong> 0 (0 = all)</li>
+                    </ul>
+                    <p>It is also possible to enable subtitles only for videos longer than a certain length. You can add your video duration in seconds to enable this feature. </p>
+
+                </ol>
+            </div>
+           <div class="clearfix">
+                <h3 class="greycolor text_cent">How CB Subtitles Works</h3>
+                <p>You Upload a subtitle file and enter its name either on <strong>Video Uploading</strong> form or on <strong>Video Editing</strong> page and submit changes. File is moved to a directory called <strong>Captions</strong> inside your <strong>cb_root / files / folder</strong> and stores data in database. Now whenever you go to watch that video for which you uploaded subtitles, it brings that data from database and takes files from directory and shows you options in video player accordingly. </p>
+                <div class="alert alert-danger">
+                    <strong>Note:</strong> Plugin only supports WebTTV (.vtt) subtitle file formats at the moment
+                </div>
+        </div>
+            <div class="clearfix">
+                <h3 class="greycolor text_cent">CB Subtitles Supported Languages</h3>
+                <img src="{$HONEY_CAPT_HTML_URL}/styles/images/videojs_supported_langs.png" class="supported_langs">
+        </div>
+            </section>

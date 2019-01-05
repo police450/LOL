@@ -1,0 +1,81 @@
+<div class="heading">
+	<h2>Revenue share configurations</h2>
+</div>
+<div class="row" style="margin-left:20px;">
+	<form id="special-thumb" class="clearfix" method="post" enctype="multipart/form-data">
+		<div class="row">
+			<h5 class=""><strong>General Configurations</strong></h5>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="rev_view_per_matrix">Number of views per matrix</label>
+				<input name="rev_view_per_matrix" id="rev_view_per_matrix" type="text" value="{$rev_config.rev_view_per_matrix}"  class="form-control" placeholder="" required/>
+				<span class="smallText" style="font-size:11px;">e.g 1000</span>
+			</div>
+		</div>
+		<hr>
+		<div class="row">	
+			<h5 class=""><strong>Paypal Configurations</strong></h5>
+			<div class="col-md-4">
+				<label for="rev_currency">Currency</label><br>
+				<select name="rev_currency" id="rev_currency"  class="form-control">
+					<option value="USD" {if $rev_config.rev_currency=='USD'} selected="selected"{/if}>[$] United States Dollar</option>
+<!-- 					<option value="GBP" {if $rev_config.rev_currency=='GBP'} selected="selected"{/if}>[£] Great Britain Pound</option>
+					<option value="EUR" {if $rev_config.rev_currency=='EUR'} selected="selected"{/if}>[€] Euro</option> -->
+				</select>
+				<p class="grey-text font-size" style="margin-top:0px;">Select in which currency you want to charge use.</p>
+			</div>
+			
+			<div class="col-md-4">
+				<label for="rev_test_mode">Enable Test Mode</label><br>
+				<select name="rev_test_mode" id="rev_test_mode" class="form-control">
+					<option value="enabled" {if $rev_config.rev_test_mode=='enabled'} selected="selected"{/if}>Yes</option>
+					<option value="disabled" {if $rev_config.rev_test_mode=='disabled'} selected="selected"{/if}>No</option>
+				</select>
+				<p class="grey-text font-size" style="margin-top:0px;"> If yes, all payments will be made using Test mode</p>
+			</div>
+			<div class="col-md-4">  
+              <label for="rev_paypal_email">Paypal Account Email</label>
+              <input name="rev_paypal_email" type="text" id="rev_paypal_email" value="{$rev_config.rev_paypal_email}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your paypal email account</p>
+            </div>
+
+
+		</div>
+		<div class="row">
+			
+            <div class="col-md-4">  
+              <label for="rev_paypal_sandbox_email">Paypal Sandbox Email</label>
+              <input name="rev_paypal_sandbox_email" type="text" id="rev_paypal_sandbox_email" class="form-control" value="{$rev_config.rev_paypal_sandbox_email}" />
+              <p class="grey-text font-size" style="margin-top:0px;">Enter paypal sandbox email for testing purpose</p>
+            </div>
+            <div class="col-md-4">  
+              <label for="rev_paypal_client_id">Client ID *</label>
+              <input name="rev_paypal_client_id" type="text" id="rev_paypal_client_id" value="{$rev_config.rev_paypal_client_id}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your paypal client id</p>
+            </div>
+            <div class="col-md-4">  
+              <label for="rev_paypal_secret">Client Secret *</label>
+              <input name="rev_paypal_secret" type="text" id="rev_paypal_secret" value="{$rev_config.rev_paypal_secret}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your paypal client secret</p>
+            </div>
+			
+		</div>
+		<div class="row">
+			
+            <div class="col-md-4">
+              <label for="rev_paypal_rest_api">Use Rest API</label>
+              <select name="rev_paypal_rest_api" id="rev_paypal_rest_api" class="form-control">
+              <option value="yes" {if $rev_config.rev_paypal_rest_api!='no'} selected="selected"{/if}>Yes</option>
+<!--               <option value="no" {if $rev_config.rev_paypal_rest_api=='no'} selected="selected"{/if}>No</option> -->
+             </select>
+              <p class="grey-text font-size" style="margin-top:0px;">Allow users to choose new paypal integration</p>
+            
+            </div>			
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<input type="submit" name="rev_update_confs" class="form-control btn btn-primary btn-block" value="Update configurations"  />
+			</div>
+		</div>
+	</form>
+</div>

@@ -1,0 +1,19 @@
+<div class="item {if $smarty.section.e_list.rownum == 1}active{/if} clearfix">
+	<a href="{videoLink($video)}">
+		<div class="video_hover"></div>
+		<img class="img_" src="{getThumb vdetails=$video size='768x432'}">
+	</a>
+	<div class="caption_detial">
+		<h2>{$video.title}</h2>
+		<div class="inner-detial">
+			<span class="view">
+				<span class="icon-eye"></span>
+				{$video.views}&nbsp;{lang code='views'}
+			</span>
+			<span class="month">
+				<span class="icon-clock2"></span>
+				{$video.date_added|niceTime}
+			</span>
+		</div>
+	</div>
+</div>

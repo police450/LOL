@@ -1,0 +1,62 @@
+	
+	.captions_section {
+		background-color: #576373;
+	}
+	.colored {
+		color : white;
+	}
+	.subs_upload_section {
+		margin-bottom: 20px;
+	}
+	.text_cent {
+		text-align:center
+	}
+	.subs_action {
+		float: left;
+		margin-top: -3px;
+	}
+	.dropdown {
+		margin-bottom: 10px;
+	}
+	.margin_bottom_x {
+		margin-bottom: 10px;
+	}
+
+	.margin_top_x {
+		margin-top: 10px;
+	}
+
+	#dropdownMenu1 {
+		margin-right: 20px;
+	}
+
+	.subs_actions {
+		margin-top: 25px;
+	}
+
+	.custom-elements {
+
+	}
+
+	.file-area .jcf-input-wrapper {
+		width: 100% !important;
+		height: 30px !important;
+	}
+
+	.file-area .jcf-upload-button {
+		width: 100%;
+		height: 30px;
+	}
+
+	.subs_notif {
+		width: 98%;
+		margin-left: 1%;
+	}
+
+	.align_ol {
+		margin-left: 50px !important;
+	}
+
+	.supported_langs {
+		margin-left: 150px;
+	}

@@ -1,0 +1,525 @@
+{if $display_type=='sid'}
+	<div class="clearfix thumb-holder item col-lg-2">
+		<a class="" href="{videoLink($video)}" title="{$video.title|title}">
+			<img class="img-responsive plylist_thumb" src="{getThumb vdetails=$video size=416x260 }">
+			<h2 class="f-title">{$video.title|truncate:22}</h2>
+			<div class="Collection__plyalist"></div>
+		</a>
+	</div>
+{/if}
+
+
+
+
+{if $display_type=='popVideos_sidebar'}
+<div class="clearfix">
+	<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 vido__wth__rea">
+		<a href="{videoLink($pop_video)}" class="video-vid">
+			<img src="{getThumb vdetails=$pop_video size=416x260}" {ANCHOR place="video_thumb" data=$pop_video} class="img-responsive">
+			<time datetime="2016-15-03" class="duration">{if $pop_video.duration>1}{$pop_video.duration|SetTime}{else}00:00{/if}</time>
+		</a>
+	</div> <!--VIDEO_THUMB END-->
+	<div class="col-lg-7 col-md-7 col-sm-7 col-xs-7 vido__wth__rea">
+		<a href="{videoLink($pop_video)}" class="video-vid">
+			<h2 class="f-title">{$pop_video.title|truncate:60}</h2>
+		</a>
+		<p>{$pop_video.username}</p>
+		<span>{$pop_video.views}&nbsp;{lang code="views"}</span>
+	</div>		
+</div>
+{/if}
+{if $display_type=='collection'}
+	<div class="col">
+		<div data-videoid="{$video.videoid}" class=" thumbs-rotate thumbs-rotate-{$video.videoid} item-video collection" onmouseover="rotate_thumb('{$video.videoid}', '.thumbs-rotate-');">
+			<div class="clearfix thumb-holder userAppending">
+				<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+					<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 }">
+				</a>
+				<img src="{$theme}/images/thumb-ratio.png" class="thumb-ratio" alt="{$video.broadcast}">
+			</div>
+			<h2 class="title">{$video.title}</h2>
+		</div>
+	</div>
+{/if}
+
+{if $display_type=='homeVideos'}
+	<div class="col">
+		<div data-videoid="{$video.videoid}" class=" col-lg-2 col-md-2 col-sm-3 col-xs-12 movie_area thumbs-rotate thumbs-rotate-{$video.videoid} item-video" onmouseover="rotate_thumb('{$video.videoid}', '.thumbs-rotate-');">
+			<div class="clearfix thumb-holder userAppending">
+				<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+					<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 }">
+				</a>
+				<img src="{$theme}/images/thumb-ratio.png" class="thumb-ratio" alt="{$video.broadcast}">
+				<h2 class="title">{$video.title|truncate:22}</h2>
+			</div>
+			<span class="icon-arrow_drop_down actionac collapsed" data-toggle="collapse" data-target="#allvideoid"></span>
+		</div>
+	</div>
+{/if}
+{if $display_type=='detialhomeVideos'}
+		<section id="allvideoid" class="detial_video_thumb collapse">
+			<span class="icon-cancel"></span>
+			<div class="block-holder col-lg-12">
+				<div class="text-col col-lg-5 col-md-5">
+					<h1 class="title">{$video.title}</h1>
+					<p> The  NBA  Finals  is  the  championship  series  of  the  National  Basketball  Association.  The  entrants  are  determined  by  the  victors  of  the  Eastern  and  Western  conferences,  who  engage  in  a  best-of-seven </p>
+					<ul>
+						<li>
+							Cast &nbsp;:
+							<a href="#">&nbsp;Action &nbsp;</a>
+							<a href="#">Horror</a>
+						</li>
+						<li>
+							category &nbsp;:
+							<a href="#">&nbsp;Horror</a>
+						</li>
+						<li>
+							Seasons &nbsp;:
+							<a href="#">&nbsp;Seasons 7</a>
+						</li>
+						<li>
+							Released &nbsp;:
+							<a href="#">&nbsp;Monday, October 9, 2017</a>
+						</li>
+						<li>
+							Upload time &nbsp;:
+							<a href="#">&nbsp;Dec 9, 2017</a>
+						</li>
+					</ul>
+					<button class="like btn">
+						<i class="fa fa-heart" aria-hidden="true"></i>
+						like 12
+					</button>
+					<button class="Comment btn">
+						Watch Now
+					</button>
+				</div>
+				<div class="img-col col-lg-7 col-md-7">
+					<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+						<div class="fullblack"></div>
+						<img class="img-responsive cover" src="{getThumb vdetails=$video size=632x395 }">
+					</a>
+				</div>
+			</div>
+		</section>
+{/if}
+{if $display_type=='ajaxHome'}
+{if $total_vids}
+	<div style="display: none" id="total_videos_recent">{$total_vids}</div>
+{/if}
+<div style="display: none" data-videoid="{$video.videoid}" class="thumbs-rotate thumbs-rotate-{$video.videoid}  item-video col-lg-4 col-md-4 col-sm-4 col-xs-12 recentAppending" onmouseover="rotate_thumb('{$video.videoid}', '.thumbs-rotate-');">
+	<div class="clearfix thumb-holder">
+		<!-- <a class="video-link cd-popup-trigger" href="{videoLink($video)}" onclick="_cb.getModalVideo({$video.videoid})" title="{$video.title|title}"> -->
+		<a {if config('popup_video') == 'yes'}
+			class="video-link cd-popup-trigger" onclick="_cb.getModalVideo({$video.videoid})" 
+		{else}
+			class="video-link" 
+		{/if} 
+		href="{videoLink($video)}" title="{$video.title|title}">
+			<img class="lazy img-responsive" src="{getThumb vdetails=$video size=416x260 }">
+		</a>
+		<img src="{$theme}/images/thumb-ratio.png" class="thumb-ratio" alt="">
+
+		{ANCHOR place='in_video_thumb' data=$video}
+		<span class="duration" title="Video duration : {if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}">{if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}</span>
+
+	</div>
+	<div class="clearfix video-info">
+		<h2 class="title"><a href="{videoLink($video)}">{$video.title|truncate:50}</a></h2>
+		<div class="clearfix views-date">
+			<span> 
+				<span class="icon-eye"></span>
+				{$video.views}&nbsp;{lang code="views"}</span>
+			<time class="date" datetime="2016-15-03">
+				<span class="icon-clock2"></span>
+				{$video.date_added|niceTime}
+			</time>
+		</div>
+	</div>
+</div>
+{/if}
+
+
+{if $display_type=='channelHome'}
+{if $total_vids}
+	<div style="display: none" id="total_videos_recent">{$total_vids}</div>
+{/if}
+<div style="display: none" data-videoid="{$video.videoid}" class="thumbs-rotate thumbs-rotate-{$video.videoid} item-video waper-block col-lg-4 col-md-4 col-sm-4 col-xs-12 recentAppending" onmouseover="rotate_thumb('{$video.videoid}', '.thumbs-rotate-');">
+	<div class="item-video">
+		<div class="clearfix thumb-holder userAppending">
+		<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+			<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 }">
+		</a>
+		<img src="{$theme}/images/thumb-ratio.png" class="thumb-ratio" alt="{$video.broadcast}">
+
+		{ANCHOR place='in_video_thumb' data=$video}
+		<span class="duration">{if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}</span>
+	</div>
+	<div class="clearfix video-info">
+		<h2 class="title"><a href="{videoLink($video)}">{$video.title|truncate:50}</a></h2>
+	<!-- 	<span class="author">{lang code="by"}&nbsp;<a href="{$userquery->profile_link($video)}">{$video.username}</a></span> -->
+		<div class="clearfix views-date">
+			<span>
+				<span class="icon-eye"></span>
+				{$video.views}&nbsp;{lang code="views"}</span>
+			<time class="date" datetime="2016-15-03">
+				<span class="icon-clock2"></span>
+				{$video.date_added|niceTime}
+			</time>
+			<span><p class="icon-comment"></p>{$video.comments_count}&nbsp;Comments</span>
+		</div>
+		<like class="like-user">
+		 	<div class="img-like-user">
+		 		
+		 		{assign var="voter_id" value=$video.voter_ids|json_decode:1 }
+
+		 		{$i = 1}
+		 		{foreach $voter_id as $user}
+		 		<a href="{$userquery->profile_link($user->userid)}"><img  src="{$userquery->getUserThumb(false,false,$user->userid)}" class="img-useriner img-circle" title="{$user->username}" width="25" height="25"></a>
+	 		 	{if ($i++ == 3)}
+	 		 	{break}
+	 		 	{/if}
+		 		{/foreach}
+		 		{if $video.rated_by==0}
+		 		<p class="like-value">Video is not being rated yet!</p>
+		 		{else}
+		 		<p class="like-value">{$video.rated_by}</p>
+		 		{/if}
+		 		
+		 	</div>
+		 	{$ratedBy = has_rated(userid(),$id,$type)}
+		 	<button {if !$disable} onclick="_cb.rateNew('{$video.videoid}','5','video')"{/if} href="javascript:void(0)" class="like-vid dislike-vid">
+		 		<span class="icon-heart2"></span>
+		 	</button>
+		</like>
+	</div>
+</div>
+</div>
+{/if}
+
+
+{if $display_type=='featuredVideos_sidebar'}
+	<div class="featured-video clearfix">
+		<div class="video_thumb">
+			<a href="{videoLink($video)}">
+				<img src="{getThumb vdetails=$video size=168x105}" {ANCHOR place="video_thumb" data=$video} class="img-responsive">
+				<time datetime="2016-15-03" class="duration">{if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}</time>
+			</a>
+			<img src="{$theme}/images/thumb-ratio.png" class="thumb-ratio" alt="">
+		</div> <!--VIDEO_THUMB END-->
+		
+		<div class="details_block">
+			<strong class="title"><a href="{videoLink($video)}">{$video.title|truncate:50}</a></strong>
+			<span class="author">{lang code="by"}&nbsp;<a href="{$userquery->profile_link($video)}">{$video.username}</a></span>
+			<div class="views-date">
+				<span>{$video.views}&nbsp;{lang code="views"}</span>
+			</div>
+		</div>
+	</div>
+{/if}
+
+{if $display_type=='featuredHome'}
+{if $total_vids}
+	<div style="display: none" id="total_videos_featured">{$total_vids}</div>
+{/if}
+<div style="display: none" data-videoid="{$video.videoid}" class="thumbs-rotate thumbs-rotate-{$video.videoid} item-video col-lg-4 col-md-4 col-sm-4 col-xs-12 featAppending" onmouseover="rotate_thumb('{$video.videoid}', '.thumbs-rotate-');">
+	<div class="clearfix thumb-holder">
+		<a {if config('popup_video') == 'yes'}
+			class="video-link cd-popup-trigger" onclick="_cb.getModalVideo({$video.videoid})" 
+		{else}
+			class="video-link" 
+		{/if} 
+		href="{videoLink($video)}" title="{$video.title|title}">
+			<div class="like-vid"><i class="fa fa-heart" aria-hidden="true"></i> {$video.rated_by} </div>
+			<img class="img-responsive" src="{getThumb vdetails=$video size=632x395 }">
+			<h2 class="f-title">{$video.title|truncate:40}</h2>
+		</a>
+		<img src="{$theme}/images/thumb-ratio.png" class="thumb-ratio" alt="">
+		
+			{ANCHOR place='in_video_thumb' data=$video}
+			<span class="duration" title="Video duration : {if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}">{if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}</span>
+	</div>
+</div>
+{/if}
+
+{if $display_type=='normal' || $display_type==''}
+<div class="item-video col-lg-6 col-md-6 col-sm-6 col-xs-12">
+	<div class="clearfix thumb-holder">
+		<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+			<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 }">
+		</a>
+		<img src="{$theme}/images/thumb-ratio.png" class="thumb-ratio" alt="">
+		
+		{ANCHOR place='in_video_thumb' data=$video}
+<!-- quicklist removed -->
+<!-- 		<button data-quick="quick-{$video.videoid}"
+ class="icon-plus2 cb_quickie cb-btn-quick-{$video.videoid} {if in_array($video.videoid, $qlist_vids)}icon-tick{/if}" vtitle="{$video.title}" v-id="{$video.videoid}" vlink="{videoLink($video)}" vthumb="{getThumb vdetails=$video size=600x338 }" vduration="{$video.duration|SetTime}" title="Add {$video.title} to Quicklist">
+		</button> -->
+		<span class="duration">{if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}</span>
+		
+	</div>
+	<div class="clearfix video-info">
+		<h2 class="title"><a href="{videoLink($video)}">{$video.title|truncate:50}</a></h2>
+		<span class="author">{lang code="by"}&nbsp;<a href="{$userquery->profile_link($video)}">{$video.username}</a></span>
+		<div class="clearfix views-date">
+			<span>{$video.views}&nbsp;{lang code="views"}</span>
+			<time class="date" datetime="2016-15-03">{$video.date_added|niceTime}</time>
+		</div>
+	</div>
+</div>
+{/if}
+
+{if $display_type=='user_videos'}
+<div class="col-md-3  col-sm-4  col-xs-6">
+	<a href="{videoLink($video)}" title="{$video.title|title}">
+		<img alt="{$video.title|title}" src="{getThumb vdetails=$video size='416x260'}" id="thumbs_{$video.videoid}"  title="{$video.title|title}"/>
+	</a>
+	<p class="cbHomeVidDuration duration_view">
+		{if $video.duration>1}
+			{$video.duration|SetTime}
+		{else}
+			00:00
+		{/if}
+	</p>
+	<a href="{videoLink($video)}" title="{$video.title|title}"><h5>
+	<b> {$video.title|truncate:25}</b></h5></a>                     
+	<span class="pull-left"><h5><small>{$video.views}&nbsp;{lang code="views"}</small></h5></span>
+	<span class="pull-right"><h5><small>{$video.date_added|niceTime}</small></h5></span>
+</div>
+{/if}
+
+{if $display_type=='playlistVideos'}
+	<div class="video_thumb col-lg-2 col-md-2 col-sm-12 col-xs-12">
+		<a class="video_link" href="{videoLink($video)}" title="{$video.title|title}">
+			<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 }">
+			<div class="play-info">
+				<strong class="title">{$video.title|truncate:30}</strong>
+				<i class="icon-playweb"></i>
+				<span class="duration">{if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}</span>
+			</div>
+		</a>
+		{ANCHOR place='in_video_thumb' data=$video}
+<!-- quicklist removed -->
+<!-- 		<i data-quick="quick-{$video.videoid}"
+	 class="icon-plus2 add_icon cb_quickie cb-btn-quick-{$video.videoid} {if in_array($video.videoid, $qlist_vids)}icon-tick{/if}" title="Add {$video.title} to Quicklist"></i> -->
+	</div>
+{/if}
+
+{if $display_type=='related'}
+	<div class="item_video row clearfix">
+	<div class="col-xs-6">
+		<div class="row cb_item_thumb video_thumb">
+			<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+				<span class="duration">{if
+					$video.duration>1}{$video.duration|SetTime}{else}00:00{/if}{*$video.duration|date_format:$config.time*}
+				</span>
+				<i class="icon-playweb play-icon"></i>
+				<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 } " border="1" />
+			</a>
+			{ANCHOR place='in_video_thumb' data=$video}
+<!-- quicklist removed -->
+<!-- 			<button data-quick="quick-{$video.videoid}"
+				 class="icon-plus2 add_icon cb_quickie cb-btn-quick-{$video.videoid} {if in_array($video.videoid, $qlist_vids)}icon-tick{/if}" vtitle="{$video.title}" v-id="{$video.videoid}" vlink="{videoLink($video)}" vthumb="{getThumb vdetails=$video size=600x338 }" vduration="{$video.duration|SetTime}" title="Add {$video.title} to Quicklist">
+	 		</button> -->
+		</div>
+	</div>
+	<div class="col-xs-6">
+		<h5 class="dropdown hide_btn">
+			<a data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" data-delay="1000" data-close-others="false" onClick="location.href='{videoLink($video)}'" href="{videoLink($video)}">{$video.title|truncate:15} </a>
+		</h5>
+		
+		<h5>{lang code="by"}&nbsp;<a href="{$userquery->profile_link($video)}">{name($video)}</a></h5>
+		<div class="clearfix views-time">
+			<span><span class="icon-eye"></span> {$video.views}&nbsp;{lang code="views"}</span>
+		</div>
+	</div>
+</div>
+{/if}
+
+{if $display_type=='morefrom-channel'}
+	<div class="item_video clearfix">
+		<div class="clearfix vid_thumb">
+			<div class="cb_item_thumb video_thumb">
+				<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+					<span class="duration">{if
+						$video.duration>1}{$video.duration|SetTime}{else}00:00{/if}{*$video.duration|date_format:$config.time*}
+					</span>
+					<i class="icon-playweb play-icon"></i>
+					<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 } " border="1" />
+				</a>
+				{ANCHOR place='in_video_thumb' data=$video}
+<!-- quicklist removed -->
+<!-- 			<button data-quick="quick-{$video.videoid}"
+				 class="icon-plus2 add_icon cb_quickie cb-btn-quick-{$video.videoid} {if in_array($video.videoid, $qlist_vids)}icon-tick{/if}" vtitle="{$video.title}" v-id="{$video.videoid}" vlink="{videoLink($video)}" vthumb="{getThumb vdetails=$video size=600x338 }" vduration="{$video.duration|SetTime}" title="Add {$video.title} to Quicklist">
+	 		</button> -->
+			</div>
+		</div>
+		<div class="clearfix">
+			<h5 class="dropdown hide_btn">
+				<a data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" data-delay="1000" data-close-others="false" onClick="location.href='{videoLink($video)}'" href="{videoLink($video)}">{$video.title|truncate:15} </a>
+			</h5>
+		</div>
+</div>
+{/if}
+
+{if $display_type=='view_videos'}
+<div class="item_video">
+	<div class="clearfix">
+		<div class="cb_item_thumb video_thumb">
+			<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+				<span class="duration">{if
+					$video.duration>1}{$video.duration|SetTime}{else}00:00{/if}{*$video.duration|date_format:$config.time*}
+				</span>
+				<i class="icon-playweb play-icon"></i>
+				<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 } " border="1" />
+			</a>
+			{ANCHOR place='in_video_thumb' data=$video}
+<!-- quicklist removed -->
+<!-- 			 <img src="{$imageurl}/dot.gif" data-quick="quick-{$video.videoid}"
+		 class="icon-plus2 add_icon cb_quickie cb-btn-quick-{$video.videoid} {if in_array($video.videoid, $qlist_vids)}icon-tick{/if}" title="Add {$video.title} to Quicklist" alt=""> -->
+		</div>
+	</div>
+	<div class="clearfix">
+		<h5 class="dropdown hide_btn">
+			<a data-hover="dropdown" data-toggle="dropdown" class="dropdown-toggle" data-delay="1000" data-close-others="false" onClick="location.href='{videoLink($video)}'" href="{videoLink($video)}">{$video.title|truncate:30} </a>
+			
+		</h5>
+		
+		<h5>{lang code="by"}&nbsp;<a href="{$userquery->profile_link($video)}">{name($video)}</a>&nbsp;{$video.date_added|niceTime}</h5>
+		<h5><span class="icon-eye"></span> {$video.views}&nbsp;{lang code="views"}</h5>
+	</div>
+</div>
+{/if}
+{if $display_type=='trendingdHome'}
+	{if $total_vids}
+		<div style="display: none" id="total_videos_featured">{$total_vids}</div>
+	{/if}
+	<div data-videoid="{$video.videoid}" class="thumbs-rotate thumbs-rotate-{$video.videoid} item-video TreaAppending" onmouseover="rotate_thumb('{$video.videoid}', '.thumbs-rotate-');">
+		<div class="clearfix thumb-holder tile-white-selected">
+			<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+				<img class="img-responsive" src="{getThumb vdetails=$video size=632x395 }">
+				<h2 class="title">{$video.title|truncate:30}</h2>
+			</a>
+			<span class="icon-arrow_drop_down actionac collapsed" data-toggle="collapse" data-target="#detial"></span>
+			<img src="{$theme}/images/thumb-ratio.png" class="thumb-ratio" alt="">
+		</div>
+	</div>
+{/if}
+{if $display_type=='trendingdHomemore'}
+	{if $total_vids}
+		<div style="display: none" id="total_videos_featured">{$total_vids}</div>
+	{/if}
+	<div class="block-holder col-lg-12">
+		<div class="text-col col-lg-5 col-md-5">
+			<h1 class="title">{$video.title}</h1>
+			<p> The  NBA  Finals  is  the  championship  series  of  the  National  Basketball  Association.  The  entrants  are  determined  by  the  victors  of  the  Eastern  and  Western  conferences,  who  engage  in  a  best-of-seven </p>
+			<ul>
+				<li>
+					Cast &nbsp;:
+					<a href="#">&nbsp;Action &nbsp;</a>
+					<a href="#">Horror</a>
+				</li>
+				<li>
+					category &nbsp;:
+					<a href="#">&nbsp;Horror</a>
+				</li>
+				<li>
+					Seasons &nbsp;:
+					<a href="#">&nbsp;Seasons 7</a>
+				</li>
+				<li>
+					Released &nbsp;:
+					<a href="#">&nbsp;Monday, October 9, 2017</a>
+				</li>
+				<li>
+					Upload time &nbsp;:
+					<a href="#">&nbsp;Dec 9, 2017</a>
+				</li>
+			</ul>
+			<button class="like btn">
+				<i class="fa fa-heart" aria-hidden="true"></i>
+				like 12
+			</button>
+			<button class="Comment btn">
+				Watch Now
+			</button>
+		</div>
+		<div class="img-col col-lg-7 col-md-7">
+			<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+				<div class="fullblack"></div>
+				<img class="img-responsive cover" src="{getThumb vdetails=$video size=632x395 }">
+			</a>
+		</div>
+	</div>
+{/if}
+
+<!-- all_catvideo -->
+{if $display_type=='catvideo'}
+	{if $total_vids}
+		<div style="display: none" id="total_videos_featured">{$total_vids}</div>
+	{/if}
+	<li>
+		<div class="slide">
+			<div class="clearfix thumb-holder tile-white-selected">
+				<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+					<img class="img-responsive" src="{getThumb vdetails=$video size=632x395 }">
+					<h2 class="title">{$video.title|truncate:30}</h2>
+				</a>
+				<span class="icon-arrow_drop_down actionac collapsed" data-toggle="collapse" data-target="#catvideo"></span>
+				<img src="{$theme}/images/thumb-ratio.png" class="thumb-ratio" alt="">
+			</div>
+		</div>		
+	</li>
+{/if}
+<!--close_all_catvideo -->
+
+
+<!-- Show_detial_all_catvideo -->
+{if $display_type=='catvideodtl'}
+	{if $total_vids}
+		<div style="display: none" id="total_videos_featured">{$total_vids}</div>
+	{/if}
+	<div class="block-holder col-lg-12">
+		<div class="text-col col-lg-5 col-md-5">
+			<h1 class="title">{$video.title}</h1>
+			<p> The  NBA  Finals  is  the  championship  series  of  the  National  Basketball  Association.  The  entrants  are  determined  by  the  victors  of  the  Eastern  and  Western  conferences,  who  engage  in  a  best-of-seven </p>
+			<ul>
+				<li>
+					Cast &nbsp;:
+					<a href="#">&nbsp;Action &nbsp;</a>
+					<a href="#">Horror</a>
+				</li>
+				<li>
+					category &nbsp;:
+					<a href="#">&nbsp;Horror</a>
+				</li>
+				<li>
+					Seasons &nbsp;:
+					<a href="#">&nbsp;Seasons 7</a>
+				</li>
+				<li>
+					Released &nbsp;:
+					<a href="#">&nbsp;Monday, October 9, 2017</a>
+				</li>
+				<li>
+					Upload time &nbsp;:
+					<a href="#">&nbsp;Dec 9, 2017</a>
+				</li>
+			</ul>
+			<button class="like btn">
+				<i class="fa fa-heart" aria-hidden="true"></i>
+				like 12
+			</button>
+			<button class="Comment btn">
+				Read Comments
+			</button>
+		</div>
+		<div class="img-col col-lg-7 col-md-7">
+			<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+				<div class="fullblack"></div>
+				<img class="img-responsive cover" src="{getThumb vdetails=$video size=632x395 }">
+			</a>
+		</div>
+	</div>
+{/if}
+<!-- close_detial_all_catvideo -->

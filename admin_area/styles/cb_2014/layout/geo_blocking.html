@@ -1,0 +1,55 @@
+
+{assign var='countries' value=$Cbucket->get_isblocked_countries(0)}
+<!-- Displaying Countries -->
+<form method="post" action="">
+    <div class="form-group">
+        <h2>Geo Block Countries</h2>
+        <h2><label for="country">{lang code='Select Country'}</label></h2>
+        <select class="form-control" name="b_country_id" id="b_country_id" required="required">
+            <option value="" selected="selected">Select country to block</option>
+            {foreach from=$countries item=country key=code}
+            <option value="{$country.country_id}" {if $user.country==$country.name} selected="selected"{/if}>{$country.name}</option>
+            {/foreach}
+        </select>
+    </div>
+    <div class="form-group">
+        <input type="submit" name="block" id="block" value=" Block " class="btn btn-md btn-primary">    
+    </div>
+
+</form>
+
+
+{assign var='is_b_countries' value=$Cbucket->get_isblocked_countries(1)}
+{if !empty($is_b_countries)}
+<table class="table table-striped">
+ <thead>
+    <tr>
+        <th>Country id</th>
+        <th>Country code</th>
+        <th>Country name</th>
+        <th>Unblock country</th>
+
+    </tr>
+</thead>
+<tbody>
+    {foreach from=$is_b_countries item=bcountry key=code}
+    <form method="post" action="">
+        <tr>
+            <td>{$bcountry.country_id}</td>
+            <td>{$bcountry.iso2}</td>
+            <td>{$bcountry.name}</td>
+            <input type="hidden" name="ub_country_id" id="ub_country_id" value="{$bcountry.country_id}" >
+            <td><input type="submit" name="unblock" id="unblock" value=" Unblock " class="btn btn-xs btn-primary"></td>
+        </tr>
+    </form>
+    {/foreach}
+</tbody>
+</table>
+
+{else}
+<div align="center"><strong><em>{lang code='no_geolocked_countries'}</em></strong></div>
+{/if}
+
+
+
+

@@ -1,0 +1,104 @@
+<div class="heading">
+    <h2>Manage Ads</h2>
+</div>
+<div class="list-ads row" style="margin:0.1% 0 7% 0;" >
+	<table class="table">
+    <thead>
+	    <tr>
+	        <th>#</th>
+	        <th>Description</th>
+	        <th>Tag</th>
+	        <th>Status</th>
+	        <th>Current Impressions</th>
+	        <th>Target Impressions</th>
+	        <th>Start Date</th>
+	        <th>End Date</th>
+	        <th>Actions</th>
+	    </tr>
+    </thead>
+    <tbody>
+    	{if $ultimate_ads}
+    	{foreach $ultimate_ads as $ad}
+	    <tr>
+	        <td>{$ad.ad_id}</td>
+	        <td>
+		        <span data-toggle="popover" title="Ad Description" data-content="{$ad.ad_desc}">
+		        	<span class="label label-primary">View Description</span>
+		        </span>
+	        </td>
+	        <td>
+		        <span data-toggle="popover" title="Ad Tag" data-content="{$ad.ad_tag}">
+		        	<span class="label label-primary">View Tag</span>
+		        </span>
+	        </td>
+	        <td>
+	        	{if $ad.ad_status == 1}
+	        		<span class="label label-success">active</span>
+	        	{else if $ad.ad_status == 0}
+	        		<span class="label label-warning">Inactive</span>
+	        	{/if}
+	        </td>
+	        <td><span class="label label-default label-ads ">{$ad.impressions}</span></td>
+	        <td><span class="label label-default label-ads ">{$ad.target_imp}</span></td>
+	        <td><span class="label label-info  ">{unix_to_date($ad.start_date,true)}</span></td>
+	        <td><span class="label label-info  ">{unix_to_date($ad.end_date,true)}</span></td>
+	        <td>
+	        	<div class="dropdown">
+					<button 
+					class="btn btn-default btn-sm dropdown-toggle ads-dropdrown" 
+					type="button" 
+					id="menu1" 
+					data-toggle="dropdown">
+						Actions
+					  	<span class="caret"></span>
+					</button>
+					  	<ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+						    <li role="presentation">
+						    	<a role="menuitem" href="{$baseurl}/admin_area/plugin.php?folder={$cb_uads_manager}/admin&file=edit_ad.php&edit={$ad.ad_id}">
+						    		Edit
+						    	</a>
+						    </li>
+						    {if $ad.ad_status == 0}
+						    <li role="presentation">
+						    	<a role="menuitem" href="{$baseurl}/admin_area/plugin.php?folder={$cb_uads_manager}/admin&file=uads.php&activate={$ad.ad_id}">
+						    		Activate
+						    	</a>
+						    </li>
+						    {else if $ad.ad_status == 1}
+						    <li role="presentation">
+						    	<a role="menuitem" href="{$baseurl}/admin_area/plugin.php?folder={$cb_uads_manager}/admin&file=uads.php&deactivate={$ad.ad_id}">
+						    		Deactivate
+						    	</a>
+						    </li>
+						    {/if}
+						    <li role="presentation" class="divider"></li>
+						    <li role="presentation">
+						    	<a role="menuitem" href="{$baseurl}/admin_area/plugin.php?folder={$cb_uads_manager}/admin&file=uads.php&delete={$ad.ad_id}">
+						    		Delete
+						    	</a>
+						    </li>
+					  	</ul>
+				</div>
+	        </td>
+	    </tr>
+	    {$ad_exists = true}
+	    {/foreach}
+	    {else}
+	    {$ad_exists = false}
+	    {/if}
+    </tbody>
+  </table>
+  {if $ad_exists == false}
+  	<span  class="alert alert-info">No Ad added in the system !</span>
+  {/if}
+  {include file="$style_dir/blocks/pagination.html" }
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+
+		$('[data-toggle="popover"]').popover({ trigger: "hover" }); 
+	
+	});
+</script>
+

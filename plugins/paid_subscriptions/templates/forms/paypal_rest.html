@@ -1,0 +1,102 @@
+<script src="https://www.paypalobjects.com/api/checkout.js"></script>
+<div id="paypal-button-container"></div>
+  {$type}
+{if $paidSub->configs.test_mode == 'enabled'}
+    {$environment = 'sandbox'}
+{else}
+    {$environment = 'production'}
+{/if}
+
+<script>
+    var environment = "{$environment}";
+    var paid_subs_url = "{$paid_subs_url}";
+    var orderId = "";
+    var subscriptionId = "";
+    var invoiceId = "";
+    var type = "{$type}";
+
+    var request = {
+        "package_id" : "{$package.package_id}",
+        "package_title" : "{$package.pkg_title}",
+        "package_desc" : "{$package.pkg_desc}",
+        "package_days" : "{$package.pkg_days}",
+        "package_price" : "{$package.pkg_price}",
+        "type":type
+    }
+
+    if (type == 'renew'){
+        request.subscription_id = "{$sub.subscription_id}";
+    }
+
+    // Render the PayPal button
+    paypal.Button.render({
+
+        // Set your environment
+        env: environment, // sandbox | production
+
+        // Wait for the PayPal button to be clicked
+        payment: function(resolve, reject) {
+
+            // Make a call to the merchant server to set up the payment
+            var CREATE_PAYMENT_URL = paid_subs_url+'/ipn/paypal_rest_api/initiate.php';
+            return paypal.request.post(CREATE_PAYMENT_URL,request)
+                .then(function(data) { 
+                    if (data.err){
+                        console.log(data.err);
+                        $("#callback-message").fadeIn(500);
+                        $("#callback-message").html(data.err);
+                        setTimeout(function(){
+                            $("#callback-message").fadeOut(500);
+                            $("#callback-message").html("");
+                        },4000);
+                    }else{
+                        orderId = data.order_id;
+                        subscriptionId = data.subscription_id;
+                        invoiceId = data.invoice_id;
+                        resolve(data.paymentID);
+                    }
+
+                }).catch(function(err) { 
+                    reject(err); 
+                });
+        },
+
+        // Wait for the payment to be authorized by the customer
+        onAuthorize: function(data, actions) {
+
+            // Make a call to the merchant server to execute the payment
+            var EXECUTE_PAYMENT_URL = paid_subs_url+'/ipn/paypal_rest_api/execute.php';
+
+            var execute_request = {
+                invoiceId : invoiceId,
+                paymentID : data.paymentID,
+                payerID : data.payerID,
+                subscriptionId : subscriptionId,
+                orderId : orderId,
+            }
+            
+            return paypal.request.post(EXECUTE_PAYMENT_URL,execute_request)
+                .then(function(data) { 
+                    if (data.err){
+                        
+                        console.log(data.err);
+                        $("#callback-message").fadeIn(500);
+                        $("#callback-message").html(data.err);
+                        setTimeout(function(){
+                            $("#callback-message").fadeOut(500);
+                            $("#callback-message").html("");
+                        },4000);
+
+                    } else{
+                        console.log(data);
+                        console.log("executed");
+                        //window.location = baseurl+"/module.php?s=premium&p=thank_you";
+                    }
+                }).catch(function(err) { 
+                    console.log(err) 
+                });
+        }
+
+    }, '#paypal-button-container');
+
+</script>

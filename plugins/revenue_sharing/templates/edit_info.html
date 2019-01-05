@@ -1,0 +1,47 @@
+
+<div id="main">
+	<div class="cb-box container">
+		<div class="">
+
+			<h1>Update/Edit your details</h1>
+			<!-- {pr($user_details,true)} -->
+
+			<div class="col-md-12 search-box">
+				<table class="table table-hover ">
+
+					{if ($user_details!=NULL)}
+					<tbody>
+						
+						<form action="" method="post">
+							{foreach from=$user_details item=item} 
+							<input type="hidden" name="userid" value="{$item['userid']}" />
+							<tr><th>User</th><td><a href="view_user.php?uid={$userid}" target="_blank">{$item['userid']|get_username}</a></td></tr>
+							<tr><th>Status</th>{if $item['status']==1}<td>Active</td>{else}<td>Inactive</td>{/if}</tr>
+							<tr><th>Earning user from</th><td>{$item['earning_user_from']}</td></tr>
+							<tr><th>Website</th><td><a href="#">{$item['publisher_website']}</a></td></tr>
+							<tr><th>Country</th><td>{$item['country']}</td></tr>
+							<tr><th>Phone</th><td><input type="text" name="phone_no" class="form-control" value="{$item['phone_no']}" ></td></tr>
+							<tr><th>Paypal email</th><td><input type="text" name="eu_email" class="form-control" value="{$item['paypal_email']}" ></td></tr>
+							<tr><th>Bank account number</th><td><input type="text" name="eu_bankacc_no" class="form-control" value="{$item['bank_acc_no']}" ></td></tr>
+							<tr><th></th><td><input type="submit" class="btn btn-primary btn-sm" name="update_eu_details" value="Update info"></td></tr>
+							{/foreach}
+
+						</form>
+
+					</tbody>
+					{else}
+					<tbody>
+						<tr>
+							<td colspan="14" rowspan="" class="text-center"><h5 style="padding-top:10px;">There are no user datails set yet!</h5></td>
+						</tr>
+					</tbody>
+					{/if}
+
+				</table>
+
+			</div>	
+			<div class="clear"></div>
+		</div>
+		<div class="clear"></div>
+	</div>
+</div>

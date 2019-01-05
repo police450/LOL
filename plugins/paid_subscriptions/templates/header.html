@@ -1,0 +1,123 @@
+<script>
+var prem_ajax = '{$paid_subs_url}/ajax.php';
+{literal}
+
+//Function used to switch premium options
+function switchPremium(obj)
+{
+	var makeVal = $(obj).val();
+	
+	if(makeVal=='ppv')
+		$('#field-credits_required').show();
+	else
+		$('#field-credits_required').hide();
+}
+
+//Show perm err
+function show_prem_err(err)
+{
+	$('#prem_err').show().html(err);
+}
+
+var order_lock = false;
+//Adding order using ajax, return order ID and submits form
+function confirm_order(pid,formID,gateWAY)
+{
+	var form = $('#'+formID);
+	
+	if(order_lock)
+		return false;
+	
+	
+	order_lock = true;
+	
+	//Sending request to prem ajax
+	//To add order and return orderID
+	$.ajax({url:prem_ajax,
+	type:"POST",data:{"mode":"add_order","pid":pid,"gateway":gateWAY},
+	dataType : 'json',
+	success : function(data)
+	{ //success
+		if(data.err)
+		{
+			show_prem_err(data.err);
+			order_lock = false;
+		}else
+		{
+			$('#'+formID+'_order_id').val(data.order_id);
+			$('#'+formID+'_custom').val(data.order_id);
+			$('#'+formID+'_invoice_id').val(data.invoice_id);
+			form.submit();
+		}		
+	} //success ends
+	
+	});
+}
+
+
+
+
+
+
+
+//Adding order using ajax, return order ID and submits form
+function confirm_renew(pid,sid,formID,gateWAY)
+{
+	var form = $('#'+formID);
+	if(order_lock)
+		return false;
+	order_lock = true;
+	//Sending request to prem ajax
+	//To add order and return orderID
+	$.ajax({url:prem_ajax,
+	type:"POST",data:{"mode":"renew_order","pid":pid,"gateway":gateWAY,"sid":sid},
+	dataType : 'json',
+	success : function(data)
+	{ //success
+		if(data.err)
+		{
+			show_prem_err(data.err);
+			order_lock = false;
+		}else
+		{
+			$('#'+formID+'_order_id').val(data.order_id);
+			$('#'+formID+'_custom').val(data.order_id);
+			$('#'+formID+'_invoice_id').val(data.invoice_id);
+
+			form.submit();
+		}		
+	} //success ends
+	
+	});
+}
+
+
+function recurring_paypal(obj)
+{
+	if($(obj).attr('checked'))
+	{
+		$('#paypal_cmd').val('_xclick-subscriptions');
+		$('#alert_pay_type').val('subscription');
+
+	}else
+	{
+		$('#paypal_cmd').val('_xclick');
+		$('#alert_pay_type').val('service');
+	}
+		
+}
+
+
+</script>
+
+<style>
+#field-credits_required{display:none}
+#field-make_premium label {display:inline-block;}
+label[for=make_premium]{display:block !important}
+
+
+</style>
+{/literal}
+
+<link href="{$paid_subs_url}/templates/premium.css" rel="stylesheet" type="text/css" />
+

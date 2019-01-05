@@ -1,0 +1,41 @@
+
+<!--"-->
+<form method="post" name="firstdata_checkout" id="firstdata_checkout" action="{$firstdataGw->gatewayUrl}" >
+	
+	<button class="btn btn-primary" type="button" style="margin-right:7px; cursor:pointer"
+	 {if $type=='renew'}
+	 onclick="confirm_{$type}('{$package.package_id}','{$sub.subscription_id}','firstdata_checkout','firstdata')"
+	 {else}
+     onclick="confirm_{$type}('{$package.package_id}','firstdata_checkout','firstdata')"
+	 {/if}>Checkout with firstdata!</button>  
+	
+	 <!-- Order ID will be updated when ajax request is completed -->
+    <input type="hidden" name="item_numer" id="firstdata_checkout_order_id" value="some_number" />
+    <!-- Invoice Number -->
+    <input type="hidden" name="invoice" id="firstdata_checkout_invoice_id" value="" />
+
+    <input type="hidden" name="custom" value="" id="firstdata_checkout_custom" />
+
+    <input type="hidden" name="txntype" value="sale">
+	 
+	<input type="hidden" name="timezone" value="CET"/>
+	 
+	<input type="hidden" name="txndatetime" value=""/>
+	 
+	<input type="hidden" name="hash" value=""/>
+	 
+	<input type="hidden" name="storename" value="10123456789"/>
+	 
+	<input type="hidden" name="mode" value="fullpay"/>
+	 
+	<input type="hidden" name="chargetotal" value="{$package.pkg_price}.00"/>
+
+	<input type="hidden" name="currency" value="{$paidSub->configs.fd_crrency}"/>
+	 
+	<input type="hidden" name="responseSuccessURL" value="{$baseurl}/module.php?s=premium&p=thank_you" />
+	 
+	<input type="hidden" name="responseFailURL" value="{$baseurl}/module.php?s=premium&p=failed" />
+  
+</form>
+</br>         
+

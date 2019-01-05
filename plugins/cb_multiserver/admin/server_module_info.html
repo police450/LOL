@@ -1,0 +1,196 @@
+<div class="clearfix">
+
+	<h2>MODULES AND PATHS</h2>
+	{if $module_info.ffmpeg_path && $module_info.ffmpeg}
+		{$ffmpeg_status.status = 'ok'}
+	{else}
+		{$ffmpeg_status.status = 'failed'}
+	{/if}
+	{if $module_info.PHP_path && $module_info.PHP}
+		{$php_status.status = 'ok'}
+	{else}
+		{$php_status.status = 'failed'}
+	{/if}
+	{if $module_info.Media_info_path && $module_info.Media_info}
+		{$media_info_status.status = 'ok'}
+	{else}
+		{$media_info_status.status = 'failed'}
+	{/if}
+	{if $module_info.MP4_Box_path && $module_info.MP4_Box}
+		{$mp4box_status.status = 'ok'}
+	{else}
+		{$mp4box_status.status = 'failed'}
+	{/if}
+	<table class="table table-striped table-margin-top">
+		<thead>
+			<tr>
+				<th>Module</th>
+				<th>Server Path</th>
+				<th>User Path</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+	  	<tr>
+		    <td>FFMPEG</td>
+		    {if $module_info.ffmpeg_path}
+		    <td>{$module_info.ffmpeg_path}</td>
+		    {else}
+		    <td class="danger">Unable to find path</td>
+		    {/if}
+			<td>/bin/ffmpeg</td>
+		    <td>
+		    	<img src="{$imageurl}/{if $ffmpeg_status.status=='ok'}button_ok.png{else}error.png{/if}">
+	    	</td>
+	  	</tr>
+	  <tr>
+	    <td>PHP</td>
+	    {if $module_info.PHP_path}
+	    <td>{$module_info.PHP_path}</td>
+	    {else}
+	    <td class="danger">Unable to find path</td>
+	    {/if}
+		<td>/bin/ffmpeg</td>
+	    <td>
+	    	<img src="{$imageurl}/{if $php_status.status=='ok'}button_ok.png{else}error.png{/if}">
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>Media Info</td>
+	    {if $module_info.Media_info_path}
+	    <td>{$module_info.Media_info_path}</td>
+	    {else}
+	    <td class="danger">Unable to find path</td>
+	    {/if}
+		<td>/bin/ffmpeg</td>
+	    <td><img src="{$imageurl}/{if $media_info_status.status=='ok'}button_ok.png{else}error.png{/if}"></td>
+	  </tr>
+	  <tr>
+	    <td>MP4Box</td>
+	    {if $module_info.MP4_Box_path}
+	    <td>{$module_info.MP4_Box_path}</td>
+	    {else}
+	    <td class="danger">Unable to find path</td>
+	    {/if}
+		<td>/bin/ffmpeg</td>
+	    <td>
+	    	<img src="{$imageurl}/{if $mp4box_status.status=='ok'}button_ok.png{else}error.png{/if}">
+	    </td>
+	  </tr>
+	</table>
+	
+	<h2>MODULES VERSION</h2>
+
+	<table class="table table-striped table-margin-top">
+		<thead>
+			<tr>
+				<th>Module</th>
+				<th>Installed Version</th>
+				<th>Required Version</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		<tr>
+			<td>FFMPEG</td>
+			{if $module_info.ffmpeg}
+			<td>{$module_info.ffmpeg}</td>
+			{else}
+			<td class="danger">Not Installed</td>
+			{/if}
+			<td>1.0 or greater</td>
+			<td>
+				<img src="{$imageurl}/{if $ffmpeg_status.status=='ok'}button_ok.png{else}error.png{/if}">
+			</td>
+		</tr>
+	  <tr>
+	    <td>PHP</td>
+	    {if $module_info.PHP}
+	    <td>{$module_info.PHP}</td>
+	    {else}
+		<td class="danger">Not Installed</td>
+		{/if}
+		<td>5.2.1 or greater</td>
+	    <td>
+	    	<img src="{$imageurl}/{if $php_status.status=='ok'}button_ok.png{else}error.png{/if}">
+	    </td>
+	  </tr>
+	  <tr>
+	    <td>Media Info</td>
+ 		{if $module_info.Media_info}
+	    <td>{$module_info.Media_info}</td>
+	    {else}
+		<td class="danger">Not Installed</td>
+		{/if}
+		<td>0.5.6 or greater</td>
+	    <td><img src="{$imageurl}/{if $media_info_status.status=='ok'}button_ok.png{else}error.png{/if}"></td>
+	  </tr>
+	  <tr>
+	    <td>MP4Box</td>
+	    {if $module_info.MP4_Box}
+	    <td>{$module_info.MP4_Box}</td>
+	    {else}
+		<td class="danger">Not Installed</td>
+		{/if}
+		<td>0.4.5 or greater</td>
+	    <td>
+	    	<img src="{$imageurl}/{if $mp4box_status.status=='ok'}button_ok.png{else}error.png{/if}">
+	    </td>
+	  </tr>
+	</table>
+
+	<h2>Permissions of server files</h2>
+	{*pr($module_info.Perms,true)*}
+	<table class="table table-striped table-margin-top">
+		<thead>
+			<tr>
+				<th>File or Folder name</th>
+				<th>Permission mode</th>
+				<th>Status</th>
+			</tr>
+		</thead>
+		
+		{foreach $module_info.Perms as $key => $Perms}
+		<tr>
+			<td>{$key}</td>
+			<td>{$Perms}</td>
+			<td>
+				<img src="{$imageurl}/{if $ffmpeg_status.status=='ok'}button_ok.png{else}error.png{/if}">
+			</td>
+		</tr>
+	  	{/foreach}
+	 
+	</table>
+</div>
+<script type="text/javascript">
+	
+		function updata_info(id)
+		{
+			
+			$.ajax({
+			    type: "POST",
+			    url: baseurl+"/plugins/cb_multiserver/admin/server_module_info.php",
+			    data: { module_info : true , sid : id },
+			    dataType: 'json',
+			    success: function(response)
+			    {
+			    	
+			    }
+
+			});
+			window.location.reload();
+		};
+        
+</script>
+
+<div>
+	<a class="btn btn-primary pull-right" id="update_module_info" onclick="updata_info({$smarty.get.id})" href="#">
+		Update Info
+	</a>
+</div>
+
+<style type="text/css">
+	
+	.table-margin-top {
+		margin-top: 30px;
+	}
+
+</style>

@@ -1,0 +1,21 @@
+<a class="buy-premium" href="{$baseurl}/module.php?s=premium&p=buy" title="Premium Template">
+	<span class="button-cross"></span>
+	<i class="icon-star"></i>
+	<span>Premium</span>
+</a>
+<script type="text/javascript">
+if ($.cookie("close-pre") == null)
+		$(".buy-premium").show();
+	else
+		$(".buy-premium").hide();
+
+$(document).ready(function(){
+	$(".button-cross").on("click",function(event){
+		alert("You can Buy Premium also from User menu !");
+		event.preventDefault();
+		$.cookie("close-pre", 1, { expires : 3 });
+		$(".buy-premium").hide();
+	});
+	//$.cookie("close-pre", null);
+});
+</script>

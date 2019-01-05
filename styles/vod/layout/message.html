@@ -1,0 +1,79 @@
+{assign var=msg value=$eh->message_list}
+{assign var=err value=$eh->error_list}
+{assign var=war value=$eh->warning_list}
+
+{if $err.0 neq '' || $err.1 != ''}
+<div class="alert alert-danger-admin col-lg-2 col-md-2 col-sm-2 col-xs-12">
+   <!--  <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button> -->
+        <span class="icon-sad2"></span>
+        <strong class="ops">Oops !</strong>
+    <ul  class="list-unstyled">
+        {foreach from=$err item=show_msg}
+        <li> {$show_msg} </li>
+        {/foreach}
+    </ul>
+    <button class="close try-again" type="button" data-dismiss="alert" aria-hidden="true">try again</button>
+</div>
+<!-- <div class="alert_messages_holder">
+    <div class="alert alert-danger alert-messages" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <ul  class="list-unstyled">
+        {foreach from=$err item=show_msg}
+        <li> {$show_msg} </li>
+        {/foreach}
+        </ul>
+    </div>
+</div> -->
+{/if}
+
+
+{if $msg.0 neq ''}
+<div class="alert alert-success col-lg-2 col-md-2 col-sm-2 col-xs-12">
+   <!--  <button class="close" type="button" data-dismiss="alert" aria-hidden="true">x</button> -->
+    <span class="icon-happy2"></span>
+    <strong class="success">success ! </strong>
+    <ul class="list-unstyled">
+        {foreach from=$msg item=show_msg}
+        <li>{$show_msg}</li>
+        {/foreach}
+    </ul>
+    <button class="close Got" type="button" data-dismiss="alert" aria-hidden="true">Got it</button>
+</div>
+<!-- <div class="alert_messages_holder">
+    <div class="alert alert-success alert-messages" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <ul class="list-unstyled">
+        {foreach from=$msg item=show_msg}
+        <li>{$show_msg}</li>
+        {/foreach}
+        </ul>
+    </div>
+</div> -->
+{/if}
+
+
+{if $war.0 neq ''}
+<div class="alert alert-warning  col-lg-10 col-md-10 col-sm-10 col-xs-12">
+    <span class="icon-cool"></span>
+    <strong class="warning"> warning !</strong>
+    <ul class="list-unstyled">
+        <img src="{$imageurl}/messagebox_warning.png" style="text-align:center; vertical-align:middle; display:inline-block;" />
+        {foreach from=$war item=show_msg}
+        <li>{$show_msg}</li>
+        {/foreach}
+    </ul>
+     <button class="close warn" type="button" data-dismiss="alert" aria-hidden="true"> warning </button>
+    <div class="clearfix"></div>
+</div>
+<!-- <div class="alert_messages_holder">
+    <div class="alert alert-warning alert-messages" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <ul class="list-unstyled">
+        <img src="{$imageurl}/messagebox_warning.png" style="float:left" />
+        {foreach from=$war item=show_msg}
+        <li>{$show_msg}</li>
+        {/foreach}
+        </ul>
+    </div>
+</div> -->
+{/if}

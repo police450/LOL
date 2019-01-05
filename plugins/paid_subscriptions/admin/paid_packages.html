@@ -1,0 +1,170 @@
+<script type="text/javascript">
+var defaultPkg = '{"type"|post}';
+{literal}
+	
+	var opts = '#videos_allowed,#duration_allowed,#package_type';
+	function disable_opts(id)
+	{
+		opts = '#videos_allowed,#duration_allowed,#package_type';
+		if(id!='default')
+		opts = '#videos_allowed'+id+',#duration_allowed'+id+',#package_type'+id;
+		
+		$(opts).attr("disabled","disabled");
+	}
+	function enable_opts(id)
+	{
+		opts = '#videos_allowed,#duration_allowed,#package_type';
+		if(id!='default')
+		opts = '#videos_allowed'+id+',#duration_allowed'+id+',#package_type'+id;
+		$(opts).attr("disabled","");
+	}
+	
+	
+	function switchPackage(pkg)
+	{
+		if(defaultPkg==pkg)
+			return false;
+		if(defaultPkg)
+		{
+			
+			$('#pkg_form_'+defaultPkg).fadeOut('fast',function(){ 
+			defaultPkg =pkg;
+			$('#pkg_form_'+pkg).fadeIn('fast'); });
+		}else
+		{
+			defaultPkg =pkg;
+			$('#pkg_form_'+pkg).fadeIn('fast');
+		}
+	}
+	
+	function closePkg(type)
+	{
+		defaultPkg = "";
+		$('#pkg_form_'+type).fadeOut('fast').hide();
+	}
+{/literal}
+</script>
+
+<div class="premium_plugin">
+
+
+<h2>Choose your package type to create</h2>
+
+
+<div style="padding:20px 0px">
+	<div class="prm_pkg_bttn_cont">
+    	<div class="prm_pkg_bttn">
+        	<span class="subs" onclick="switchPackage('subs');">Subscription</span>
+        </div>
+    </div>
+    
+    
+    <div class="prm_pkg_bttn_cont">
+    	<div class="prm_pkg_bttn_ppv">
+        	<span class="ppv" onclick="switchPackage('ppv');">PPV</span>
+        </div>
+    </div>
+    
+    
+    <div class="prm_pkg_bttn_cont">
+    	<div class="prm_pkg_bttn_minutes">
+        	<span class="minutes" onclick="switchPackage('mins');">Minutes</span>
+        </div>
+    </div>
+    
+    
+    <div class="prm_pkg_bttn_cont">
+    	<div class="prm_pkg_bttn_videos">
+        	<span class="videos" onclick="switchPackage('vids');">Videos</span>
+        </div>
+    </div>
+    
+    <div class="clear"></div>
+</div>
+
+
+<!-- SUBSCRIPTION -->
+<form method="post" name="add_subscription">
+
+<div class="pkg_form_new " id="pkg_form_subs" {if $smarty.post.type!='subs'}style="display:none"{/if} >
+    {include file="$paid_subs_dir/admin/add_package.html" type="subs" type_title="Create new subscription package"}
+</div>
+</form>
+<!-- SUBSCRIPTION -->
+
+<!-- PPV -->
+<form method="post" name="add_ppv">
+
+<div class="pkg_form_new " id="pkg_form_ppv"  {if $smarty.post.type!='ppv'}style="display:none"{/if}  >
+    {include file="$paid_subs_dir/admin/add_package.html" type="ppv" type_title="Create new PPV package"}
+</div>
+</form>
+
+<!-- PPV -->
+
+
+<!-- Minutes -->
+<form method="post" name="add_mins">
+<div class="pkg_form_new " id="pkg_form_mins"  {if $smarty.post.type!='mins'}style="display:none"{/if} >
+    {include file="$paid_subs_dir/admin/add_package.html" type="mins" type_title="Create new package based on Minutes"}
+</div>
+</form>
+
+<!-- Minutes -->
+
+<!-- Videos -->
+<form method="post" name="add_vids">
+
+<div class="pkg_form_new " id="pkg_form_vids"  {if $smarty.post.type!='vids'}style="display:none"{/if} >
+    {include file="$paid_subs_dir/admin/add_package.html" type="vids" type_title="Create videos package"}
+</div>
+
+</form>
+<!-- Videos -->  
+
+
+  
+
+
+<div  style="height:20px"></div>
+
+<div style="height:10px"></div>
+{* Getting List of Packages *}
+{assign var=packages value=$paidSub->getPackages()}
+
+{if $packages}
+
+    <div class="panel panel-default">
+    <div class="panel-heading"><strong>Manage Packages</strong></div>
+    <table class="table table-stripped"  style="border-bottom: 1px solid #ccc;">
+      <tr>
+        <td width="40"><strong>ID</strong></td>
+        <td><strong>Package Name &amp; Description</strong></td>
+        <td width="250"><strong>Package Details</strong></td>
+        <td width="200"><strong>Actions</strong></td>
+      </tr>
+    </table>
+    
+    	{if !$spackage}
+        {assign var='bgcolor' value='#fff'}
+        {foreach from=$packages item=package}
+            
+  			{include file="$paid_subs_dir/admin/package.html" get_videos='yes'}
+        
+        {if $bgcolor=='#f2f2f2'}
+            {assign var='bgcolor' value='#fff'}
+        {else}
+            {assign var='bgcolor'  value='#f2f2f2'}
+        {/if}
+        {/foreach}
+        {else}
+        	{include file="$paid_subs_dir/admin/package.html" get_videos='no' package=$spackage}      
+        {/if}
+
+
+    </div>
+    {else}
+<div align="center"><strong><em>No Packages Available</em></strong></div>
+{/if}
+
+</div>

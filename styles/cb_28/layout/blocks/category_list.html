@@ -1,0 +1,184 @@
+			{$category = $smarty.get.cat}
+			{if $category != 'All' && is_numeric($category)} 
+				{if $smarty.const.THIS_PAGE == 'videos'}
+					{$catname = $cbvid->get_category_name($category)}
+					{$nowdo = "videos"}
+				{else}
+					{$catname = $userquery->get_category_name($category)}
+				{/if}
+				{$catname = $catname.category_name}
+			{else}
+				{$catname = 'All'}
+			{/if}
+			{if $smarty.const.BEATSLIST}
+				{$cats_array = $beats->get_categories()}
+				{$categories = $cats_array}
+				{$type = 'beats'}
+			{/if}
+			<span class="lastclicked" style="display:none;"></span>
+			<span class="lastlevel" style="display:none;"></span>
+			<!-- Start of category code -->
+			<div class="dropdown cat-list"> 
+				<ul class="cbopen_list">
+					<li>
+						<div>
+							<a href="{$baseurl}/{if $smarty.const.THIS_PAGE == 'videos'}videos.php{else}channels.php{/if}">
+								<i class="fa fa-tags" aria-hidden="true"></i>
+								All
+							</a>
+
+						</div>
+					</li>
+					{$level = '1'}
+					{foreach from=$categories item=maincat}
+					{$cat_id=$category.category_id}
+						<li>
+							<div>
+								<a href="{cblink(['name'=>'category','data'=>$maincat,'type'=>$type])}" class="">
+									<img src="{$cbvid->get_category_thumb($maincat, 'video')}" height='90' width='90'/>
+									{$maincat.category_name}
+								</a>
+								{if $maincat.children}
+								<i class="fa fa-angle-down" aria-hidden="true" data-level="1" data-toggle="collapse" data-target="#sub1"></i>
+								{/if}
+							</div>
+							{if $maincat.children} 
+								<ul id="sub1" class="sub-menu collapse">
+								{$level = '2'}
+								{foreach from=$maincat.children item=sub1}
+									<li>
+										<div>
+											<a href="{cblink(['name'=>'category','data'=>$sub1,'type'=>$type])}" class="">{$sub1.category_name} </a>
+											{if $sub1.children}<i class="fa fa-angle-down" aria-hidden="true" data-level="1" data-toggle="collapse" data-target="#sub2"></i>{/if}
+										</div>
+										{if $sub1.children}
+											<ul id="sub2" class="sub-menu collapse"> 
+											{$level = '3'}
+											{foreach from=$sub1.children item=sub2}
+											<li>
+												<div>
+													<a href="{cblink(['name'=>'category','data'=>$sub2,'type'=>$type])}" class="">{$sub2.category_name} </a>
+													{if $sub2.children}<i class="fa fa-angle-down" aria-hidden="true" data-level="1" data-toggle="collapse" data-target="#sub3"></i>{/if}
+												</div>
+												{if $sub2.children}
+													<ul id="sub3" class="sub-menu collapse">
+													{$level = '4'}
+													{foreach from=$sub2.children item=sub3}
+													<li>
+														<div>
+															<a href="{cblink(['name'=>'category','data'=>$sub3,'type'=>$type])}"  class="">{$sub3.category_name} </a>
+															{if $sub3.children}<i class="fa fa-angle-down" aria-hidden="true" data-level="1" data-toggle="collapse" data-target="#sub4"></i>{/if}
+														</div>
+													
+														{if $sub3.children}
+															<ul id="#sub4"" class="sub-menu collapse">
+																{$level = '5'}
+																{foreach from=$sub3.children item=sub4}
+																	<li>
+																		<div>
+																			<a class="">{$sub4.category_name}</a>
+																			{if $sub4.children}<i class="icon-right-arrow trigger" data-level="5" ></i>{/if}
+																		</div>
+																	</li>
+																{/foreach}
+															</ul>
+														{/if}
+														</li>
+													{/foreach}
+													</ul>
+												{/if}
+												</li>
+											{/foreach}
+											</ul>
+										{/if}
+									</li>
+								{/foreach}
+								</ul>
+							{/if}
+						</li>
+					{/foreach}
+				</ul>
+			</div> 
+			<!-- End of category code -->
+			<!--<ul class="cat-list clearfix">
+				{$categories = pullCategories('videos',true)}
+				{if $categories}					
+						<li>
+							<a href="{$baseurl}/{if $smarty.const.THIS_PAGE == 'videos'}videos.php{else}channels.php{/if}">
+								<i class="fa fa-tags" aria-hidden="true"></i>
+								All Categories
+							</a>
+						</li>
+						{foreach $categories as $category}
+						{$cat_id=$category.category_id}
+						<li>
+							<div>
+								<a {if $smarty.get.cat==$category.category_id }  class="active" {/if} href="{cblink(['name'=>'category','data'=>$category,'type'=>'v'])}">
+									<img src="{$cbvid->get_category_thumb($category,'video')}" class="img-responsive" alt="">
+									<span>{$category.category_name}</span>
+								</a>
+							</div>
+						</li>
+					{/foreach}
+				{/if}
+				{*<li id="more-icon"  class="arrow-down show">
+					<a href="javascript:void(0)" >Show more</a>
+				</li>*}
+				<li>
+					<div>
+						<a href="#">
+							jazib hussain
+							<i class="fa fa-chevron-right trigger dropdown-toggle" aria-hidden="true" data-level="1" data-toggle="dropdown"></i>
+						</a>
+					</div>
+						<ul class="sub-menu">
+							<li>
+								<div>
+									<a href="{cblink(['name'=>'category','data'=>$sub1,'type'=>$type])}" class="">pakistan</a>
+									<i class="icon-right-arrow trigger" data-level="2" ></i>
+								</div>
+								
+									<ul class="dropdown-menu sub-menu"> 
+									<li>
+										<div>
+											<a href="{cblink(['name'=>'category','data'=>$sub2,'type'=>$type])}" class="">sialkot</a>
+											<i class="icon-right-arrow trigger"data-level="3"></i>
+										</div>
+
+											<ul class="dropdown-menu sub-menu">
+											Ali
+											<li>
+												<div>
+													<a href="{cblink(['name'=>'category','data'=>$sub3,'type'=>$type])}"  class="">Here</a>
+													<i class="icon-right-arrow trigger" data-level="4" ></i>
+												</div>
+													<ul class="dropdown-menu sub-menu">
+														here
+															<li>
+																<div>
+																	<a class="">jazib</a>
+																	<i class="icon-right-arrow trigger" data-level="5" ></i>
+																</div>
+															</li>
+														
+													</ul>
+												</li>
+		
+											</ul>
+
+										</li>
+
+									</ul>
+
+							</li>
+					</ul>
+				</li>
+			</ul> -->	
+
+<script type="text/javascript">
+	//$(document).ready(function(){
+			var level = '{$level}';
+	//});
+	
+
+</script>

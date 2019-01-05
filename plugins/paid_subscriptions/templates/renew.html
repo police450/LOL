@@ -1,0 +1,67 @@
+<div id="main"> 
+<div class="cb-box row container" style="display:inline-block; margin-auto;margin-left:70px">
+
+
+	<div  class="alert-info br5 well" style="font-size:18px; font-weight:bold; margin-bottom:20px">WATCH PREMIUM CONTENT - HIGH QUALITY</div>
+<div class="premium_vids">
+
+{assign var=premium_vids value=$paidSub->getSubsVids($sub,20)}
+
+{if $premium_vids}
+{foreach from=$premium_vids item=pvid}
+	
+    <div style="margin-bottom:10px">
+        <div style="overflow:hidden; position:relative; height:130px">
+            <img src="{get_thumb vdetails=$pvid size=big}" width="240" style="position:absolute; top:-25px" />
+        </div>
+        <div style="font-size:14px; font-weight:bold; margin-top:5px">{$pvid.title}</div>
+    </div>
+    
+{/foreach}
+{/if}
+
+</div>
+
+<div class="packages_div">
+
+	<!-- Confirming Order -->
+		<div class="btn btn-primary btn-lg" style="width:95%">Confirming purchase!</div>
+        <div align="center">
+        	<div style="font-size:24px; font-weight:bold" >{$package.pkg_title}</div>
+            <div style="font-size:18px">{$package.pkg_desc}<br /><br />Renew for only</div>
+            
+            <h3  style="margin-bottom:15px"><span class="label label-default">
+            	{$paidSub->currency|currency}{$package.pkg_price}
+            </span></h3>
+            <div class="mb10"></div>
+            
+            
+            {include file="$paid_subs_dir/templates/block/error.html" style="display:none"}
+            
+
+               <!-- Loading firstdata form -->
+            {*include file="$paid_subs_dir/templates/forms/firstdata.html" type='renew'*}
+            <!-- ending firstdata form -->
+
+            <!-- Loading paypal form -->
+            {if $paidSub->configs.use_pay_pal=='yes'}
+                {if $paidSub->configs.paypal_rest_api=='yes'}
+                    {include file="$paid_subs_dir/templates/forms/paypal_rest.html" type='renew'}
+                {else}
+                    {include file="$paid_subs_dir/templates/forms/paypal.html" type='renew'}
+                {/if}
+            {/if}
+            <!-- ending paypal form -->
+            
+            <!-- Loading alertpay form -->
+            {include file="$paid_subs_dir/templates/forms/alertpay.html" type='renew'}
+            <!-- ending alertpay form -->
+             
+        </div>
+    <!-- Confirming Order -->
+    
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+</div>

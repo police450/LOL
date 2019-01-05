@@ -1,0 +1,78 @@
+  {*if has_access('admin_access',true)*}
+<!--   <div id="myModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form action="" method="post">
+           <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3 class="modal-title text-primary">Oops!</h3>
+          </div>
+          <input type="hidden" name="userid" value="{userid()}">
+          <div class="modal-body">
+            <p><strong>This plugin is </strong></p>
+            <p class="text-warning"><small>If you don't request, your changes will be lost.</small></p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div> -->
+{*else*}
+  <div id="myRevModal" class="modal fade">
+  	<div class="modal-dialog">
+  		<div class="modal-content">
+        <form action="" method="post">
+         <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h3 class="modal-title text-primary">Request admin to become an earning user</h3>
+        </div>
+        <input type="hidden" name="userid" value="{userid()}">
+        <div class="modal-body">
+          <p><strong>Please fill out necessary info</strong></p>
+          <div class="form-group">
+            <label for="website">Publisher's Website<span class="text-danger"> *</span></label>
+            <input type="text" class="form-control" id="pub_website" name="pub_website" required="" >
+            <span class="smallText" style="font-size:11px;">Your website or social media platform from where you are going to drive traffic here</span>
+          </div>
+          <div class="form-group">
+            <label for="publisher_country">Country<span class="text-danger"> *</span></label>
+            <select class="form-control" name="publisher_country" id="publisher_country" required="">
+              {assign var=countries value=$Cbucket->get_countries(iso2)}
+              {foreach from=$countries item=country key=code}
+              <option value="{$code}" >
+                {$country}
+              </option>
+              {/foreach}
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="phone_no">Phone</label>
+            <input type="text" class="form-control" id="phone_no" name="phone_no">
+            <span class="smallText" style="font-size:11px;">Admin might use it for contact or varification <strong>(Please add it in internation format e.g +9233112345467)</strong></span>
+          </div>
+          <div class="form-group">
+            <label for="paypal_email">Paypal email</label>
+            <input type="email" class="form-control" id="paypal_email" name="paypal_email">
+            <span class="smallText" style="font-size:11px;">For payment tranfer info (not mendatory can be given later)</span>
+          </div>
+          <div class="form-group">
+            <label for="account_no">Bank account number</label>
+            <input type="text" class="form-control" id="account_no" name="account_no">
+            <span class="smallText" style="font-size:11px;">For payment tranfer info (not mendatory can be given later)</span>
+          </div>
+           <p class="text-warning"><small>* means mendatory.</small></p>
+          <p class="text-warning"><small>If you don't request, your changes will be lost.</small></p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <input type="submit" class="btn btn-success" name="request_earning_user" value="Request now" >
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+{*/if*}
+
+

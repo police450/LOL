@@ -1,0 +1,115 @@
+<h2>ClipBucket Html5 Player Settings</h2>
+
+<div class="row">
+  {if $logo_enbale=='yes'}
+  <div>
+    <br>
+    <span class="alert alert-info">Note : Invideo Logo Option is only compatibe with "CB Html5  Player". This Feature will be made comaptibel with "CB_videoJS" in upcoming verisons</span>
+  </div>
+  {/if}
+  <div class="col-md-4 pull-right">
+      <div class="dropdown">
+        <button class="btn {if $logo_enbale=='yes'}btn-primary{/if}{if $logo_enbale=='no'}btn-danger{/if} dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          {if $logo_enbale=='yes'}<i class="glyphicon glyphicon-ok"></i>Invideo Logo Enabled {/if}
+          {if $logo_enbale=='no'}<i class="glyphicon glyphicon-remove"></i>Invideo Logo Diabled {/if}
+          <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+          <li><a href="{$baseurl}/admin_area/plugin.php?folder={$smarty.get.folder}&file={$smarty.get.file}&enable=yes"> Enable</a></li>
+          <li><a href="{$baseurl}/admin_area/plugin.php?folder={$smarty.get.folder}&file={$smarty.get.file}&enable=no"> Disable</a></li>
+        </ul>
+      </div>
+</div>
+</div>
+
+
+<div class="row">
+  <h4>Change Invideo and Control bar logo settings</h4>
+
+
+ <form method="post" enctype="multipart/form-data">
+  <div class="col-md-4">
+   
+      Logo File<br>
+      <small>
+        Logo file that will display on your CB Html5 player <strong style="color:#428bca">Controls</strong>  </br> (Please select PNG file only, Best resolution <strong style="color:#428bca">35x25</strong> in pixels)<br>
+        <span style="background-color:#000;padding:3px 3px 6px 3px;"><img src="{$l_logo}" /></span>
+      </small>
+  <input style="margin-top:5px" type="file" class="form-control" name="logo" />
+  <input style="margin-top:10px" type="submit" class="btn btn-primary" name="logo" value="Update logo"/>
+  </div>
+
+ {if $logo_enbale=='yes'}
+ <div class="col-md-4">
+   
+      Logo File<br>
+      <small>
+        Logo file that will display on your CB Html5 player <strong style="color:#428bca">On Video</strong> </br> (Please select PNG file only, Best resolution <strong style="color:#428bca">100x30</strong> in pixels) 
+         <br>
+         {if $ov_logo}
+         <img src="{$ov_logo}" />
+         {else}
+         <span class="label label-info">No Logo selected</span>
+         {/if}
+      </small>
+      
+    </label>
+   <input type="file" class="form-control" name="image"/>  
+  </div>
+  {/if}
+
+</form>
+</div>
+
+</br>
+
+<!--line break-->
+<hr/>
+
+<div class="row" style="margin-bottom:200px;">
+  <h4>Settings</h4>
+
+
+
+
+<form method="post" enctype="multipart/form-data">
+
+ 
+<div class="col-md-4">
+    
+      Logo HyperLink<br>
+      <small>
+        Bottom contro's logo <strong style="color:#428bca">hyperlink</strong>
+      </small>
+  <input style="margin-top:5px" type="text" value="{$Cbucket->configs.player_logo_url}" class="form-control" name="player_logo_url" />
+   <input style="margin-top:10px"type="submit" class="btn btn-primary" value="Update Settings" name="change" />
+  </div>
+
+
+ {if $logo_enbale=='yes'}
+  <div class="col-md-4">
+    
+    <label for="logo_placement">
+      Logo Placement<br>
+      <small>Placement of logo, top, left , right or bottom</small>
+    </label>
+    <select class="form-control pull-right" name="logo_placement" id="logo_placement">
+        <option value="tl" {if $Cbucket->configs.logo_placement=='tl'} selected="selected"{/if}>Top Left</option>
+        <option value="tr" {if $Cbucket->configs.logo_placement=='tr'} selected="selected"{/if}>Top Right</option>
+        <option value="br" {if $Cbucket->configs.logo_placement=='br'} selected="selected"{/if}>Bottom Right</option>
+        <option value="bl" {if $Cbucket->configs.logo_placement=='bl'} selected="selected"{/if}>Bottom Left</option>
+      </select>
+     
+     
+  </div>
+  {/if}
+
+   </form>
+
+</div>
+
+
+
+
+
+

@@ -1,0 +1,31 @@
+.vjs-menu-button-popup .vjs-menu {
+	border-top-color: none;
+	bottom: 9px;
+	display: none;
+	height: 485px;
+	left: -8em;
+	margin-bottom: 2.6em;
+	overflow: hidden;
+	padding: 40px 0;
+	position: absolute;
+	width: 110px;
+}
+
+// Button Pop-up Menu
+.vjs-menu-button-popup .vjs-menu .vjs-menu-content {
+	background:#141414;
+	bottom: 1.5em;
+	max-height: 306px;
+	padding: 0 1px;
+	position: absolute;
+	width: 100%;
+}
+.vjs-menu-button-popup .vjs-menu .vjs-menu-content li {
+	font:15px/30px "source_sans_proregular",sans-serif;
+	text-transform:capitalize !important;
+}
+
+.vjs-workinghover .vjs-menu-button-popup:hover .vjs-menu,
+.vjs-menu-button-popup .vjs-menu.vjs-lock-showing {
+	display: block;
+}

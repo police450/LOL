@@ -1,0 +1,68 @@
+<div align="center" class="cb-box container">
+  <div style="margin:auto" a>
+    	<div style="margin-bottom:20px"><span style="font-size:15px;" class="label label-success">You are about to watch</span>
+        <br />
+    <span style="font-size:18px; margin-bottom:20px">{$vdo.title}</span></div>
+ 
+
+      <div style="display:inline-block; position:relative; margin-bottom:15px">
+      	<img src="{get_thumb vdetails=$vdo size=big}" width="312" height="216" />
+        <div style="display:inline-block; position:absolute; right:5px; bottom:5px; background-color:#333333; padding:3px; color:#fff; font-size:14px;" class="br5">{$vdo.duration|SetTime}</div>
+        
+        
+      </div>
+      
+      <div style="width:500px; font-size:13px">
+        <p>This video is premium, you can watch it by clicking 'watch now' button <strong>
+        {if $package.pkg_type=='ppv'}
+        	{if $vdo.credits_required}
+            	, you have {$package.credits_left} credits left in your package and {$vdo.credits_required} credits will be deducted from your PPV package 
+            {/if}
+        {elseif $package.pkg_type=='subs'}
+        	{if $pkg.vids}
+           		, you have {$pkg.vids_left} videos left in your package
+            {/if}            	
+            
+            {if $pkg.ppv>0}
+            	, includes {$pkg.ppv_left} ppv videos
+            {/if}
+        {elseif $package.pkg_type=='vids'}
+        	{if $pkg.vids}
+           		, you have {$pkg.vids_left} videos left in your package
+            {/if}            	
+            
+            {if $pkg.ppv>0}
+            	, includes {$pkg.ppv_left} ppv videos
+            {/if}
+        {elseif $package.pkg_type=='mins'}
+        	{if $pkg.vids}
+           		, you have {$pkg.mins_left} minutes left in your package
+            {/if}            	
+            
+            {if $pkg.ppv>0}
+            	, includes {$pkg.ppv_left} ppv videos
+            {/if}
+        {/if}</strong>
+     <br />
+<br />
+ Once this video
+is added to your account, you can watch it for 
+{$pkg.end_date}
+ <strong>{if $package.package}
+	{$pkg.end_date|daysLeft|number_format} days 
+{else}
+	as long as you want
+{/if}</strong>
+
+without any extra charges.</p>
+        <form id="form1" name="form1" method="post" action="">
+          <input type="hidden" value="{$package.subscription_id}" name="subs_id" />
+          <input type="hidden" value="yes" name="watch_prem_video" />
+          <input type="hidden" value="{$vdo.videoid}" name="videoid" />
+          <input type="submit" name="button" id="button" value="Watch this video now" class="watch_now_button br5"/>
+        </form>
+        <p>&nbsp;</p>
+    </div>
+    </div>
+    
+</div>

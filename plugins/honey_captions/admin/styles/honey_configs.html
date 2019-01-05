@@ -1,0 +1,87 @@
+<link rel="stylesheet" type="text/css" href="{$HONEY_CAPT_HTML_URL}/styles/css/all.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700' rel='stylesheet' type='text/css'>
+<script src="{$HONEY_CAPT_HTML_URL}/styles/js/main.js"></script>
+<section class="clearfix form-elements cb-uikit">
+                    <section class="cover clearfix text-center">
+                <div class="cb-logo">
+                    <img src="{$HONEY_CAPT_HTML_URL}/styles/images/cb-logo.png" alt="" class="img-responsive">
+                </div>
+                <h1><em>CB Subtitles</em></h1>
+            </section>
+                <header class="clearfix">
+                    <h3 class="bluecolor4">Basic Configuration</h3>
+                    <div id="honey_config_msg"></div>
+                </header>
+                <form name="honey_configs" id="honey_configs" class="form-horizontal" action="#">
+                    <div class="clearfix">
+                        <div class="col-lg-10 col-md-10 col-sm-10 col-xs-12">
+                        <div class="form-group">
+                         <label for="reqtxt" class="col-sm-2 control-label">Enable Captions</label>
+                            <div class="padding-top form-group clearfix">
+                                <div class="custom-elements no-yes col-lg-3 col-md-3 col-sm-6">
+                                    <input type="checkbox" name="enable_capts" id="enable_capts" {if $enable_subs == 'yes'} checked="checked" {/if}  />
+                                </div>
+                            </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reqtxt" class="col-sm-2 control-label">Max Files</label>
+                                <div class="col-sm-10">
+                                    <div class="required-field-block">
+                                        <input type="text" name="max_capt_files" id="max_capt_files" class="form-control" placeholder="Maxium Subtitle Files Per Video e:g 5" required id="reqtxt" value="{$max_files}">
+                                        <div class="required-icon" data-original-title="" title="">
+                                            <div class="text">*</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reqtxt" class="col-sm-2 control-label">Max Size (kb)</label>
+                                <div class="col-sm-10">
+                                    <div class="required-field-block">
+                                        <input type="text" name="max_capt_size" id="max_capt_size" class="form-control" placeholder="Maxium Subtitle Files Size In KB e:g 100" required id="reqtxt" value="{$max_sub_size}">
+                                        <div class="required-icon" data-original-title="" title="">
+                                            <div class="text">*</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="reqtxt" class="col-sm-2 control-label">Video Length (sec)</label>
+                                <div class="col-sm-10">
+                                    <div class="required-field-block">
+                                        <input type="text" name="min_vid_len" id="min_vid_len" class="form-control" placeholder="Minimum video length (seconds) to allow subtitles e:g 60" required id="reqtxt" value="{$vid_len}">
+                                        <div class="required-icon" data-original-title="" title="">
+                                            <div class="text">*</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="clearfix">
+                        <button type="submit" id="honey_configs_submit" class="btn btn-success" value="update">Update Settings</button>
+                    </div>
+                </form>
+            </section>
+
+<script type="text/javascript">
+	var ajax_file = '{$honey_ajax}';
+
+	 $('#honey_configs_submit').on("click",function(e){
+        e.preventDefault();
+        $('#honey_config_msg').hide();
+        var form_fields = $( "#honey_configs" ).serialize();
+    	 $.ajax({
+    	 	url: ajax_file,
+    	 	type: "POST",
+    	 	data:form_fields,
+    	 	 success: function(result){
+    	 	 
+        	$("#honey_config_msg").html("<div class='alert alert-success'>"+result+"</div>");
+            $('#honey_config_msg').fadeIn("slow");
+    	}});
+    });
+
+
+</script>

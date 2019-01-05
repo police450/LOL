@@ -1,0 +1,57 @@
+﻿CB Subtitles Documentation
+Information About Plugin
+
+	Created: 6th, November, 2015
+	Author: Saqib Razzaq
+	Author Website: http://clip-bucket.com
+	Version: 1.0
+	ClipBucket Version: 2.8.x
+Why You Need CB Subtitles
+
+	CB Subtitles allows you to upload unlimited number of subtitle files for your videos in more 30 different languages. Users can then decide what caption file they need to use and language / caption 	file will be switched on the fly without any pauses. Admin can control main aspects of plugin from backed such as maximum subtitle files, maximum subtitle file size, minimum video duration etc.
+
+How To Install CB Subtitles Plugin
+	Plugin installation is as simple as possible. Follow the steps below and you will have CB Subtitles up and running in matter of moments.
+1. Unzip plugin file that you downloaded from ClipBucket webiste
+2. Move the folder that got after unzipping into your_cb_root_directory / plugins
+3. Now Login to Admin area by going to http://your_website.com/admin_area
+4. Go to plugin manager and select Honey Caption then click Install
+5. This will install your plugin but you won't be able to use it yet
+6. Now Click on CB Subtitles menu appearing in your admin area and click on “License Configurations”
+7. Now add your License Key and update settings
+8. Your plugin has been installed and ready to run. 
+	
+	After successful installation you will see changes in 3 different places. There will be a new upload field in video upload section, new filed in Admin Area video editor as well as in user's video editor.
+
+Honey Caption Configurations
+	This plugin gives admin control over its functionality. You can have a look at below settings to make this plugin according to your needs.
+1. Enable Captions
+Value :  Yes / No
+Default : Yes
+It is  a simple switch. If you disable captions from here, they will be hidden all across your website. Users will be able to watch videos with captions normally but captions won't be available. Uploading of captions will also be disabled. 
+2. Maximum Files
+Value : Number of files 
+Default : 2
+You can limit the number of subtitle files one can upload per video. Setting this field to 0 enables subtitles for videos of all durations.
+3. Maximum Size
+Value : Size in Kbs
+Default : 100
+You limit the file size for subtitle files by changing this value. Enter a size in Kilobytes and it will take effect immediately. 
+4. Minimum Video Length
+Value : Duration in seconds
+Default : 0
+It is also possible to enable subtitles only for videos longer than a certain length. You can add your video duration in seconds to enable this feature. 
+
+How CB Subtitles Works
+	You Upload a subtitle file and enter its name either on Video Uploading form or on Video Editing page and submit changes. File is moved to a directory called Captions inside your cb_root / files / 
+	folder and stores data in database. Now whenever you go to watch that video for which you uploaded subtitles, it brings that data from database and takes files from directory and shows you options in 
+	video player accordingly. 
+
+	Note: Plugin only supports WebTTV (.vtt) subtitle file formats at the moment
+
+CB Subtitles Supported Languages
+
+
+							
+
+	

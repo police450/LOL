@@ -1,0 +1,28 @@
+<!-- {pr($default_rpm,true)} -->
+<div class="heading">
+    <h2>Set default RPM</h2>
+</div>
+<form name="form1" method="post" action="">
+    <fieldset class="fieldset">
+    <div class="row">
+<!--         <div class="col-md-3">
+            <label for="tier name">Tier name</label>
+            <input type="text" name="tier_name" id="tier_name" class="form-control">
+        </div> -->
+        <div class="col-md-3">
+            <label for="rpm_value">RPM (rate per matrix)</label>
+            <input type="text" name="rpm_val" id="rpm_val" value="{$default_rpm}" class="form-control">
+            <span class="smallText" style="font-size:11px;">In Dollars($).</span>
+        </div>
+
+    </div>
+    <div class="row" style="padding-top: 20px;">
+        <div class="col-md-6">
+
+        <input type="submit" name="update_d_rpm" id="update_d_rpm" value="Update default RPM" class="btn btn-primary btn-sm">
+  
+        </div>
+    </div>   
+
+</fieldset>
+</form>

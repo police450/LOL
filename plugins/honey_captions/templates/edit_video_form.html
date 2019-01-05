@@ -1,0 +1,127 @@
+	<link rel="stylesheet" type="text/css" href="{$HONEY_CAPT_HTML_URL}/styles/css/all.css">
+	<link rel="stylesheet" type="text/css" href="{$HONEY_CAPT_HTML_URL}/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700' rel='stylesheet' type='text/css'>
+	<script type="text/javascript" src="{$HONEY_CAPT_HTML_URL}/styles/js/main.js"></script>
+		<div class="panel panel-default clearfix cb-uikit">
+			<!-- Default panel contents -->
+			<div class="panel-heading"><h3 class="bluecolor4 text_cent">Subtitles Section</h3></div>
+			<div class="panel-body">
+			{if $subs}
+			    <div class="alert alert-primary subs_notif">You have uploaded <strong>{count($subs)} / {$max_sub_files}</strong> substitles for this video</div>
+			{/if}
+				<p>Upload your subtitle files to show subtitles in this video. You can upload maximum of <strong>{$max_sub_files}</strong> files, each file can be <strong>{$max_sub_file_size} KB</strong> in size. {if $min_vid_len == 0}You can upload subtitle for videos of all durations{else}You can upload subtitle for videos with duration longer than <strong>{$min_vid_len} seconds</strong>{/if}</p>
+			</div>
+
+			<!-- Table -->
+			<div class="clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="clearfix custom-elements margin_bottom_x">
+					<input type="file" id="captions" name="captions">
+				</div>
+                    <div class="form-group">
+                        <div class="clearfix">
+                            <div class="">
+                                <input type="text" name="subtitle_lang" id="subtitle_lang" class="form-control margin_bottom_x" placeholder="Language of Subtitle file. e:g English(uk)" id="reqtxt" value="{$max_files}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {if $subs}
+
+			<table class="table greybg clearfix">
+
+				<tr>
+					<th>#</th>
+					<th>File Name</th>
+					<th>Language</th>
+					<th>Default</th>
+					<th>Action</th>
+				</tr>  
+				{foreach from=$subs key=k item=v}
+				{assign var='defualt_sub' value=$v.default_sub}
+				{assign var='videoid' value=$smarty.get.video}
+				{assign var='vid_page' value='video'}
+
+				{if empty($videoid)}
+				{assign var='videoid' value=$smarty.get.vid}
+				{assign var='vid_page' value='vid'}
+				{/if}    
+				<tr>
+					<th scope="row">{$v.subid}</th>
+					<td>{$v.file_name}</td>
+					<td>{$v.file_language|capitalize}</td>
+					<td>{if $defualt_sub == 'yes'}<strong>Default</strong>{else}<strong>No</strong>{/if}</td>
+					<td>	  
+					<div class="dropdown">
+					<button id="dropdownMenu1" class="btn btn-primary btn-xs dropdown-toggle subs_action" data-toggle="dropdown">
+				    	Actions <i class="caret"></i></button>
+						<ul class="dropdown-menu subs_actions pull-right" aria-labelledby="dropdownMenu1" role="menu">
+				    		<li><a role="menuitem" tabindex="-1" href="{$baseurl}/files/captions/{$v.file_path}/{$v.file_name}" class="" download>Download</a></li>
+				    		{if $defualt_sub != 'yes'}
+				    		<li><a role="menuitem" tabindex="-1" href="edit_video.php?{$vid_page}={$videoid}&defualt_sub={$v.subid}">Make Default</a>
+				    		{/if}
+				    		<li><a role="menuitem" tabindex="-1" href="edit_video.php?{$vid_page}={$videoid}&del_sub={$v.subid}">Delete</a>
+				    	</li>
+					</ul>
+				</div>
+				</td>
+				</tr>
+				{/foreach}
+
+			</table>
+			{else}
+				<div class="alert alert-danger">No Substitles have been uploaded for this video yet!</div>
+			{/if}
+			</div>
+		
+
+
+
+
+
+
+
+
+
+
+ <!-- <link rel="stylesheet" type="text/css" href="{$HONEY_CAPT_HTML_URL}/style.css">
+<div class="col-md-12 col-lg-12 captions_section">
+<h3 class="colored text_cent"> Subtitles Section </h3>
+	<div class="col-md-12 subs_upload_section" style="margin-top: 30px">
+	    <label for="captions" class="colored">Subtitles / Captions ( Required )</label>
+	    <input  name="captions" type="file" id="captions" class="form-control margin_bottom_x">
+	    <label for="subtitle_lang" class="colored">Subtitle file langugage ( Required ) </label>
+	    <input  name="subtitle_lang" type="text" id="subtitle_lang" class="form-control" placeholder="Language of Subtitle file. e:g English(uk)">
+	</div>
+	<label for="captions" class="colored">Total Captions: {$total_subs}</label>
+	<ol class="colored">
+		{foreach from=$subs key=k item=v}
+		{assign var='defualt_sub' value=$v.default_sub}
+		{assign var='videoid' value=$smarty.get.video}
+		{assign var='vid_page' value='video'}
+
+		{if empty($videoid)}
+		{assign var='videoid' value=$smarty.get.vid}
+		{assign var='vid_page' value='vid'}
+		{/if}
+		
+	 	  <li>{$v.file_name} &nbsp;&nbsp;&nbsp;&nbsp;<strong>* {$v.file_language|capitalize} *</strong>{if $defualt_sub == 'yes'}&nbsp;&nbsp;&nbsp;&nbsp;<strong>(Default)</strong>{/if}</li>
+	  <div class="dropdown">
+		<button id="dropdownMenu1" class="btn btn-primary btn-xs dropdown-toggle subs_action" data-toggle="dropdown">
+	    	Actions <i class="caret"></i></button>
+			<ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1" role="menu">
+	    		<li><a role="menuitem" tabindex="-1" href="{$baseurl}/files/captions/{$v.file_path}/{$v.file_name}" class="" download>Download</a></li>
+	    		{if $defualt_sub != 'yes'}
+	    		<li><a role="menuitem" tabindex="-1" href="edit_video.php?{$vid_page}={$videoid}&defualt_sub={$v.subid}">Make Default</a>
+	    		{/if}
+	    		<li><a role="menuitem" tabindex="-1" href="edit_video.php?{$vid_page}={$videoid}&del_sub={$v.subid}">Delete</a>
+	    	</li>
+		</ul>
+	</div>
+		{/foreach}
+	</ol>
+</div>
+
+ -->

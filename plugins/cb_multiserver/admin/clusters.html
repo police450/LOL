@@ -1,0 +1,67 @@
+<h2>Multiserver Cluster Setup</h2><br />
+<br />
+
+
+<form name="subs_config" action="" method="post">
+<table width="100%" border="0" cellpadding="2" cellspacing="0" class="block">
+
+<div id="sample_child_field" style="display:none">
+<input type="text" name="file_childs[]" value="" ><br>
+</div>
+
+
+
+<tr>
+  <td width="400" valign="top"><strong>Cluster File Path</strong></td>
+  <td>Cluster Childs<br>
+	Server Path
+	</td>
+</tr>
+
+
+{if $clusters}
+
+	{foreach from=$clusters item=cluster key=file_name  name=filer}
+	<tr>
+	  <td valign="top" style="padding:10px 0px">
+		<input type="text" name="file_paths[{$smarty.foreach.filer.iteration}]" value="{$file_name}"/>
+	  </td>
+	  <td>
+		<div id="sample_child_field_{$smarty.foreach.filer.iteration}" style="display:none">
+		<input type="text" name="file_path_childs[{$smarty.foreach.filer.iteration}][]" value="" ><br>
+		</div>
+
+		{foreach from=$cluster item=clust}
+			<input type="text" name="file_path_childs[{$smarty.foreach.filer.iteration}][]" value="{$clust.file_server_path}" ><br>
+			
+		{/foreach}
+		<a onclick="$(this).before($('#sample_child_field_{$smarty.foreach.filer.iteration}').html())" >+ Add</a>
+		
+	  </td>
+	</tr>
+	
+	{/foreach}
+	
+{/if}
+
+
+<tr>
+  <td valign="top" style="padding:10px 0px">
+	<input type="text" name="file_path" value=""/>
+  </td>
+  <td>
+  
+	<input type="text" name="file_childs[]" value="" ><br>
+	<a onclick="$(this).before($('#sample_child_field').html())" >+ Add</a>
+  </td>
+</tr>
+
+<tr> 
+  <td valign="top" style="padding-top:30px">
+  <input type="submit" name="update" id="update" value="Update Clusters" class="button" /></td>
+  <td valign="top">&nbsp;</td>
+</tr>
+
+</table>
+</form>
+

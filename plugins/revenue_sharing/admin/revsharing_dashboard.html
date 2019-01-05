@@ -1,0 +1,111 @@
+<!-- {pr($notifications,true)} -->
+<div class="heading">
+	<h2>Revenue sharing dashboard</h2>
+</div>
+
+
+<div class="row">
+	<div class="col-md-12">
+		<div class="alert alert-success-alt alert-dismissable">
+			<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>{$notifications}
+		</div>
+	</div>
+</div>
+<!-- {pr($graph_data,true)} -->
+<script type="text/javascript">
+	AmCharts.makeChart("chartdiv",
+	{
+		"type": "serial",
+		"pathToImages": "https://www.amcharts.com/lib/3/images/",
+		"categoryField": "date",
+		"dataDateFormat": "YYYY-MM-DD",
+		"categoryAxis": {
+			"parseDates": true
+		},
+		"chartCursor": {
+			"enabled": true
+		},
+		"chartScrollbar": {
+			"enabled": true
+		},
+		"trendLines": [],
+		"graphs": [
+		{
+			"bullet": "round",
+			"id": "AmGraph-1",
+			"title": "Views",
+			"valueField": "views"
+		},
+		{
+			"bullet": "square",
+			"id": "AmGraph-2",
+			"title": "Earnings",
+			"valueField": "earnings"
+		}
+		],
+		"guides": [],
+		"valueAxes": [
+		{
+			"id": "ValueAxis-1",
+			"title": "Views  -  or  -  Earnings"
+		}
+		],
+		"allLabels": [],
+		"balloon": {},
+		"legend": {
+			"enabled": true,
+			"useGraphSettings": true
+		},
+		"titles": [
+		{
+			"id": "Title-1",
+			"size": 15,
+			"text": "Views and earning overall stats"
+		}
+		],
+		"dataProvider": {$graph_data},
+		"export": {
+			"enabled": true,
+			"menu": [ {
+				"class": "export-main",
+				"menu": [ {
+					"label": "Download",
+					"menu": [ "PNG", "JPG", "CSV","PDF" ]
+				}, {
+					"label": "Annotate",
+					"action": "draw",
+					"menu": [ {
+						"class": "export-drawing",
+						"menu": [ "PNG", "JPG" ]
+					} ]
+				} ]
+			} ]
+		}
+	}
+	);
+
+</script>
+
+
+<div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
+
+<style>
+.alert-purple { 
+	border-color: #694D9F;background: #694D9F;color: #fff; 
+}
+.alert-info-alt { 
+	border-color: #B4E1E4;background: #81c7e1;color: #fff; 
+}
+.alert-danger-alt { 
+	border-color: #B63E5A;background: #E26868;color: #fff; 
+}
+.alert-warning-alt { 
+	border-color: #F3F3EB;background: #E9CEAC;color: #fff;
+}
+.alert-success-alt { 
+	border-color: #19B99A;background: #20A286;color: #fff; 
+}
+.alertlink,.alertlink:hover,.alertlink:visited{
+	color: #fff;
+}
+</style>

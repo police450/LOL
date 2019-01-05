@@ -1,0 +1,62 @@
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+  <tr>
+    <td width="400" align="left" valign="middle" class="left_head" style="text-indent:10px"><strong>Enter Your Twitter Appliaction Details:</strong></td>
+    <td class="head">&nbsp;</td>
+    <td width="100" class="right_head">&nbsp;</td>
+  </tr>
+</table>
+<BR /> <BR />
+<form name="subs_config" action="" method="post">
+{section name=list loop=$tw_config_vals}
+
+<table width="100%" border="0" cellpadding="2" cellspacing="5" class="block">
+<tr>
+  <td width="301" valign="top"><strong>Application Key: </strong></td>
+  <td width="813" valign="top"><input name="app_key" type="text" id="app_key" value="{$tw_config_vals[list].app_key}" /></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+  <td valign="top"><strong>Application Secret: </strong></td>
+  <td valign="top"><input name="app_secret" type="text" id="app_secret" value="{$tw_config_vals[list].app_secret}" /></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+  <td valign="top"><strong>Application Redirect URL: </strong></td>
+  <td valign="top"><input name="red_url" type="text" id="red_url" value="{$tw_config_vals[list].red_url}" /></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<!--
+<tr>
+  <td valign="top"><strong>Twitter Connect License: </strong></td>
+  <td valign="top"><input name="lisc_key" type="text" id="lisc_key" value="{$tw_config_vals[list].lisc_key}" /></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+//-->
+<tr> 
+  <td valign="top"><input type="submit" name="update" id="update" value="Update" class="button" /></td>
+  <td valign="top">&nbsp;</td>
+</tr>
+</table>
+{/section}
+</form>
+
+<!--
+<div style="height:50px; display:block;">
+<ul>
+<li class="button" style="width:150px; color:#FFF; margin-left: 10px; float:left; list-style:none; list-style-type:none; text-transform:uppercase;"><a href="?enable=1" style="color:#FFF; width:150px; display:block; text-align:center;">Enable</a></li>
+<li class="button" style="width:150px; color:#FFF; margin-left: 10px; float:left; list-style:none; list-style-type:none; text-transform:uppercase;"><a href="?enable=0" style="color:#FFF; width:150px; display:block; text-align:center;">Disable</a></li>
+</ul>
+</div>
+//-->

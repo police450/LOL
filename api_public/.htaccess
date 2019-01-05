@@ -1,0 +1,12 @@
+RewriteEngine on
+
+#RewriteRule ^([a-zA-Z]+)/?([a-zA-Z]+)/?([a-zA-Z0-9]+)?$ index.php?mode=$1&action=$2&param=$3&%{QUERY_STRING} [L]
+#RewriteRule ^([a-zA-Z]+)/?([a-zA-Z]+)/?$ index.php?mode=$1&action=$2&%{QUERY_STRING} [L]
+RewriteRule ^(.*)/$ index.php?mode=$1&%{QUERY_STRING} [L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+
+#RewriteRule ^(.*)$ 	index.php?%{QUERY_STRING} [NS]
+
+# RewriteCond %{REQUEST_URI} !^admin/

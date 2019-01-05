@@ -1,0 +1,26 @@
+<script type="text/javascript">
+var uads_ajax = '{$cb_uads_ajax_url}';
+
+function update_ad_imp(ad_id){
+	var ad_id = ad_id;
+	$.ajax({
+		url : uads_ajax,
+		data : { ad_id : ad_id, mode : "update_imp"},
+		type : "post",
+		datatype : "json",
+		error : function(data){
+			console.log(data);
+		},
+		success : function(data){
+			if (data.msg){
+				var msg = data.msg;
+			}else{
+				var msg = data.err;
+			}
+			console.log(msg);
+		}
+
+	});
+}
+	
+</script>

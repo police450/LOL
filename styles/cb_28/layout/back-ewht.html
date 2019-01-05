@@ -1,0 +1,124 @@
+						<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 holder_option">
+						<div class="uder-info-detials">
+							<div class="like-video wtch-btn">
+								<button {if !$disable} onclick="_cb.rateNew('{$vdo.videoid}','5','video')"{/if} href="javascript:void(0)" class="like-whct btn">
+									<i class="fa fa-heart" aria-hidden="true"></i>
+								</button>
+								<p style="color:#fff" class="hidden-xs">{$vdo.rated_by} likes</p>
+							</div>
+							<div class="add-playlist wtch-btn">
+								<button class="play-list btn add-icon hidden-xs" data-toggle="modal" data-target="#myModal"></button>
+								<i class="fa fa-plus play-list hidden-lg hidden-md hidden-sm" aria-hidden="true" data-toggle="modal" data-target="#myModal"></i>
+							</div>
+							<div class="share-embd wtch-btn">
+								<button class="btn share share-btn" data-toggle="modal" data-target="#share" ></button>
+								<i class="fa fa-share-alt share hidden-xs" aria-hidden="true" data-toggle="modal" data-target="#share"></i>
+							</div>
+							<div class="repot_vide_01 wtch-btn">
+								<button class="btn report-btn hidden-xs" data-toggle="modal" data-target="#report" ></button>
+								<i class="fa fa-flag hidden-lg hidden-md hidden-sm" aria-hidden="true" data-toggle="modal" data-target="#report"></i>
+							</div>
+							<div class="more_desc_01">
+								<button class="view_more" data-toggle="collapse" data-target="#demo">
+									<i class="fa fa-chevron-down" aria-hidden="true"></i>
+								</button>
+							</div>
+						</div>
+						</div> 
+			<section class="clearfix watch_Video_detial">
+				<div class="bg-detials-vid">
+					<div class="container clearfix">
+						<header class="video_inner">
+							<h2>{$vdo.title|ucfirst}</h2>
+							<span class="up-time">
+								<div class="view_value hidden-xs">
+										{if $Cbucket->configs.video_round_views=='yes'}
+										{prettyNum($vdo.views)}
+										{else}
+										{( $vdo.views )}
+										{/if}
+										{if $vdo.views > 1}
+										{lang code='views'}
+										{else}
+										{lang code="view"}
+										{/if}
+									</div>
+									-&nbsp;
+									Published :&nbsp; {$vdo.date_added|nicetime}
+								<div class="view_value hidden-lg hidden-md hidden-sm">
+									{$video.views}&nbsp;{lang code="views"} . {$vdo.rated_by} likes
+
+								</div>
+							</span>
+							<div id="demo" class="col-lg-12 col-md-12 col-sm-12 fade col-xm-12 more_video_detial collapse">
+							<div class="col-lg-10 col-md-10 col-sm-12 col-xs-12 col">
+								<div class="uder-info-detials col-lg-9 col-md-9 col-sm-6 col-xs-12">
+									<!-- uder-info-detials -->
+									<a href="{$userquery->profile_link($video)}" class="avatar">
+										<img src="{$userquery->avatar($video,'m',userid())}" class="img-responsive" width="55" height="55">
+									</a>
+									<h2 class="user_title">
+										<a href="{$userquery->profile_link($video)}"> {$vdo.username}</a>
+										<span class="user_subscrib">{$channel.subscribers} Subscribers</span>
+									</h2>
+								</div>
+							</div>
+								<div class="watch-vid-details">
+									<a class="title" href="#">{$vdo.title|ucfirst}</a>
+									<p class="decription">
+										{AutoLinkUrls($vdo.description|unescape:"html")}
+									</p>
+									<ul class="clearfix dec-list">
+										<li><strong>{lang code='category'} </strong>&nbsp;:&nbsp; {$vdo.category|categories:video}</li>
+										<li><strong>{lang code='duration'} </strong>&nbsp;:&nbsp; {if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}</li>
+										<li><strong>{lang code='date'} </strong>&nbsp;:&nbsp; {$video.date_added|nicetime}</li>
+										<li><strong >{lang('tags')} </strong><span>&nbsp;:&nbsp; {$vdo.tags|tags:videos}</span></li>
+									</ul>
+								</div>
+							</div>
+						</header>
+					</div>
+				</div>
+			</section>
+						<!--****Related_Videos****-->
+			<section class="Related_Videos">
+				<div class="container clearfix">
+					<h4>
+						{if $smarty.get.play_list}Related Videos{elseif $relMode != 'ono'}Related Videos{else}Popular Videos{/if}
+					</h4> 
+					<div class="clearfix col col-lg-12 col-md-12 col-md-12 col-xs-12">
+						{if $smarty.get.play_list}
+
+						{if $videos}
+						{foreach from=$videos item=pop_video}
+
+						{if $pop_video@iteration == 9}
+						{break}
+						{/if}
+						<div class="clearfix popular-vid item-video col-lg-3 col-md-3">
+							{include file="$style_dir/blocks/videos/video.html" display_type='popVideos_sidebar'}
+						</div>
+						{/foreach}
+
+						{else}
+						<div class="well well-info">No Videos Found !</div>
+						{/if}
+						{else}			    	
+						{if $videos}
+						{foreach from=$videos item=pop_video}
+
+						{if $pop_video@iteration == 9}
+						{break}
+						{/if}
+						<div class="clearfix popular-vid item-video col-lg-3 col-md-3">
+							{include file="$style_dir/blocks/videos/video.html" display_type='popVideos_sidebar'}
+						</div>
+						{/foreach}
+
+						{else}
+						<div class="well well-info">No Videos Found !</div>
+						{/if}
+						{/if}
+					</div>
+				</div>
+			</section>

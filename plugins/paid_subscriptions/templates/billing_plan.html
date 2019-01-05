@@ -1,0 +1,38 @@
+<div id="main">
+ <div class="cb-box container">
+    <button onclick="window.location='module.php?s=premium&amp;p=buy'" class="btn btn-primary" style="margin-top:10px; margin-bottom:10px;"> Go Back </button>
+    
+    <div class="alert-warning br5 well" style="font-size:15px; font-weight:bold;">Subscription Plans list on this package!</div>
+
+
+<div class="">
+    <!-- {pr($billing_plans,true)} -->
+    {include file="$paid_subs_dir/templates/block/error.html" style="display:none"}
+    
+    <!-- {* Getting Subscription Package *} -->
+    <div class="">
+
+    {if empty($billing_plans)}
+    
+    <div class="alert alert-info">
+     <strong>No plans found!</strong> There are no plans activated or created for this package yet
+    </div>
+
+    {else}
+    {foreach from=$billing_plans item=bill_plan}
+    <form name="plan_select" method="post" action="">
+            {include file="$paid_subs_dir/templates/block/billing_plan_block.html"}
+    </form>               
+    {/foreach}
+
+    {/if}
+   
+    </div>
+
+
+
+  
+</div>
+
+</div>
+</div>

@@ -1,0 +1,278 @@
+{include file="$cb_multiserver_dir/admin/header.html"}
+<div class="cb-uikit">
+<section class="cover clearfix text-center form-group">
+	<div class="cb-logo">
+		<img src="{$cb_multiserver_url}/images/cb-logo.png" alt="" class="img-responsive">
+	</div>
+	<h1><em>CLIPBUCKET MULTI-SERVER LEGACY</em></h1>
+</section><!-- cover-holder -->
+
+<div class="clearfix">
+<h3>Multi Server Manager
+	{if $mode=='edit'} &raquo; Editing {$server.server_name} {/if}
+	{if $mode=='configure'}&raquo; Configuration of {$server.server_name} {/if}
+	{if $mode=='view_stats'}&raquo; Stats of {$server.server_name} {/if}
+</h3>
+
+
+<div class="clearfix head-info form-group" >
+	<span class="alert alert-primary pull-right" style="margin:-8px 0 0 10px;">
+		<i class="glyphicon glyphicon-certificate"></i>
+		{$multi_server->configs.license_key}
+		<i class="glyphicon glyphicon-globe"></i>
+		{$domainName}
+	</span>
+	<span class="btn btn-primary btn-sm pull-right" data-target="#applicationKey" data-toggle="modal" >
+		<i class="glyphicon glyphicon-eye-open"></i>
+		View App key
+	</span>
+</div>
+
+<!--<a class="serverBttn btn btn-primary" href="{$_link_test}">Test Servers</a>-->
+{$servers = $multi_server->get_servers()}
+{if $servers}
+    <div class="panel panel-default clearfix" >
+	    <table class="table table-bordered table-striped manageUsersTable">
+	    <thead>
+		    <tr class="panel-heading">
+		        <th width="60">ID</th>
+		        <th>Name</th>
+		        <th>IP</th>
+		        <th>Domain</th>
+		        <th>Server Role</th>
+		        <th>Status</th>
+		        <th>Server Used</th>
+		        <th>Actions</th>
+		    </tr>
+	    </thead>
+	    <tbody>
+	    {foreach $servers as $serv}
+	    	{$srvr_role = $serv.server_action}
+	    <tr>
+	        <td>{$serv.server_id}</td>
+	        <td>{$serv.server_name}</td>
+	        <td>{$serv.server_ip}</td>
+	        <td>{$serv.server_api_path|serverDomain}</td>
+	        <td>
+	        {if $srvr_role == '2'}
+	        	<label class="alert-primary">Stream Only</label>
+	        	{elseif $srvr_role == '1'}
+	        	<label class="alert-warning">Convert Only</label>
+	        	{elseif $srvr_role == '0'}
+	        	<label class="alert-success">Convert & Stream</label>
+	        	{else}
+	        	<label class="alert-danger">Undefined</label>
+	        {/if}
+	        </td>
+	        <td>{$serv.active|serverStatus}</td>
+	        <td > 
+	        	<span class="serverBarCont"><span class="serverBar" style="width:{serverUsed server=$server ivert=yes}"></span></span> 
+	        </td>
+	        <td >
+	        	<div class="dropdown">
+                    <button data-toggle="dropdown" class="btn btn-primary btn-xs dropdown-toggle" id="dropdownMenu1">
+                        Actions <i class="caret"></i></button>
+                    <ul role="menu" aria-labelledby="dropdownMenu1" class="dropdown-menu ">
+                      <li><a href="{$queryString}action=view_stats&id={$serv.server_id}">View stats</a></li>
+			        <li><a href="{$queryString}action=edit&id={$serv.server_id}">Edit</a></li>
+			        <li><a href="{$queryString}action=configure&id={$serv.server_id}">Configure</a></li>
+			        <li ><a  href="{$queryString}action=module_info_refresh&id={$serv.server_id}"> Refresh Module Info</a></li>
+			        <li><a href="{$queryString}action=module_info&id={$serv.server_id}">Module Info</a></li>
+			        <li class="divider"></li>
+			        {if $server.active!='yes'}
+			        <li><a href="{$queryString}action=activate&id={$serv.server_id}">Activate</a></li>
+			        {else}
+			        <li><a href="{$queryString}action=deactivate&id={$serv.server_id}">Deactivate</a></li>
+			       	{/if}
+			       	<li><a href="{$queryString}action=delete&id={$serv.server_id}">Delete</a></li>  
+                    </ul>
+                </div>
+	        </td>
+	      </tr>
+	    {/foreach}
+	    </tbody>
+	    </table>
+	</div>
+{/if}
+
+{if $mode!='edit'}
+	<div class="clearfix form-group">
+		<span  id="addBttnCont">
+    		<a href="javascript:void(0)" 
+        	onclick='$( ".addserverForm" ).slideToggle(200);' class="btn btn-primary btn-sm">
+            + Add new server</a>
+   		</span> 
+	</div>
+	<div class="clearfix addserverForm" id="serverForm"  style="display:none;">
+		{include file="$cb_multiserver_dir/admin/add_server.html" server=""}
+	</div>
+{/if}
+
+<div class="clearfix" style="height: 10px;"></div>
+{if $mode=='edit'}
+	{include file="$cb_multiserver_dir/admin/edit_server.html" server=$server}
+{/if}
+{if $mode=='add' }
+<div style="margin:100px 0 400px 0;" class="md-col-12" id="serverForm">
+	{include file="$cb_multiserver_dir/admin/add_server.html"}
+</div>
+{/if}
+{if $mode=='configure'}
+	{include file="$cb_multiserver_dir/admin/edit_configurations.html" server=$server}
+{/if}
+
+{if $mode=='view_stats'}
+
+<div style="width:350px; float:left">
+	<div style="margin-bottom:15px">
+		Total videos : <strong>{$server.server_api_path|count_server_videos|number_format}</strong><br />
+		Total files : <strong>{$stats.total_files|number_format}</strong><br />
+		Total video files : <strong>{$stats.video_files|number_format}</strong><br />
+		Total thumb files : <strong>{$stats.thumb_files|number_format}</strong><br />
+	    
+		Total photo files : <strong>{$stats.photo_files|number_format}</strong><br />
+		Total Size : <strong>{$stats.total_size|number_format}MB</strong><br />
+		Total videos size : <strong>{$stats.videos_size|number_format}MB</strong><br />
+		Total thumbs size : <strong>{$stats.thumbs_size|number_format}MB</strong><br />
+		Total photos size : <strong>{$stats.photo_size|number_format}MB</strong><br />
+
+	</div>
+	<div id='chart_div'></div>
+</div>
+
+<div style="width:auto; float:left">
+	<div align="center" class="addServerForm">
+		<input type="text" style="width:100px" value="{$curYear}"  id="statsYear"/>
+		<select name="month" id="statsMonth">
+		<option value="">-----</option>
+		{section name=mnth start=1 loop=13 step=1}
+		{assign var=month value=$smarty.section.mnth.index}
+
+		  <option value="{$smarty.section.mnth.index}"
+		  	{if $smarty.section.mnth.index==$curMonth} selected="selected" {/if}>{"2008-$month-10"|date_format:"%B"}</option>
+		{/section}
+		</select>
+		<select name="day" id="statsDay">
+		<option value="">-----</option>
+		{section name=day start=1 loop=31 step=1}
+
+		  <option value="{$smarty.section.day.index}"
+		  	{if $smarty.section.day.index==$curDay} selected="selected" {/if}>{$smarty.section.day.index}</option>
+		{/section}
+		</select>
+		<input class="serverBttn btn btn-primary" type="button" value="Fetch Stats" onclick="fetchStats('update')" style="display:inline-block"/>
+	</div>
+	<script type='text/javascript' src='https://www.google.com/jsapi'></script>   
+	<script type='text/javascript'>
+		var mem=50;
+		var cpu=50;
+		var server_url = '{$cb_multiserver_url}/connect.php';
+		var server_api_path = '{$server.server_api_path}';
+		{literal}
+		google.load('visualization', '1', {packages:['gauge']});
+		google.setOnLoadCallback(drawChart);
+		  
+	    function drawChart() {
+		 	
+		    var data = new google.visualization.DataTable();
+	        data.addColumn('string', 'Label');
+	        data.addColumn('number', 'Value');
+	        data.addRows(3);
+	        data.setValue(0, 0, 'Memory');
+	        data.setValue(0, 1, mem);
+	        data.setValue(1, 0, 'CPU');
+	        data.setValue(1, 1, cpu);
+
+	        var chart = new google.visualization.Gauge(document.getElementById('chart_div'));
+	        var options = {width: 400, height: 120, redFrom: 90, redTo: 100,
+	            yellowFrom:75, yellowTo: 90, minorTicks: 5};
+	        chart.draw(data, options);
+			
+			$.ajax({
+				type : 'post',
+				url : server_url,
+				data : {mode:'get_status',server:server_api_path},
+				success : function(stat)
+				{
+					data.setValue(0, 1, stat.mem);
+					data.setValue(1, 1, stat.cpu);
+					chart.draw(data, options);
+				},
+				dataType:'json'
+			});
+				
+			setInterval(function() {
+				$.ajax({
+					type : 'post',
+					url : server_url,
+					data : {mode:'get_status',server:server_api_path},
+					success : function(stat)
+					{
+						data.setValue(0, 1, stat.mem);
+						data.setValue(1, 1, stat.cpu);
+						chart.draw(data, options);
+					},
+					dataType:'json'
+				});
+			}, 5000);
+		}
+		  
+		{/literal}
+	</script>
+	<script type="text/javascript">
+	 	var msname = '{$server.server_name}';
+		var statsData = {$statsData};
+		{literal}
+	    google.load("visualization", "1", {packages:["corechart"]});
+	    var statBars = new google.visualization.DataTable();
+		 
+		var stats_div = 'stats_div';
+	  	var typeTitle = "Days";
+		  
+		var barsOptions = {width: '800', height: 240, title: msname+' stats',
+		  	hAxis: {title: typeTitle}
+		};
+		  
+	    function drawStats() {
+			var data = new google.visualization.DataTable();			
+					data.addColumn('string', 'Day');
+					data.addColumn('number', 'Uploads');
+					data.addColumn('number', 'MBs');    
+					data.addRows(statsData);
+					new google.visualization.ColumnChart(document.getElementById(stats_div)).
+				  	draw(data,
+					   barsOptions
+				  );
+	    }
+		  
+		$(document).ready(function(){
+		 	drawStats() 
+		});
+		 
+		{/literal}
+	</script>
+	<div id="stats_div" onclick=""></div>
+</div>
+
+<div class="clearfix"></div>
+<div style="height:50px"></div>
+{/if}
+
+
+	<div class="modal fade" id="applicationKey" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  	<div class="modal-dialog">
+		    <div class="modal-content">
+		    	<div class="modal-header">
+			        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			        <h4 class="modal-title" id="myModalLabel">Your website application key</h4>
+		      	</div>
+		      	<div class="modal-body">
+			        <p>this is key will be used to create secure connection between two servers, you have to paste this key in your 'config.php' on your content or conversion server</p>
+			    	<textarea style="height:70px; width:100%" onClick="$(this).select()">{$appKey}</textarea>
+		     	</div>
+		 	</div>
+		</div>
+	</div>
+
+</div>
+

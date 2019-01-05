@@ -1,0 +1,127 @@
+			<!--<div class="cat-col col-lg-6 col-md-6 col-sm-6 col-xs-12 clearfix">
+				{include file="$style_dir/blocks/category_list.html" type='video'}
+			</div>-->
+			<!-- {$categories = pullCategories()} -->
+		<div class="filter-dropdowns clearfix">
+			{assign var=sorting_links value=sorting_links()}				
+				<div class="sorting-col col-lg-6 col-md-6 col-sm-6 col-xs-12 clearfix">
+					<!--Sorting By View-->
+					<div class="dropdown">
+						{if $smarty.get.sort}
+						{foreach from=$sorting_links item=name key=sort name=sorts}
+							{if $smarty.get.sort==$sort && isset($smarty.get.sort)} 
+							<a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">{$name} <span class="icon-down-arrow"></span></a>
+							{/if}
+						{/foreach}
+						{else}
+							<a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">Recent <span class="icon-down-arrow"></span></a>
+						{/if}    
+					
+						<ul class="dropdown-menu">
+							{foreach from=$sorting_links item=name key=sort}
+							<li>
+								<a href="{link name=sort sort=$sort type=videos}&sorting=sort" {if $smarty.get.sort==$sort} class="selected" {/if}>{if $smarty.get.sort==$sort}<i class="icon-tick"></i>{/if}{$name}</a>
+							</li>
+							{/foreach}
+						</ul>
+					</div>
+					
+					<!--Sorting By time-->
+					{assign var=time_links value=time_links()}
+					<div class="dropdown">
+						{if $smarty.get.time} 
+					
+						{foreach from=$time_links item=name key=sort name=times}
+							{if $smarty.get.time==$sort && isset($smarty.get.time)} 
+							<a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">{$name} <span class="icon-down-arrow"></span></a>
+							{/if}
+						{/foreach}
+						{else}
+							<a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">all time <span class="icon-down-arrow"></span></a>
+						{/if}  
+						  <ul class="dropdown-menu">
+							{foreach from=$time_links item=name key=sort name=times}
+								<li>
+									<a href="{link name=time sort=$sort type=videos}" {if $smarty.get.time==$sort} class="selected"{/if}>{if $smarty.get.time==$sort}<i class="icon-tick"></i>{/if}{$name}</a>
+								</li>
+							{/foreach}
+						  </ul>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="dropdown"> 
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown">{$catname}
+				<span class="icon-down-arrow"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<div>
+							<a href="{$baseurl}/{if $smarty.const.THIS_PAGE == 'videos'}videos.php{else}channels.php{/if}">All</a>
+						</div>
+					</li>
+					{$level = '1'}
+					{foreach from=$categories item=maincat}
+						<li>
+							<div>
+								<a href="{cblink(['name'=>'category','data'=>$maincat,'type'=>$type])}" class="">{$maincat.category_name}</a>
+								{if $maincat.children}<i class="icon-right-arrow trigger" data-level="1"></i>{/if}
+							</div>
+							{if $maincat.children} 
+								<ul class="dropdown-menu sub-menu">
+								{$level = '2'}
+								{foreach from=$maincat.children item=sub1}
+									<li>
+										<div>
+											<a href="{cblink(['name'=>'category','data'=>$sub1,'type'=>$type])}" class="">{$sub1.category_name} </a>
+											{if $sub1.children}<i class="icon-right-arrow trigger" data-level="2" ></i>{/if}
+										</div>
+										{if $sub1.children}
+											<ul class="dropdown-menu sub-menu"> 
+											{$level = '3'}
+											{foreach from=$sub1.children item=sub2}
+											<li>
+												<div>
+													<a href="{cblink(['name'=>'category','data'=>$sub2,'type'=>$type])}" class="">{$sub2.category_name} </a>
+													{if $sub2.children}<i class="icon-right-arrow trigger"data-level="3" ></i>{/if}
+												</div>
+												{if $sub2.children}
+													<ul class="dropdown-menu sub-menu">
+													{$level = '4'}
+													{foreach from=$sub2.children item=sub3}
+													<li>
+														<div>
+															<a href="{cblink(['name'=>'category','data'=>$sub3,'type'=>$type])}"  class="">{$sub3.category_name} </a>
+															{if $sub3.children}<i class="icon-right-arrow trigger" data-level="4" ></i>{/if}
+														</div>
+													
+														{if $sub3.children}
+															<ul class="dropdown-menu sub-menu">
+																{$level = '5'}
+																{foreach from=$sub3.children item=sub4}
+																	<li>
+																		<div>
+																			<a class="">{$sub4.category_name}</a>
+																			{if $sub4.children}<i class="icon-right-arrow trigger" data-level="5" ></i>{/if}
+																		</div>
+																	</li>
+																{/foreach}
+															</ul>
+														{/if}
+														</li>
+													{/foreach}
+													</ul>
+												{/if}
+												</li>
+											{/foreach}
+											</ul>
+										{/if}
+									</li>
+								{/foreach}
+								</ul>
+							{/if}
+						</li>
+					{/foreach}
+				</ul>
+			</div> 

@@ -1,0 +1,82 @@
+ {* Get package videos, if avaialble *}
+   
+  {if $get_videos=='yes'} 
+  {assign var=pkg_videos value=$paidSub->getPackageVideos($package.package_id,15)}
+    {/if}
+  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="background-color:{$bgcolor};border-bottom: 1px solid #ccc;"  class="pkg_list_tbl">
+          <tr>
+            <td width="40" valign="top">{$package.package_id}</td>
+            <div class="clearfix"></div>
+            <td valign="top">
+            <div style="float:left; display:inline-block; margin-right:5px"><img src="{$paid_subs_url}/images/icons/{$package.pkg_type}.png" /></div>
+            <div style="float:left"><strong><label class="label label-primary">{$package.pkg_title}</label></strong>
+            <br />{$package.pkg_desc}<br />
+            <span style="color:#999999">created {$package.date_added|niceTime} &#8226; {if $package.active=='yes'}<label class="label label-success">active</label>{else}<label class="label label-danger">inactive</label>{/if}
+            {if $package.pkg_type=='vids'}  &#8226; collection : {$package.is_collection}{/if}{if $pkg_videos} | <a href="javascript:void(0)" onclick="$('#pkg_videos_{$package.package_id}').slideToggle()">
+            <span class="btn btn-success btn-sm">
+            <i class="glyphicon glyphicon-eye-open"></i>
+            See Videos</span></a>{/if}
+            </span></div>
+            <div class="clear clearfix"></div>
+            
+            {if $pkg_videos}
+            <div style="margin-left:20px; margin-top:10px;display:none;" id="pkg_videos_{$package.package_id}">
+            	{foreach from=$pkg_videos item=video}
+                	<div style="padding-bottom:5px;
+                     margin-bottom:5px; vertical-align:central" id="pkg_vid_{$package.package_id}_{$video.videoid}">
+                        <i class="glyphicon glyphicon-trash" title="Remove Video from this package" onclick="remove_prem_video('{$video.videoid}','{$package.package_id}')" style="font-size: 1.7em;cursor:pointer;color:#d15b47;"></i><strong> {$video.title}</strong>
+                        <!-- | <a href="edit_video.php?video={$video.videoid}">Edit video</a>-->
+                      <div class="clear clearfix"></div>
+                    </div>
+                    <div class="video_output_{$package.package_id}_{$video.videoid}" ></div>
+                {/foreach}
+                
+                <div style="background-color:#CCC; height:1px; margin-bottom:3px"></div>
+               	<a href="{$queryString}mode=videos&id={$package.package_id}"><span class="btn btn-primary btn-xs">View all videos
+                </span></a>
+            </div>
+            
+            
+            {/if}
+                
+            </td>
+            <td width="250"valign="top" class="pkg_details">
+            
+                <ul><li><span class="label label-default label-white">Type</span> {$package.pkg_type|pkg_type_name}</li>
+
+                    <li><span class="label label-default label-white">Price</span> {$package.pkg_price}</li>
+                    <li><span class="label label-default label-white">Days</span>  {$package.pkg_days|pkg_limit:"days"}</li>
+                    <li><span class="label label-default label-white">Videos</span>  {$package.pkg_vids|pkg_limit:"vids"}</li>
+
+                    {if $package.pkg_type!='ppv'}
+                    <li><span class="label label-default label-white">PPV</span> {$package.pkg_ppv|pkg_limit:"ppv"}</li>
+                    {else}
+                    <li><span class="label label-default label-white">Credits</span> {$package.pkg_credits|number_format}</li>
+                    {/if}
+                    <li><span class="label label-default label-white">Uses</span>  44</li>
+
+                </ul>
+            </td>
+
+            <td width="200" valign="top">
+             <div class="dropdown">
+                    <button id="dropdownMenu1" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">
+                        Actions <i class="caret"></i></button>
+                     <ul class="dropdown-menu pull-right " aria-labelledby="dropdownMenu1" role="menu">
+                        <li class=""><a href="{$queryString}mode=edit&id={$package.package_id}">Edit</a></li>
+                        {if $package.active=='yes'}
+                        <li class=""><a href="{$queryString}mode=deactivate&id={$package.package_id}">Deactivate</a></li>
+                       {else}
+                       <li class=""><a href="{$queryString}mode=activate&id={$package.package_id}">Activate</a></li>
+                        {/if}
+                        <li class="divider"></li>
+                      <li class="de"><a href="{$queryString}mode=delete&id={$package.package_id}">Delete</a></li>
+                       
+                    </ul>
+                </div>
+                
+            
+            
+            </td>
+          </tr>
+        </table> 

@@ -1,0 +1,92 @@
+<div id="main"> 
+<div  class="cb-box container">
+	<div class="alert-info well" style="font-size:18px; font-weight:bold; margin-bottom:20px;text-align:center">WATCH PREMIUM CONTENT - HIGH QUALITY</div>
+<div class="premium_vids">
+{foreach from=$premium_vids item=pvid}
+	
+    <div style="margin-bottom:10px">
+        <div style="overflow:hidden; position:relative; height:130px">
+            <img src="{get_thumb vdetails=$pvid size=big}" width="240" style="position:absolute; top:-25px" />
+        </div>
+        <div style="font-size:14px; font-weight:bold; margin-top:5px">{$pvid.title}</div>
+    </div>
+    
+{/foreach}
+
+</div>
+
+<div class="packages_div">
+
+	{if $videos}
+    <div class="btn btn-primary  " style="width:95%;margin-bottom:20px;">Videos</div>
+    
+    {foreach from=$videos item=video}
+    
+    	{include file="$style_dir/blocks/videos/video.html" }
+    
+    	
+    {/foreach}
+    <div class="clear clearfix"></div>
+    {include file="$style_dir/blocks/pagination.html"}
+    <div style="height:20px"></div>
+    
+    {/if}
+    <!-- Confirming Order -->
+        <!-- <div class="btn btn-primary" style="width:95%">Confirming purchase</div> -->
+        <div align="center">
+        <div class="alert alert-danger" id="callback-message" style="display:none;"></div>
+        </div>
+        <div align="center">
+            <div style="font-size:24px; font-weight:bold" >{$package.pkg_title}</div>
+            <div style="font-size:18px">{$package.pkg_desc}</div>
+            
+            <h3  style="margin-bottom:15px"><span class="label label-default">
+                {$paidSub->currency|currency}{$package.pkg_price}
+            </span></h3>
+            <div class="mb10"></div>
+            
+            
+            {include file="$paid_subs_dir/templates/block/error.html" style="display:none"}
+            
+            {if $package.pkg_days && $paidSub->configs.paypal_rest_api=='no'}
+                <div style="margin:5px auto">
+                    <label><input type="checkbox" name="auto_renew" checked="checked" onclick="recurring_paypal(this)"  value="yes"/> Auto Renew</label>
+                </div>
+            {/if}
+            
+                <!-- Loading firstdata form -->
+            {*include file="$paid_subs_dir/templates/forms/firstdata.html" type='order'*}
+            <!-- ending firstdata form -->
+
+            
+            <!-- Loading paypal form -->
+            {if $paidSub->configs.use_pay_pal=='yes'}
+                {if $paidSub->configs.paypal_rest_api=='yes'}
+                    {include file="$paid_subs_dir/templates/forms/paypal_rest.html" type='order'}
+                {else}
+                    {include file="$paid_subs_dir/templates/forms/paypal.html" type='order'}
+                {/if}
+            {/if}
+            <!-- ending paypal form -->
+
+            {if $paidSub->configs.use_alertpay=='yes'}                  
+            <!-- Loading alertpay form -->
+            {include file="$paid_subs_dir/templates/forms/alertpay.html" type='order'}
+            <!-- ending alertpay form -->
+            {/if}
+            <hr>
+            {if ($package['pkg_type']=='subs')}
+            <button onclick="window.location='module.php?s=premium&amp;p=billing_plan&amp;pid={$package.package_id}'" class="btn btn-primary" > Choose long term Subscription plan </button>
+            {/if} 
+
+        </div>
+
+     
+        <!-- Confirming Order -->
+        
+        
+    <div class="clearfix"></div>
+</div>
+<div class="clearfix"></div>
+</div>
+</div>

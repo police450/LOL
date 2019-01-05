@@ -1,0 +1,280 @@
+<form method="post" enctype="multipart/form-data" class="form-horizontal" id="editConfigurations">
+	<div id="error_cont" style="display:none " class="alert alert-danger"></div>
+	<div id="msg_cont" style="display:none" class="alert alert-success"></div>
+	<div class="clearfix">
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<h6>Modules and Paths</h6>
+			<div class="form-group">
+				<label for="baseurl" class="col-sm-2 control-label">Baseurl</label>
+				<div class="col-sm-10">
+					<div class="input-group withicon">
+					<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+					<input name="baseurl" type="text" id="baseurl" value="{$server_confing.baseurl}" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label" for="callback_url">CallBack Url</label>
+				<div class="col-sm-10">
+					<div class="input-group withicon">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-link"></i></span>
+						<input name="callback_url" type="text" id="callback_url" value="{$server_confing.callback_url}" class="form-control">
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="ffmpeg_path" class="col-sm-2 control-label">FFMPEG Path</label>
+				<div class="col-sm-10">
+						<input name="ffmpeg_path" type="text" id="ffmpeg_path" value="{$server_confing.ffmpeg_path}" class="form-control" data-toggle="tooltip" data-placement="top" title="Enter FFMPEG Binary path, mostly its /usr/bin/ffmpeg">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="ffprobe_path" class="col-sm-2 control-label">FFPROBE Path</label>
+				<div class="col-sm-10">
+						<input name="ffprobe_path" type="text" id="ffprobe_path" value="{$server_confing.ffprobe_path}" class="form-control" data-toggle="tooltip" data-placement="top" title="Enter ffprobe Binary path, may be its /usr/bin/ffprobe ">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="mediainfo_path" class="col-sm-2 control-label">MediaInfo Path</label>
+				<div class="col-sm-10">
+					<input name="mediainfo_path" type="text" id="mediainfo_path" value="{$server_confing.mediainfo_path}" class="form-control" data-toggle="tooltip" data-placement="top" title="Enter mediainfo Binary path, by default its /usr/bin/mediainfo">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="mp4box_path" class="col-sm-2 control-label">MP4Box Path</label>
+				<div class="col-sm-10">
+					<input name="mp4box_path" type="text" id="mp4box_path" value="{$server_confing.mp4box_path}" class="form-control" data-toggle="tooltip" data-placement="top" title="Path to Mp4Box  /usr/bin/MP4Box">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="php_path" class="col-sm-2 control-label">PHP Path</label>
+				<div class="col-sm-10">
+					<input name="php_path" type="text" id="php_path" value="{$server_confing.php_path}" class="form-control" data-toggle="tooltip" data-placement="top" title="Enter PHP Binary path, its either /usr/bin/php or /usr/local/bin/php">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="processes_at_once" class="col-sm-2 control-label">Maximum Process at once</label>
+				<div class="col-sm-10">
+					<input name="processes_at_once" type="text" id="processes_at_once" value="{$server_confing.processes_at_once}" class="form-control" data-toggle="tooltip" data-placement="top" title="Nummber of conversion processes at once, set 0 to make it unlimit">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="processes_at_once" class="col-sm-2 control-label">Stream via</label>
+				<div class="col-sm-10 custom-elements">
+					<input type="radio" name="stream_via" value="dash" id="stream_via_dash" {if $server_confing.stream_via =='dash'} checked="checked"{/if} />DASH (dynamic addaptive streaming)
+				</div>
+
+				<div class="col-sm-10 custom-elements">
+					<input type="radio" name="stream_via" value="hls" id="stream_via_hls" {if $server_confing.stream_via =='hls'} checked="checked"{/if} />HLS (http live streaming)   
+				</div>
+			</div>
+
+			<div class="form-group">
+			<h6>WaterMark Settings</h6>
+			<div class="padding-top form-group clearfix">
+				<label class="col-sm-2 control-label">Enable/Disable</label>
+				<div class="custom-elements no-yes col-lg-3 col-md-3 col-sm-6">
+					<input name="watermark_video" id="watermark_video" type="checkbox" value="1"{if $server_confing.watermark_video == '1'} checked{/if}>
+				</div>
+			</div>
+<!-- 			<div class="padding-top form-group clearfix">
+				<label class="col-sm-2 control-label">Watermark Position</label>
+				<div class="custom-elements  col-lg-3 col-md-3 col-sm-6">
+					<div class="clearfix">
+						<label>
+							<input type="radio" name="v_watermark_placement" id="top_left" value="left:top"{if $server_confing.v_watermark_placement == 'left:top'} checked{/if} >
+							Top Left
+						</label>
+					</div>
+					<div class="clearfix">
+						<label>
+							<input type="radio" name="v_watermark_placement" id="top_right" value="right:top"{if $server_confing.v_watermark_placement == 'right:top'} checked{/if} >
+							Top Right
+						</label>
+					</div>
+					<div class="clearfix">
+						<label>
+							<input type="radio" name="v_watermark_placement" id="bottom_left" value="left:bottom"{if $server_confing.v_watermark_placement == 'left:bottom'} checked{/if} >
+							Bottom Left
+						</label>
+					</div>
+					<div class="clearfix">
+						<label>
+							<input type="radio" name="v_watermark_placement" id="bottom_right" value="right:bottom"{if $server_confing.v_watermark_placement == 'right:bottom'} checked{/if} >
+							Bottom Right
+						</label>
+					</div>
+				</div>
+			</div> -->
+			<div class="form-group">
+				<label for="sbrate" class="col-sm-2 control-label">Watermark File</label>
+				<div class="col-sm-10 custom-elements">
+					<i class="glyphicon glyphicon-info-sign" data-toggle="tooltip" data-placement="top" title="Best-Size: 32x18, Format: png, Info: Will overrite the existing"></i>
+					<input type="file" name="video_watermark_file" id="video_watermark_file" >
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-2 control-label">Current Watermark</label>
+				<div class="col-lg-4 col-md-4 col-sm-6">
+					{if $server_confing.has_video_watermark}
+					<div style="background-color:#383838;min-height:100px;position:relative;">
+						<img src="{$server_confing.server_api_path}/video_watermark.png" height="18" width="32" style="margin:-9px 0 0 -16px;position:absolute;top:50%;left:50%;">
+						<input name="has_video_watermark" value="yes" type="hidden">
+					</div>
+					{else}
+					<span class="alert alert-warning">Watermark not found !</span>
+					{/if} 
+				</div>
+			</div>
+		</div>
+
+		</div>
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<h6>Conversion Settings</h6>
+			<div class="form-group">
+				<label for="max_video_duration" class="col-sm-2 control-label">Max duration</label>
+				<div class="col-sm-10">
+					<div class="input-group withicon">
+						<span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+						<input type="text" value="{$server_confing.max_video_duration}" name="max_video_duration" id="max_video_duration" class="form-control"/>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="max_video_duration" class="col-sm-2 control-label">Video Resolutions</label>
+				<div class="custom-elements col-lg-6">
+					<div class="clearfix">
+						<label>
+							<input type="checkbox" name="gen_240" {if $server_confing.gen_240=='yes'} checked="checked"{/if}  value="yes"> Generate 240
+						</label>
+					</div>
+					<div class="clearfix">
+						<label>
+							<input type="checkbox" name="gen_360" {if $server_confing.gen_360=='yes'} checked="checked"{/if}  value="yes"> Generate 360
+						</label>
+					</div>
+					<div class="clearfix">
+						<label>
+							<input type="checkbox" name="gen_480" {if $server_confing.gen_480=='yes'} checked="checked"{/if}  value="yes"> Generate 480
+						</label>
+					</div>
+					<div class="clearfix">
+						<label>
+							<input type="checkbox" name="gen_720" {if $server_confing.gen_720=='yes'} checked="checked"{/if}  value="yes"> Generate 720
+						</label>
+					</div>
+					<div class="clearfix">
+						<label>
+							<input type="checkbox" name="gen_1080" {if $server_confing.gen_1080=='yes'} checked="checked"{/if}  value="yes"> Generate 1080
+						</label>
+					</div>
+				</div>
+			</div>	
+			<div class="form-group">
+				<label for="max_video_duration" class="col-sm-2 control-label">Keep Original</label>
+				<div class="custom-elements col-lg-6">
+					<div class="clearfix">
+						<label>
+							<input type="checkbox" name="keep_orig" {if $server_confing.keep_orig=='yes'} checked="checked"{/if}  value="yes"> Yes
+						</label>
+					</div>
+				</div>
+			</div>
+			<div class="form-group">
+              <label for="convProfile" class="col-sm-2 control-label">Select profile </label>
+              <div class="col-sm-10">
+              <select class="form-control" name="convProfile" id="convProfile">
+                  <option selected="selected" value="0">Choose from list</option>
+                  <!-- <option {if $smarty.post.convProfile=='1'} selected="selected"{/if} value="1">H.264, AAC - Youtube like</option> -->
+                  <option {if $smarty.post.convProfile=='1'} selected="selected"{/if} value="1">High Configurations</option>
+                  <option {if $smarty.post.convProfile=='2'} selected="selected"{/if}  value="2">Normal Configurations</option>
+                  <option {if $smarty.post.convProfile=='3'} selected="selected"{/if}  value="3">Low Configurations</option>
+              </select>
+          	</div>
+          </div>
+			<div class="form-group">
+				<label for="video_codec" class="col-sm-2 control-label">Video Codec</label>
+				<div class="col-sm-10">
+					<input name="video_codec" type="text" id="video_codec" value="{$server_confing.video_codec}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="audio_codec" class="col-sm-2 control-label">Audio Codec</label>
+				<div class="col-sm-10">
+					<input name="audio_codec" type="text" id="audio_codec" value="{$server_confing.audio_codec}" class="form-control">
+				</div>
+			</div>
+<!-- 			<div class="form-group">
+				<label for="vrate" class="col-sm-2 control-label">Video Rate</label>
+				<div class="col-sm-10">
+					<input name="vrate" type="text" id="vrate" value="{$server_confing.vrate}" class="form-control">
+				</div>
+			</div> -->
+			<div class="form-group">
+				<label for="vbrate_240" class="col-sm-2 control-label">Video Bitrate 240</label>
+				<div class="col-sm-10">
+					<input name="vbrate_240" type="text" id="vbrate_240" value="{$server_confing.vbrate_240}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="vbrate_360" class="col-sm-2 control-label">Video Bitrate 360</label>
+				<div class="col-sm-10">
+					<input name="vbrate_360" type="text" id="vbrate_360" value="{$server_confing.vbrate_360}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="vbrate_480" class="col-sm-2 control-label">Video Bitrate 480</label>
+				<div class="col-sm-10">
+					<input name="vbrate_480" type="text" id="vbrate_480" value="{$server_confing.vbrate_480}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="vbrate_720" class="col-sm-2 control-label">Video Bitrate 720</label>
+				<div class="col-sm-10">
+					<input name="vbrate_720" type="text" id="vbrate_720" value="{$server_confing.vbrate_720}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="vbrate_1080" class="col-sm-2 control-label">Video Bitrate 1080</label>
+				<div class="col-sm-10">
+					<input name="vbrate_1080" type="text" id="vbrate_1080" value="{$server_confing.vbrate_1080}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="srate" class="col-sm-2 control-label">Audio Rate</label>
+				<div class="col-sm-10">
+					<input name="srate" type="text" id="srate" value="{$server_confing.srate}" class="form-control">
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="sbrate" class="col-sm-2 control-label">Audio Bitrate</label>
+				<div class="col-sm-10">
+					<input name="sbrate" type="text" id="sbrate" value="{$server_confing.sbrate}" class="form-control">
+				</div>
+			</div>
+		</div>
+
+		<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+			<div class="pull-left">
+				<div class="clearfix">
+					<input name="secret_key" value="{$server_confing.secret_key}" type="hidden">
+					<input name="application_key" value="{$appKey}" type="hidden"> 
+					<input name="update_configurations" value="update_configurations" type="hidden">
+					<input class="btn btn-primary configUpdate" type="button" value="Update configurations" onclick="updaeServerConfigs()" />
+					<span id="servLoading" style="margin-top:5px"></span>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+<script type="text/javascript">
+	$('#server_main_role').change(function(){
+        var currentValue = $('#server_main_role').val();
+        if (currentValue == 'c') {
+        	$('.assoc_server_id').fadeIn('slow');
+        } else {
+        	$('.assoc_server_id').hide();
+        }
+    });
+</script>

@@ -1,0 +1,121 @@
+<h2>Paid Subscription</h2>
+
+
+<div class="widgets-wrap" id="column1" >
+	 
+    <div class="row" style="margin-left:3px;">
+     <div class="dragbox col-sm-8 col-md-8  " id="cbstats" >
+      
+        <h2>Paid Subscriptions Quick Stats</h2>
+        <div class="dragbox-content" >
+            <div class="item clearfix">
+            	<div class="stats_subitem"><strong>Subscriptions</strong></div>
+                <div class="stats_subitem_d">Total : <strong>{getSubscriptions(['count_only'=>'yes'])}</strong> | Active : <strong>{getSubscriptions(['count_only'=>'yes'])}</strong> | Inactive : <strong>{getSubscriptions(['count_only'=>'yes'])}</strong> </div>
+            </div>
+            
+             <div class="item clearfix">
+            	<div class="stats_subitem"><strong>Orders</strong></div>
+                <div class="stats_subitem_d">Total : <strong>{getOrders(['count_only'=>'yes'])}</strong> | Paid : <strong>{getOrders(['count_only'=>'yes'])}</strong> | Pending : <strong>{getOrders(['count_only'=>'yes'])}</strong> | Failed : <strong>{getOrders(['count_only'=>'yes','status'=>'failed'])}</strong></div>
+            </div>
+            
+             <div class="item clearfix">
+            	<div class="stats_subitem"><strong>Members</strong></div>
+                <div class="stats_subitem_d">Total : <strong>{get_users count_only=yes}</strong> | Active : <strong>{get_users count_only=yes status='Ok'}</strong> | Flagged : <strong>{$userquery->action->count_flagged_objects()}</strong> | Banned : <strong>{get_users count_only=yes ban='yes'}</strong></div>
+            </div>
+            
+            
+             <div class="item clearfix">
+                <table width="100%" border="0" cellpadding="0" cellspacing="00"><tr><td width="50%"><strong>Today's Income</strong></td>
+                  <td width="50%" align="right" style="color:#090; font-size:13px; font-weight:bold">{$paidSub->currency|currency}{$income_today}</td></tr></table>
+          </div>
+            
+            
+               <div class="item clearfix">
+                <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr>
+                  <td width="50%"><strong>This Month's Income</strong></td>
+                  <td width="50%" align="right" style="color:#090; font-size:13px; font-weight:bold">{$paidSub->currency|currency}{$income_today}</td></tr></table>
+          </div>
+            
+        </div>
+    </div>
+   </div> 
+
+
+
+<br>
+<span class="btn btn-primary" style="margin:5px 5px 5px 0px;" onClick="window.location='{$conf_link}'">
+  Edit Configurations
+</span>
+<span class="btn btn-primary" style="margin:5px 5px 5px 5px" onClick="window.location='{$pkgs_link}'">
+  Manage Packages
+</span>
+<span class="btn btn-primary" style="margin:5px 5px 5px 5px" onClick="window.location='{$subs_link}'">
+  Mange Subscriptions
+</span>
+
+<br><br><br>
+
+
+
+    
+
+	
+    
+{assign var=subs  value=getSubscriptions(['limit'=>'10','order_by'=>'date_added','sort'=>'DESC'])}
+{if $subs}
+<div class="panel panel-default">
+  <div class="panel-heading">Latest Subscriptions</div>
+  <table class="table"  style="border-bottom: 1px solid #ccc;">
+  <tr>
+    <td width="20"><strong>ID</strong></td>
+    <td width="300"><strong>Subscription</strong></td>
+    <td width="170"><strong>Amount</strong></td>
+    <td width="190"><strong>Status</strong></td>
+    <td width="200"><strong>Actions</strong></td>
+  </tr>
+  </table>
+{assign var='bgcolor' value='#fff'}
+{foreach from=$subs item=sub}    
+{assign var=order value=$paidSub->getSubsOrderDetails($sub.subscription_id)}
+
+<table class="table" style="background-color:{$bgcolor}">
+  <tr>
+    <td width="20" valign="top">{$sub.subscription_id}</td>
+    <td width="300" valign="top"><label class="label label-default">{$sub.pkg_title}</label><br>
+      <strong>{$sub.username}</strong> {$sub.date_added|niceTime}</td>
+    
+    <td width="170" valign="top"> {if $order.amount_recieved} <strong>{$sub.package_currency|currency}{$order.amount_recieved}</strong>{/if}
+     {assign var=order_status value=orderStatus($order)}
+     <span class="label label-{$order_status.class}" style="margin-bottom:10px;">{$order_status.status}</span>
+     
+     <br/>
+      {if $order_status.status == 'Paid'}
+      <a href="javascript:void(0)" onclick="window.open(baseurl+'/module.php?s=premium&p=view_invoice&sid={$sub.subscription_id}','View Invoice','width=700,height=280')"><button class="btn btn-info btn-xs">view order invoice</button></a></td>
+      {/if}
+    
+    <td width="190" valign="top"><label class="">Active</label> : <strong>{$sub.active}</strong><br>
+      <label class="">Videos Watched</label> :<strong> {$sub.watched}</strong><br>
+      <label class="">Duration Watched</label> : <strong>{$sub.watched_time}</strong><br>
+      <label class="">Days Left</label> : <strong>{$sub.end_date|daysLeft|number_format} </strong>  <br></td>
+    <td width="200" valign="top">
+    
+      {if $sub.active=="no"} 
+      <a href="{$subs_link}&activate={$sub.subscription_id}"><span class="btn btn-primary btn-sm">Activate Subscription</span></a><br>
+      {else}
+      <a href="{$subs_link}&deactivate={$sub.subscription_id}"><span class="btn btn-primary btn-sm">Deactivate Subscription</span></a><br>
+      {/if}
+</td>
+  </tr>
+</table>
+{if $bgcolor=='#f2f2f2'}
+    {assign var='bgcolor' value='#fff'}
+{else}
+    {assign var='bgcolor'  value='#f2f2f2'}
+{/if}
+{/foreach}
+
+{/if}
+
+</div>
+</div>
+

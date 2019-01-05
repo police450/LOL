@@ -1,0 +1,46 @@
+<script>
+
+var allowed_time = {$allowed_time};
+var time_watched = $.cookie("{$time_watch_cookie_name}");
+var count=0;
+
+function stopWatchPlayer()
+{ldelim}
+	time_watched++;
+	$.cookie("{$time_watch_cookie_name}",time_watched);
+	if(time_watched>=allowed_time)
+	{ldelim}
+		flowplayer("the_Video_Player").unload().hide();
+		$("#normal_player_cont").html($('#demoOverContent').html());
+	{rdelim}else
+	setTimeout('stopWatchPlayer()', 1000);
+{rdelim}
+
+flowplayer("the_Video_Player").onStart(function()
+{ldelim}
+	stopWatchPlayer();
+{rdelim});
+
+{literal}
+function switchPremium(obj)
+{
+	alert($(obj).val());
+}
+{/literal}
+</script>
+
+<div id="demoOverContent" style="display:none">
+<div style="background-color:#CCC; padding:5px;">
+		{if $has_premium}
+  <div align="center">
+    <h2>Watch Premium video</h2>
+    <p>Are you sure<a href="{$baseurl}/premium_service.php"></a> you want to see this video!</p>
+    <p><form action="{videoLink vdetails=$video_details}" method="post"><input type="submit" name="play_video" id="button" value="Watch Video Now" /></form>
+      
+    </p>
+  </div>
+          {else}
+  <div align="center"><h2>Premium video</h2>You need premium credits in order to view this video, click button below to buy premium package<br />
+  <a href="{$baseurl}/premium_service.php">Become Premium</a></div>
+        {/if}
+</div></div>

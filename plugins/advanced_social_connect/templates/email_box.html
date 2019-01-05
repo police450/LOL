@@ -1,0 +1,51 @@
+<script type="text/javascript" src="//code.jquery.com/jquery-latest.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<!-- put this block in container message box -->
+<div class="clearfix container ">
+<div class="cb-box bottom_space">
+	<div id="notic" class="alert alert-warning">Email Address is required to login using Twitter only</div>
+	<div id="err_msgs" class="alert alert-danger"></div>
+	<form name="social_email_box" id="social_email_box" action="signup.php" method="post">
+		<label for="social_email">{lang code="Email Address"}</label>
+		<div class="row form-group clearfix">
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<input type="email" name="email" id="social_email" class="form-control" required="required" placeholder="{lang code='Enter your email address..'}" value="" >
+				<input type="hidden" name="name" value="{$social_name}">
+				<input type="hidden" name="social_account_id" value="{$social_account_id}">
+				<input type="hidden" name="username" value="{$social_username}">
+				<input type="hidden" name="avatar_url" value="{$social_avatar_url}">
+				<input type="hidden" name="soclid" value="{$soclid}">
+			</div>
+			<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+				<input name="social_email_update" value="Update Your Account" class="btn btn-primary btn-block" id="email_box_submit" type="button">
+			</div>
+		</div>
+	</form>
+</div>
+</div>
+<!---->
+
+<style type="text/css">
+	.bottom_space {
+		margin-bottom: 20px;
+	}
+</style>
+
+<script type="text/javascript">
+$('#err_msgs').hide();
+
+	$(document).ready(function(){
+		$('#email_box_submit').on('click',function(e){
+
+			if ( $('#social_email').val() ) {
+				$('#social_email_box').submit();
+			} else {
+				$('#err_msgs').html("You must provide email to login using Twitter");
+				$('#err_msgs').fadeIn('slow');
+			}
+		});
+
+	})
+	
+</script>

@@ -1,0 +1,113 @@
+{if $row.wowza_connect_api == 'no'}
+<span class="alert alert-warning">This Section is not connected and configured with wowza APIs, Kindly See the manual Menu</span>
+{/if}
+{if $smarty.get.view}
+<div class="container">
+	<h2>Wowza Applciation : {$app.Name}</h2>
+	<a class="btn btn-sm btn-primary pull-right" href="{$baseurl}/admin_area/plugin.php?folder={$ls_dir_base}/admin&file=manage_wowza_application.php">
+		<i class="glyphicon glyphicon-arrow-left"> </i>
+		Back To Manager
+	</a>
+    <table class="table table-striped">
+	    <thead>
+			<tr>
+				<th>Application</th>
+				<th>Stream Config</th>
+				<th>Server</th>
+			</tr>
+	    </thead>
+	    <tbody>
+	    	{if $app}
+		    	<tr class="active">
+					<td><strong>Applicaiton Description : </strong> {$app.Description} </td>
+					<td><strong>Stream Type : </strong> {$app.StreamConfig.StreamType} </td>
+					<td><strong>Server Name : </strong> _defaultServer_ </td>
+				</tr>
+				<tr class="danger">
+					<td><strong>Applicaiton Name : </strong> {$app.Name} </td>
+					<td><strong>Storage Dir : </strong> {$app.StreamConfig.StorageDir} </td>
+					<td></td>
+				</tr>
+				<tr class="Success">
+					<td><strong>Application Type : </strong>{$app.AppType}</td>
+					<td><strong>Storage Dir Exists : </strong> {$app.StreamConfig.StorageDirExists} </td>
+					<td></td>
+				</tr>
+			{/if}      
+	    </tbody>
+  	</table>
+</div>
+{else}
+<div class="heading">
+    <h2>Create Wowza Application</h2>
+</div>
+<div class="row" style="margin-left:20px;">
+	<form id="wowza-form" class="clearfix" method="post" >
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="channel_name">Create Application</label>
+				<input name="channel_name" id="channel_name" type="text"  class="form-control" placeholder="" required/>
+				<span class="smallText" style="font-size:11px;">e.g ClipBucket (must be unique)</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="description">Description</label>
+				<textarea name="description" id="description" class="form-control" required></textarea>   
+				<span class="smallText" style="font-size:11px;">e.g Add description here</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<input type="submit" name="create-application" class="form-control btn btn-warning btn-block" value="Create Wowza Application"  />
+			</div>
+		</div>
+	</form>
+</div>
+
+
+{if $applications}
+<div class="container">
+	<h2>Applications</h2>
+	<p>Manage your applications here..</p>            
+	<table class="table">
+	    <thead>
+	    <tr>
+	        <th>Application Name</th>
+	        <th>App Type</th>
+	        <th>Actions</th>
+	    </tr>
+	    </thead>
+	    <tbody>
+	    	{foreach $applications.Application as $app}
+			<tr>
+				<td>{$app['@attributes']['id']}</td>	
+				<td>{$app.AppType}</td>
+				<td>
+					<div class="dropdown">
+						<button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">Actions
+						<span class="caret"></span></button>
+						<ul class="dropdown-menu">
+							<li>
+								<a href="{$baseurl}/admin_area/plugin.php?folder={$ls_dir_base}/admin&file=manage_wowza_application.php&view={$app['@attributes']['id']}">
+									View Details
+								</a>
+							</li>
+							<li>
+								<a  onClick="javascript:_cb.Confirm_Delete('{$baseurl}/admin_area/plugin.php?folder={$ls_dir_base}/admin&file=manage_wowza_application.php&remove={$app['@attributes']['id']}')" href="javascript:void(0);">
+									Remove
+								</a>
+							</li>
+						</ul>
+					</div>
+				</td>
+			</tr>
+			{/foreach}
+	    </tbody>
+	 </table>
+</div>
+	
+{/if}
+
+{/if}
+
+
+

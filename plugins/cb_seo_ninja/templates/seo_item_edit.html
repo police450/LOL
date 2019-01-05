@@ -1,0 +1,109 @@
+	<link rel="stylesheet" type="text/css" href="{$ninja_html_url}/styles/css/all.css">
+	<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700' rel='stylesheet' type='text/css'>
+		<div class="panel panel-default clearfix cb-uikit">
+			<!-- Default panel contents -->
+			<div class="panel-heading"><h3 class="bluecolor4 text_cent">SEO Section</h3></div>
+			<div class="panel-body">
+			<p>SEO Settings blah blah</p>
+			</div>
+
+			<!-- Table -->
+			<div class="clearfix">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                        <div class="clearfix">
+                        <strong>SEO Title</strong>
+                            <div class="required-field-block">
+                                <input type="text" name="seo_title" id="seo_title" class="form-control" value="{$seo_title}">
+                            </div>
+                        <strong>SEO Description</strong>
+                            <div class="required-field-block">
+                                <textarea name="seo_description" id="seo_description" class="form-control">{$seo_description}</textarea>
+                            </div>
+                        <strong>SEO Keywords</strong>
+                        	<div class="required-field-block">
+                                <input type="text" name="seo_keywords" id="seo_keywords" class="form-control" value="{$seo_keywords}">
+                            </div>
+                        <strong>Social Title</strong>
+                        	<div class="required-field-block">
+                                <input type="text" name="fb_title" id="fb_title" class="form-control" value="{$fb_title}">
+                            </div>
+                        <strong>Social Description</strong>
+                        	<div class="required-field-block">
+                                <input type="text" name="fb_desc" id="fb_desc" class="form-control" value="{$fb_desc}">
+                            </div>
+                        <strong>Social Thumb URL</strong>
+                        	<div class="required-field-block">
+                                <input type="text" name="fb_thumb" id="fb_thumb" class="form-control" value="{$fb_thumb}">
+                            </div>
+                       <!--  <strong>Twitter Title</strong>
+                        	<div class="required-field-block">
+                                <input type="text" name="tw_title" id="tw_title" class="form-control" value="{$tw_title}">
+                            </div>
+                        <strong>Twitter Description</strong>
+                        	<div class="required-field-block">
+                                <input type="text" name="tw_desc" id="tw_desc" class="form-control" value="{$tw_desc}">
+                            </div>
+                        <strong>Twitter Thumb URL</strong>
+                        	<div class="required-field-block">
+                                <input type="text" name="tw_thumb" id="tw_thumb" class="form-control" value="{$tw_thumb}">
+                            </div>
+                        <strong>Twitter HashTag</strong>
+                        	<div class="required-field-block">
+                                <input type="text" name="tw_hashtag" id="tw_hashtag" class="form-control" value="{$tw_hashtag}">
+                            </div> -->
+                        </div>
+                    </div>
+	            </div>
+	        </div>
+		</div>
+		
+
+
+
+
+
+
+
+
+
+
+ <!-- <link rel="stylesheet" type="text/css" href="{$HONEY_CAPT_HTML_URL}/style.css">
+<div class="col-md-12 col-lg-12 captions_section">
+<h3 class="colored text_cent"> Subtitles Section </h3>
+	<div class="col-md-12 subs_upload_section" style="margin-top: 30px">
+	    <label for="captions" class="colored">Subtitles / Captions ( Required )</label>
+	    <input  name="captions" type="file" id="captions" class="form-control margin_bottom_x">
+	    <label for="subtitle_lang" class="colored">Subtitle file langugage ( Required ) </label>
+	    <input  name="subtitle_lang" type="text" id="subtitle_lang" class="form-control" placeholder="Language of Subtitle file. e:g English(uk)">
+	</div>
+	<label for="captions" class="colored">Total Captions: {$total_subs}</label>
+	<ol class="colored">
+		{foreach from=$subs key=k item=v}
+		{assign var='defualt_sub' value=$v.default_sub}
+		{assign var='videoid' value=$smarty.get.video}
+		{assign var='vid_page' value='video'}
+
+		{if empty($videoid)}
+		{assign var='videoid' value=$smarty.get.vid}
+		{assign var='vid_page' value='vid'}
+		{/if}
+		
+	 	  <li>{$v.file_name} &nbsp;&nbsp;&nbsp;&nbsp;<strong>* {$v.file_language|capitalize} *</strong>{if $defualt_sub == 'yes'}&nbsp;&nbsp;&nbsp;&nbsp;<strong>(Default)</strong>{/if}</li>
+	  <div class="dropdown">
+		<button id="dropdownMenu1" class="btn btn-primary btn-xs dropdown-toggle subs_action" data-toggle="dropdown">
+	    	Actions <i class="caret"></i></button>
+			<ul class="dropdown-menu pull-right" aria-labelledby="dropdownMenu1" role="menu">
+	    		<li><a role="menuitem" tabindex="-1" href="{$baseurl}/files/captions/{$v.file_path}/{$v.file_name}" class="" download>Download</a></li>
+	    		{if $defualt_sub != 'yes'}
+	    		<li><a role="menuitem" tabindex="-1" href="edit_video.php?{$vid_page}={$videoid}&defualt_sub={$v.subid}">Make Default</a>
+	    		{/if}
+	    		<li><a role="menuitem" tabindex="-1" href="edit_video.php?{$vid_page}={$videoid}&del_sub={$v.subid}">Delete</a>
+	    	</li>
+		</ul>
+	</div>
+		{/foreach}
+	</ol>
+</div>
+
+ -->

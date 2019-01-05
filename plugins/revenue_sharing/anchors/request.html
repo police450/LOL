@@ -1,0 +1,15 @@
+  {assign var='u_details'  value = $revshare->get_eu_details(userid())}
+  {if empty($u_details)}
+  <li><a href="#myRevModal" data-toggle="modal"><i class="glyphicon glyphicon-usd"></i> {lang code="Become earning user"}</a></li>
+  {else}
+ 
+  <li><a href="{$baseurl}/module.php?s=revshare&p=user_stats"><i class="glyphicon glyphicon-stats "></i> {lang code="View Your earnings"}</a></li>
+  <li><a href="{$baseurl}/module.php?s=revshare&p=edit_info"><i class="glyphicon glyphicon-info-sign "></i>  {lang code="Edit earning info"}</a></li>
+
+  {/if}
+
+  
+
+
+
+

@@ -1,0 +1,339 @@
+<link rel="stylesheet" type="text/css" href="{$ninja_html_url}/styles/css/all.css">
+<link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,200,300,600,700' rel='stylesheet' type='text/css'>
+<script src="{$ninja_html_url}/styles/js/main.js"></script>
+<section class="clearfix form-elements cb-uikit">
+                    <section class="cover clearfix text-center">
+                <div class="cb-logo">
+                    <img src="{$ninja_html_url}/styles/images/cb-logo.png" alt="" class="img-responsive">
+                </div>
+                <h1><em>SEO Ninja</em></h1>
+            </section>
+                <header class="clearfix">
+                    <h3 class="bluecolor4">Website Configuration</h3>
+                </header>
+                <form name="seo_ninja_configs" id="seo_ninja_configs" class="form-horizontal" action="#">
+                    <div class="clearfix">
+                        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingOne">
+                              <h4 class="greycolor4">
+                                <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                  General Settings
+                                </a>
+                              </h4>
+                              <div id="seo_errs" class="alert alert-danger" style="display:none"></div>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                              <div class="panel-body">
+                                <div class="form-group">
+                                    <label for="reqtxt" class="col-sm-2 control-label">Meta Title (<span class="cur_meta_title"></span>/<span class="max_meta_title">70</span>)</label>
+                                    <div class="col-sm-6">
+                                        <div class="required-field-block">
+                                            <input name="website_title" id="website_title" class="form-control" placeholder="SEO title to be used for your website" title="SEO title to be used for your website" value="{$website_title}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reqtxt" class="col-sm-2 control-label">Meta Description (<span class="cur_meta_desc"></span>/<span class="max_meta_desc">156</span>)</label>
+                                    <div class="col-sm-6">
+                                        <div class="required-field-block">
+                                            <input name="website_description" id="website_description" class="form-control" placeholder="SEO title to be used for your website" title="SEO title to be used for your website" value="{$website_description}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reqtxt" class="col-sm-2 control-label">Website Meta Keywords(<span class="cur_meta_keys"></span>/<span class="max_meta_keys">7</span>)</label>
+                                    <div class="col-sm-6">
+                                        <div class="required-field-block">
+                                        <input name="website_keywords" id="website_keywords" class="form-control" placeholder="Meta keywords to be used for website" value="{$website_keywords}">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reqtxt" class="col-sm-2 control-label">Your Name</label>
+                                    <div class="col-sm-6">
+                                        <div class="required-field-block">
+                                            <textarea name="owner_name" id="owner_name" class="form-control" placeholder="SEO title to be used for your website" title="SEO title to be used for your website">{$owner_name}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reqtxt" class="col-sm-2 control-label">Type</label>
+                                    <div class="col-sm-6">
+                                        <div class="required-field-block">
+                                            <select name="owner_type" id="owner_type">
+                                                <option name="person" value="person" {if $owner_type == 'person'}selected="selected"{/if}>Person</option>
+                                                <option name="company" value="company" {if $owner_type == 'company'}selected="selected"{/if}>Company</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                 <label for="reqtxt" class="col-sm-2 control-label">Single Video Meta</label>
+                                    <div class="padding-top form-group clearfix">
+                                        <div class="custom-elements no-yes col-lg-3 col-md-3 col-sm-6">
+                                            <input type="checkbox" name="single_item_meta" id="single_item_meta" {if $single_item_meta == 'on'} checked="checked" checked="checked" {else} {/if}  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                 <label for="reqtxt" class="col-sm-2 control-label">Daily SEO Mail</label>
+                                    <div class="padding-top form-group clearfix">
+                                        <div class="custom-elements no-yes col-lg-3 col-md-3 col-sm-6">
+                                            <input type="checkbox" name="daily_mail" id="daily_mail" {if $daily_mail == 'on'} checked="checked" {/if}  />
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingTwo">
+                              <h4 class="greycolor4">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                  Webmaster Tools
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                              <div class="panel-body">
+                                 <div class="form-group">
+                                    <label for="reqtxt" class="col-sm-2 control-label">Google Verification ID</label>
+                                    <div class="col-sm-10">
+                                        <div class="required-field-block">
+                                            <textarea name="google_id" id="google_id" class="form-control" placeholder="Verification you got from Google">{$google_id}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reqtxt" class="col-sm-2 control-label">Alexa Verification ID</label>
+                                    <div class="col-sm-10">
+                                        <div class="required-field-block">
+                                            <textarea name="alexa_id" id="alexa_id" class="form-control" placeholder="Verification you got from Alexa">{$alexa_id}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reqtxt" class="col-sm-2 control-label">Bing Verification ID</label>
+                                    <div class="col-sm-10">
+                                        <div class="required-field-block">
+                                            <textarea name="bing_id" id="bing_id" class="form-control" placeholder="Verification you got from Alexa">{$bing_id}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="headingThree">
+                              <h4 class="greycolor4">
+                                <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                 Index Settings
+                                </a>
+                              </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                              <div class="panel-body">
+                                <div class="form-group">
+                                 <label for="reqtxt" class="col-sm-2 control-label">Index Videos</label>
+                                    <div class="padding-top form-group clearfix">
+                                        <div class="custom-elements no-yes col-lg-3 col-md-3 col-sm-6">
+                                            <input type="checkbox" name="index_videos" id="index_videos" {if $index_videos == 'on'} checked="checked" {/if}  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                 <label for="reqtxt" class="col-sm-2 control-label">Index Photos</label>
+                                    <div class="padding-top form-group clearfix">
+                                        <div class="custom-elements no-yes col-lg-3 col-md-3 col-sm-6">
+                                            <input type="checkbox" name="index_photos" id="index_photos" {if $index_photos == 'on'} checked="checked" {/if}  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                 <label for="reqtxt" class="col-sm-2 control-label">Index Channels</label>
+                                    <div class="padding-top form-group clearfix">
+                                        <div class="custom-elements no-yes col-lg-3 col-md-3 col-sm-6">
+                                            <input type="checkbox" name="index_channels" id="index_channels" {if $index_channels == 'on'} checked="checked" {/if}  />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                 <label for="reqtxt" class="col-sm-2 control-label">Index Categories</label>
+                                    <div class="padding-top form-group clearfix">
+                                        <div class="custom-elements no-yes col-lg-3 col-md-3 col-sm-6">
+                                            <input type="checkbox" name="index_categories" id="index_categories" {if $index_categories == 'on'} checked="checked" {/if}  />
+                                        </div>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div id="beats_config_msg"></div>
+                    <div class="clearfix">
+                        <button type="submit" id="ninja_webconf_submit" class="btn btn-success" value="update">Update Settings</button>
+                    </div>
+                </form>
+            </section>
+
+<script type="text/javascript">
+	var ajax_file = '{$ninja_ajax}';
+
+    function same_as_default(type, string) {
+        if (type == 'title') {
+            var site_title = '{$ninjaless_configs.site_title}';
+            //alert(site_title);
+            var seo_title = string;
+            if (site_title == seo_title) {
+                return true;
+            }
+        }
+    }
+    
+
+    function meta_title_check(pageLoad)
+    {
+        if (pageLoad == true)
+        {
+            var website_title = $('#website_title').val();
+            var cur_meta_title = $('#website_title').val().length;
+            if (cur_meta_title) {
+                $('.cur_meta_title').text(cur_meta_title);
+                if (same_as_default('title', website_title)) {
+                    $('#seo_errs').append("Bad website title : <strong>SEO title and Website title must not be same</strong> <br>");
+                    
+                }
+                if (cur_meta_title > 70 || cur_meta_title < 40) {
+                    var error = 'Meta title must be between 40 and 70 characters';
+                    $('.cur_meta_title').css("color","red");
+                    $('.cur_meta_title').attr('title',error);
+                    $('#seo_errs').append("Bad website title : <strong>"+error+"</strong> <br>");
+                    
+                } else {
+                    $('.cur_meta_title').css("color","green");
+                }
+            }
+        }
+        else
+        {
+            $('#website_title').bind("keyup",function(){
+                var cur_meta_title = $('#website_title').val().length;
+                if (cur_meta_title) {
+                    $('.cur_meta_title').text(cur_meta_title);
+                    if (cur_meta_title > 70 || cur_meta_title < 40) {
+                        $('.cur_meta_title').css("color","red");
+                        $('.cur_meta_title').attr('title','Meta title must be between 40 and 70 characters');
+
+                    } else {
+                        $('.cur_meta_title').css("color","green");
+                    }
+                }
+            });
+        }
+    }
+
+    function meta_desc_check(pageLoad)
+    {
+        if (pageLoad == true)
+        {
+            var cur_meta_desc = $('#website_description').val().length;
+            if (cur_meta_desc) {
+                $('.cur_meta_desc').text(cur_meta_desc);
+                if (cur_meta_desc > 156 || cur_meta_desc < 120) {
+                    var error = 'Meta description must be between 120 and 156 characters';
+                    $('.cur_meta_desc').css("color","red");
+                    $('.cur_meta_desc').attr('title',error);
+                    $('#seo_errs').append("Bad website description : <strong>"+error+"</strong> <br>");
+                } else {
+                    $('.cur_meta_title').css("color","green");
+                }
+            }
+        }
+        else
+        {
+            $('#website_description').bind("keyup",function(){
+            var cur_meta_desc = $('#website_description').val().length;
+                if (cur_meta_desc) {
+                    $('.cur_meta_desc').text(cur_meta_desc);
+                    if (cur_meta_desc > 156 || cur_meta_desc < 120) {
+                        $('.cur_meta_desc').css("color","red");
+                        $('.cur_meta_desc').attr('title','Meta description must be between 120 and 156 characters');
+                    } else {
+
+                        $('.cur_meta_desc').css("color","green");
+                    }
+                }
+            });
+        }
+    }
+
+    function check_keywords_count(pageLoad)
+    {
+        if (pageLoad == true)
+        {
+            var cur_meta_keys = $('#website_keywords').val();
+            cur_meta_keys = cur_meta_keys.split(",").length - 1;
+            if (cur_meta_keys) {
+                $('.cur_meta_keys').text(cur_meta_keys);
+                if (cur_meta_keys > 7 || cur_meta_keys < 4) {
+                    var error = 'Meta keywords must be between 4 and 7';
+                    $('.cur_meta_keys').css("color","red");
+                    $('.cur_meta_keys').attr('title', error);
+                    $('#seo_errs').append("Bad website keywords : <strong>"+error+"</strong> <br>");
+                } else {
+                    $('.cur_meta_keys').css("color","green");
+                }
+            }
+        }
+        else
+        {
+            $('#website_keywords').bind("keyup",function(){
+            var cur_meta_keys = $('#website_keywords').val();
+            cur_meta_keys = cur_meta_keys.split(",").length - 1;
+                if (cur_meta_keys) {
+                    $('.cur_meta_keys').text(cur_meta_keys);
+                    if (cur_meta_keys > 7 || cur_meta_keys < 4) {
+                        $('.cur_meta_keys').css("color","red");
+                        $('.cur_meta_keys').attr('title','Meta keywords must be between 4 and 7');
+                    } else {
+                        $('.cur_meta_keys').css("color","green");
+                    }
+                }
+            });
+        }
+    }
+
+    meta_title_check(false);
+    meta_title_check(true);
+    meta_desc_check(false);
+    meta_desc_check(true);
+    check_keywords_count(false);
+    check_keywords_count(true);
+    $('#ninja_webconf_submit').css("margin-top","10px");
+	 $('#ninja_webconf_submit').on("click",function(e){
+        e.preventDefault();
+        $('#beats_config_msg').hide();
+        var form_fields = $( "#seo_ninja_configs" ).serialize();
+    	 $.ajax({
+    	 	url: ajax_file,
+    	 	type: "POST",
+    	 	data: form_fields,
+    	 	 success: function(result){
+    	 	 
+        	$("#beats_config_msg").html("<div class='alert alert-success'>"+result+"</div>");
+            $('#beats_config_msg').fadeIn("slow");
+    	}});
+    });
+
+    if ($('#seo_errs').text().length)
+    {
+        $('#seo_errs').fadeIn('slow');
+    }
+
+
+
+</script>

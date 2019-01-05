@@ -1,0 +1,252 @@
+{$myAccountLinks = $userquery->my_account_links()}
+{$leftMenuLinks = array_slice($myAccountLinks, 7)}
+<div id="main" class="clearfix cb_container">
+	<div class="clearfix">
+		<div class="main_channel pull-left col-lg-12">
+			<!-- sidebar_left -->
+			<aside id="sidebar-left" class="pull-left col-lg-2 col-md-2 hidden-md hidden-sm hidden-xs">
+				<!-- featured-video -->
+				{$limit = '3'}
+				{$featured=$cbvid->get_videos(["featured"=>"yes","limit"=>$limit])}
+				{if $featured}
+				<div class="featured-videos-holder white-box">
+					<h2>{lang code='featured_videos'}</h2>
+					<ul>
+						{foreach from=$featured item=video}
+						<li class="ft-holder clearfix">
+							<div class="col-lg-5 col-md-6 col-sm-6 col-xs-5 col">
+								<div class="relative">
+									<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+										<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 }">
+										<div class="duration-holder">
+											{if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-lg-7 col-md-6 col-sm-6 col-xs-7 video-info">
+								<h3 title="{videoLink($video)}">
+									<a href="{videoLink($video)}">{$video.title|truncate:30}</a>
+								</h3>
+								<a  class="by" href="{$userquery->profile_link($video)}">{lang code="by"}
+								&nbsp;{$video.username}</a>
+								<p class="hidden-md hidden-sm">
+									{$video.views}&nbsp;{lang code="views"}
+									&nbsp;.&nbsp;
+									{$video.date_added|niceTime}
+								</p>
+							</div>
+						</li>
+						{/foreach}
+					</ul>
+				</div>
+				{/if}
+
+				<!-- ************ EDITORS BLOCK END ************ -->
+				<div class="box-ad ad">{AD place='ad_300x250'}</div>
+
+				<div class="Popular-Users-holder white-box">
+					{$topic_view_users=get_users(['topic_view'=>'yes','limit'=>5])}
+					
+					<h2>{lang code="Top Rated"}</h2>
+					<ul>
+						{foreach $topic_view_users as $user}
+						<li class="ft-holder clearfix">
+							<div class="col-lg-3 col-md-3 col-sm-3 col-xs-3 col">
+								<div class="relative">
+									<a href="{$userquery->profile_link($user)}" class="avatar">
+										<img src="{$userquery->getuserthumb($user,'m')}" width="40" height="40" class="img-circle">
+									</a>
+								</div>
+							</div>
+							<div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 video-info">
+								<h2><a href="{$userquery->profile_link($user)}">{$user.username}</a></h2>
+								<span class="hidden-md hidden-sm">											{prettyNum($user.total_videos|number_format)} {lang code='videos'}
+									.
+									{prettyNum($user.profile_hits|number_format)} {lang code='views'}
+
+								</span>
+								<button class="add_frnd btn" onclick="_cb.add_friendNew('{$user.userid}','result_cont')">
+									<i class="fa fa-plus" aria-hidden="true"></i>
+								</button>
+							</div>
+						</li>
+						{/foreach}
+					</ul>
+					
+				</div>
+			</aside>
+			<section id="content-area" class="clearfix channels col-lg-8 col-md-8 pull-left">
+				<!-- white-box-Categories -->
+				<div class="white-box">
+					{$categories = pullCategories()}
+					{assign var=sorting_links value=sorting_links()}
+					<div class="clearfix">
+						<button class="btn cat_btn pull-left" data-toggle="collapse" data-target="#cat-channel">
+							All Categories
+							<i class="fa fa-caret-down" aria-hidden="true"></i>
+						</button>
+						<div id="cat-channel" class="cat-channel collapse white-box">
+							{include file="$style_dir/blocks/category_list.html" type='channels'}
+						</div>
+						<div class="sorting-col hidden-xs col-lg-6 col-md-6 col-sm-6 col-xs-12 clearfix pull-right">
+							<!--Sorting By View-->
+							<div class="dropdown">
+								{if $smarty.get.sort}
+								{foreach from=$sorting_links item=name key=sort name=sorts}
+									{if $smarty.get.sort==$sort && isset($smarty.get.sort)} 
+									<a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">{$name} <span class="icon-arrow_drop_down"></span></a>
+									{/if}
+								{/foreach}
+								{else}
+									<a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">Recent <span class="icon-arrow_drop_down"></span></a>
+								{/if}    
+							
+								<ul class="dropdown-menu">
+									{foreach from=$sorting_links item=name key=sort}
+									<li>
+										<a href="{link name=sort sort=$sort type=channels}&sorting=sort" {if $smarty.get.sort==$sort} class="selected" {/if}>{if $smarty.get.sort==$sort}<i class="fa fa-check" aria-hidden="true"></i>{/if}{$name}</a>
+									</li>
+									{/foreach}
+								</ul>
+							</div>
+							
+							<!--Sorting By time-->
+							{assign var=time_links value=time_links()}
+							<div class="dropdown">
+								{if $smarty.get.time} 
+							
+								{foreach from=$time_links item=name key=sort name=times}
+									{if $smarty.get.time==$sort && isset($smarty.get.time)} 
+									<a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">{$name} <span class="icon-arrow_drop_down"></span></a>
+									{/if}
+								{/foreach}
+								{else}
+									<a href="javascript:void(0)" data-toggle="dropdown" class="dropdown-toggle">all time <span class="icon-arrow_drop_down"></span></a>
+								{/if}  
+								  <ul class="dropdown-menu">
+									{foreach from=$time_links item=name key=sort name=times}
+										<li>
+											<a href="{link name=time sort=$sort type=channels}&timing=time" {if $smarty.get.time==$sort} class="selected"{/if}>{if $smarty.get.time==$sort}
+												<i class="fa fa-check" aria-hidden="true"></i>{/if}{$name}</a>
+										</li>
+									{/foreach}
+								  </ul>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<!-- ************ EDITORS BLOCK END ************ -->
+				<!-- ******************************************* -->
+				<div class="clearfix leaderboard-ad ">
+					<div class="ad clearfix">
+						{AD place='ad_728x90'}
+					</div>
+				</div>
+				<!-- Featured-Channels -->
+				<div class="channel-holder white-box clearfix">
+					<div class="channel-features clearfix">
+						{$feature_users=get_users(['featured'=>'yes','limit'=>6])}
+						{if $feature_users}
+						<h2>{lang code="featured_users"}</h2>
+						<div class="features-block clearfix">
+							{foreach $feature_users as $user}
+							<div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 features-col featured-channel">
+								<div class="cover-holder clearfix">
+									<img class="img-responsive new-features cb-live-background" src="{if $userquery->getCover($user.userid)}{$userquery->getCover($user.userid)}{else}{$baseurl}/images/cover_default.jpg {/if}" size='1140x380' alt="">
+									<div class="shadow-holder">
+										<div class="img-holder col">
+											<a href="{$userquery->profile_link($user)}" class="avatar">
+												<img src="{$userquery->getuserthumb($user,'m')}" width="50" height="50" class="img-circle">
+											</a>
+										</div>
+										<div class="channels-info col">
+											<h3>
+												<a href="{$userquery->profile_link($user)}">{$user.username}</a>
+												<span class="live"> live </span>
+											</h3>
+											<p>
+												<span>{prettyNum($user.profile_hits|number_format)} {lang code='views'}</span>
+												<span>{prettyNum($user.total_videos|number_format)} {lang code='videos'}</span>
+											</p>
+										</div>
+										<div class="col subscribe-holder">
+											<!-- subscribe -->
+											<button id="subscribe_channel_feature-{$user.userid}" class="subscribe circle">
+												Subcribe
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							{/foreach}
+						</div>
+						{/if}
+					</div>
+
+					<!-- All-Channels -->
+					<div class="clearfix row channel">
+						<h2 class="all">{lang code="All Channels"}</h2>
+						{if $users}
+						{foreach $users as $user}
+						<div class="item-channel col-lg-3 col-md-3 col-sm-6 col-xs-12">
+						{include file="$style_dir/blocks/channels.html" block_type = 'itemChannel'}
+						</div>
+						{/foreach}
+						{else}
+						<div class="well well-info">{lang code="no_channel_found"}</div>
+						{/if}
+					</div>
+				</div>
+				{include file="$style_dir/blocks/pagination.html"}
+				<!-- ************ EDITORS BLOCK END ************ -->
+				<!-- ******************************************* -->
+				<div class="clearfix leaderboard-ad ">
+					<div class="ad clearfix">
+						{AD place='ad_728x90'}
+					</div>
+				</div>
+			</section>
+			<!-- sidebar_right -->
+			<aside id="sidebar_right" class="pull-left col-lg-2 col-md-2 hidden-md hidden-sm hidden-xs">
+					<!-- Trending-video -->
+					{$limit = '8'}
+					{$popular=$cbvid->get_videos(["popular"=>"yes","limit"=>$limit])}
+					{if $popular}
+					<div class="featured-videos-holder white-box">
+						<h2>{lang code='Trending videos'}</h2>
+						<ul>
+							{foreach $popular as $video}
+							<li class="ft-holder clearfix">
+								<div class="col-lg-5 col-md-6 col-sm-6 col-xs-5 col">
+									<div class="relative">
+										<a class="video-link" href="{videoLink($video)}" title="{$video.title|title}">
+											<img class="img-responsive" src="{getThumb vdetails=$video size=416x260 }">
+											<div class="duration-holder">
+												{if $video.duration>1}{$video.duration|SetTime}{else}00:00{/if}
+											</div>
+										</a>
+									</div>
+								</div>
+								<div class="col-lg-7 col-md-6 col-sm-6 col-xs-7 video-info">
+									<h3 title="{videoLink($video)}">
+										<a href="{videoLink($video)}">{$video.title|truncate:30}</a>
+									</h3>
+									<a  class="by" href="{$userquery->profile_link($video)}">{lang code="by"}
+									&nbsp;{$video.username}</a>
+									<p class="hidden-md hidden-sm">
+										{$video.views}&nbsp;{lang code="views"}
+										&nbsp;.&nbsp;
+										{$video.date_added|niceTime}
+									</p>
+								</div>
+							</li>
+							{/foreach}
+						</ul>
+					</div>
+					{/if}
+			</aside>
+		</div>
+	</div>
+</div>

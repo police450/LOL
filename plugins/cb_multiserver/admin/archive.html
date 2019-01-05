@@ -1,0 +1,56 @@
+{literal}
+<style>
+    .ui-widget{z-index: 999}
+</style>
+{/literal}
+<h2>Archiving Servers</h2>
+<div style="height:3px"></div>
+Point servers/files path of existing server to archive server | <a href="{$embed_url}/update_configs.php?">Update embed server</a>
+<div style="height:15px"></div>
+
+
+<form name="add_archive" method="post" >
+    <div class="add_new_archive" id="add_new_archive">
+        <fieldset style="display:inline-block">
+            <legend>Add new archive</legend>
+        <input type="text" name="from[]" class="datepicker" placeholder="from" style="width:150px"/>
+        <input type="text" name="to[]" class="datepicker" placeholder="to" style="width:150px"/>
+        <div></div>
+        <input type="text" name="file_server[]"  placeholder="File server" style="width:308px"/>
+        <div></div>
+        <input type="text" name="archive_server[]" placeholder="Archive server" style="width:308px"/>
+        </fieldset>
+        <div></div>
+    </div>
+    
+    <a href="javascript:void(0)" onclick="$('#add_new_archive').after($('#add_new_archive').html());" >+ Add more</a>
+    
+    <div style="height:15px"></div>
+    {if $archives}
+    {foreach from=$archives item=archive_s}
+        {foreach from=$archive_s item=archive  name=ar}
+        <div class="add_new_archive" id="{$smarty.foreach.ar.iteration}-archive">
+            <fieldset style="display:inline-block">
+                <div align="right"><a href="javascript:void(0)" onclick="$('#{$smarty.foreach.ar.iteration}-archive').remove();">remove</a></div>
+            <input type="text" name="from[]" class="datepicker" placeholder="from" style="width:150px" value="{$archive.from}"/>
+            <input type="text" name="to[]" class="datepicker" placeholder="to" style="width:150px" value="{$archive.to}"/>
+            <div></div>
+            <input type="text" name="file_server[]"  placeholder="File server" style="width:308px" value="{$archive.file_server}"/>
+            <div></div>
+            <input type="text" name="archive_server[]" placeholder="Archive server" style="width:308px" value="{$archive.archive_server}"/>
+            </fieldset>
+        </div>
+        {/foreach}
+    {/foreach}
+    {/if}
+    
+    <input type="submit" name="update_archive" value="Update server" />
+</form>
+
+{literal}
+<script>
+  $(function() {
+    $( ".datepicker" ).datepicker();
+  });
+  </script>
+{/literal}

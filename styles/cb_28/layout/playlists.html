@@ -1,0 +1,61 @@
+<div class="marginBottomLarge" style="margin-top:20px;"></div>
+{assign var=userid value=userid()}
+<section class=" clearfix container">
+	<a class="btn btn-primary pull-right" href="{$baseurl}/manage_playlists.php?user={$userid|get_username}" >Create new playlist</a>
+
+	{section name=plist loop=$playlists}
+
+	{assign var=playlist_items value=$cbvid->get_playlist_items($playlists[plist].playlist_id, 'playlist_items.date_added DESC')}
+
+	{if !empty($playlist_items)}
+	<div class="jcarousel-skin-default playlist_container" style="margin-top:20px;">
+		<h1>
+			{$playlists[plist].playlist_name|truncate:100}
+			{assign var=firstitem value=$playlists[plist].first_item|json_decode:1}
+			{if $firstitem}
+			<a class="allplay" href="{$baseurl}/watch_video.php?v={$firstitem->videokey}&play_list={$playlists[plist].playlist_id}" target="_blank">{lang code='play'}</a>
+		<!-- 	<a class="allplay" href="#" target="">({$playlists[plist].userid|get_username})</a>  -->
+			{else}
+			<a class="allplay" onclick="_cb.throwHeadMsg('danger','{lang code=no_vid_in_playlist}', 5000, true);">{lang code='play'}</a> 
+			{/if}
+
+		</h1>
+			<!-- 	<p>{$playlists[plist].date_added|date_format}</p>
+					<p>{$cbvid->action->count_playlist_items($playlists[plist].playlist_id)|number_format}</p> -->
+
+			<a href="#" class="jcarousel-prev chevron">
+				<i class="fa fa-chevron-left" aria-hidden="true"></i>
+			</a>
+			<a href="#" class="jcarousel-next chevron"> 
+				<i class="fa fa-chevron-right" aria-hidden="true"></i>
+			</a>
+			<!-- 	{pr($playlist_items,true)} -->
+			{assign var=count value=0}
+			<div class="jcarousel" id="jcarousel1">
+				<ul>
+					{foreach $playlist_items as $video}
+					{include file="$style_dir/blocks/videos/video.html" display_type='playlistslid'}
+					{assign var=count value=$count+1}
+					{if $count>15}
+					{break}
+					{/if}
+					{/foreach}
+				</ul>
+			</div>
+		</div>
+	{/if}
+	{/section}
+</section>
+				
+{include file="$style_dir/blocks/pagination.html" }
+<div class="marginBottomLarge"></div>
+				
+<script type="text/javascript">
+	$(function() {
+		$('.jcarousel').jcarousel({
+
+		});
+	$(".jcarousel-prev").jcarouselControl({ target: '-=3' });
+	$(".jcarousel-next").jcarouselControl({ target: '+=3' });
+				});
+</script>

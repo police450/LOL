@@ -1,0 +1,75 @@
+<div class="heading">
+    <h2>Add Live Channels</h2>
+</div>
+<div class="row" style="margin-left:20px;">
+	<form id="special-thumb" class="clearfix" method="post" enctype="multipart/form-data">
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="app_type">Application Type</label>
+				<select class="form-control" name="app_type" id="app-type">
+					<option value="Custom">Custom</option>
+					<option selected value="Live">Wowza</option>
+				</select>
+				<span class="smallText" style="font-size:11px;">e.g Please choose if you want to create a live channel with wowza or custom</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group channel-link" style="display:none;">
+				<label for="description">Channel Link</label>
+				<input name="channel_link" id="channel_link" type="url"  class="form-control" placeholder=""  />
+				<span class="smallText" style="font-size:11px;">e.g Please Add your custom upstream channel link here.</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="channel_name">Application Name</label>
+				<input name="channel_name" id="channel_name" type="text"  class="form-control" placeholder="" required/>
+				<span class="smallText" style="font-size:11px;">e.g ClipBucket (this must be the name wowza application to be assigned )</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="description">Description</label>
+				<textarea name="description" id="description" class="form-control" required></textarea>   
+				<span class="smallText" style="font-size:11px;">e.g Add description here</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="userid">User ID</label>
+				<input name="userid" id="userid" type="integer"  class="form-control" placeholder="" required/>
+				<span class="smallText" style="font-size:11px;">e.g 2330</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group recording">
+				<label for="userid">Recording</label>
+				<select name="recording" class="form-control">
+					<option selected value="no">No</option>
+					<option value="yes">Yes</option>
+				</select>
+				<span class="smallText" style="font-size:11px;">e.g This option allows users to save their stream in clipbucket </span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<input type="submit" name="create-channel" class="form-control btn btn-info btn-block" value="Create Channel"  />
+			</div>
+		</div>
+	</form>
+</div>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#app-type").on("change",function(){
+			var _this = $(this);
+			var appType = _this.val();
+			if (appType == 'Custom'){
+				$(".channel-link").show();
+				$("#channel-link").attr("required",true);
+				$(".recording").hide();
+			}else{
+				$(".channel-link").hide();
+				$("#channel-link").attr("required",false);
+				$(".recording").show();
+			}
+		});
+	});
+</script>
+
+
+

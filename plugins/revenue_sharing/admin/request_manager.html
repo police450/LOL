@@ -1,0 +1,62 @@
+<div class="heading">
+	<h2>Earning user requests</h2>
+</div>
+<!-- {pr($requests,true)} -->
+<div class="row" style="margin-top:20px;margin-bottom:20px;">
+	<div class="col-md-12 search-box">
+		<table class="table table-hover" width="">
+			<thead>
+				<tr>
+					<th>Request ID</th>
+					<th>Username</th>
+					<th>User channel</th>
+					<th>Request state</th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			{if ($requests!=NULL)}
+			<tbody>
+				
+				{foreach from=$requests item=item} 
+				<form action="" method="post">
+					<input type="hidden" name="userid" value="{$item['userid']}" />
+					<tr> 
+						<td>{$item['request_id']}</td>  
+						<td><a href="view_user.php?uid={$item['userid']}" target="_blank">{$item['userid']|get_username}<a></td>
+							<td><a href="{$baseurl}/view_channel.php?user={$item['userid']|get_username}" target="_blank" class="btn btn-xs btn-default">View channel<a></td>
+								{if {$item['request_state']}==0}
+								<td><span class="label label-info">Pending approval</span></td> 
+								{elseif {$item['request_state']}==1}
+								<td><span class="label label-danger">Rejected</span></td>
+								{elseif {$item['request_state']}==2}
+								<td><span class="label label-warning">Review later</span></td>
+								{elseif {$item['request_state']}==3}
+								<td><span class="label label-success">Approved</span></td>	
+								{/if}
+							<td>
+							<div class="dropdown">
+							<button id="dropdownMenu1" class="btn btn-primary btn-xs dropdown-toggle" data-toggle="dropdown">Actions <i class="caret"></i></button>
+								<ul class="dropdown-menu" aria-labelledby="dropdownMenu1" role="menu">
+									<li><input type="submit" name="approve" value="Approve" class="btn btn-link"></li>
+									<li><input type="submit" name="reject" value="Reject" class="btn btn-link" onclick="return confirm('Are you sure you want to reject this request?');"></li>
+									<li class="divider"></li>
+									<li><input type="submit" name="review_later" value="Review later" class="btn btn-link"></li>
+
+								</ul>
+							</div>
+							</td> 
+					</tr>
+				</form> 
+				{/foreach}
+			
+			</tbody>
+			{else}
+			<tbody>
+			<tr>
+				<td colspan="14" rowspan="" class="text-center"><h5 class="alert alert-info" style="padding-top:10px;">There are no pending requests yet!</h5></td>
+			</tr>
+			</tbody>
+			{/if}			
+		</table>
+	</div>
+	</div>

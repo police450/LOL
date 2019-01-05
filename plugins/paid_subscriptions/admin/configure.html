@@ -1,0 +1,529 @@
+<h3>Paid Subscription Configurations</h3>
+<br>
+<form name="subs_config" action="" method="post">
+
+ <div class="row">
+  <div class="col-md-4">
+          <label for="currency">Currency</label><br>
+            <select name="currency" id="currency"  class="form-control">
+            <option value="USD" {if $config.currency=='USD'} selected="selected"{/if}>[$] United States Dollar</option>
+            <option value="GBP" {if $config.currency=='GBP'} selected="selected"{/if}>[£] Great Britain Pound</option>
+            <option value="EUR" {if $config.currency=='EUR'} selected="selected"{/if}>[€] Euro</option>
+            </select>
+           <p class="grey-text font-size" style="margin-top:0px;">Select in which currency you want to charge use.</p>
+  </div>
+  <div class="col-md-4">
+           <label for="test_mode">Enable Test Mode</label><br>
+            <select name="test_mode" id="test_mode" class="form-control">
+            <option value="enabled" {if $config.test_mode=='enabled'} selected="selected"{/if}>Yes</option>
+            <option value="disabled" {if $config.test_mode=='disabled'} selected="selected"{/if}>No</option>
+            </select>
+           <p class="grey-text font-size" style="margin-top:0px;"> If yes, all payments will be made using Test mode</p>
+  </div>
+  <div class="col-md-4">
+          <label for="premium_type">Premium Subscription type</label>
+          <select name="premium_type" id="premium_type" class="form-control">
+          <option value="all" {if $config.premium_type=='all'} selected="selected"{/if}>All</option>
+          <option value="selected" {if $config.premium_type=='selected'} selected="selected"{/if}>Selected</option>
+          </select>
+          <p class="grey-text font-size" style="margin-top:0px;"> if set to 'all' , all videos will be treated as premium, if set to 'selected', only selected videos will be treated as premium</p>
+  </div>
+  </div><br><br>
+
+
+
+  <div class="row">
+  <div class="col-md-4">
+          <label for="allow_demo">Allow non-premium members to watch videos?</label>
+          <input class="form-control" name="allow_demo" type="text" id="allow_demo" value="{$config.allow_demo}" size="45">
+          <p class="grey-text font-size" style="margin-top:0px;"> Set time limit for non-premium members each day the can watch, set 0 to disable, set in minutes or videos</p>
+   </div>
+  <div class="col-md-4">
+          <label for="show_prem_icon">Show Premium icon thumb</label>
+         <select name="show_prem_icon" id="show_prem_icon" class="form-control">
+          <option value="yes" {if $config.show_prem_icon!='no'} selected="selected"{/if}>Yes</option>
+          <option value="no" {if $config.show_prem_icon=='no'} selected="selected"{/if}>No</option>
+        </select>
+        <p class="grey-text font-size" style="margin-top:0px;"> This will show a premium or ppv icon on video thumb to let user know weather video is premium or ppv</p>
+        </div>
+  <div class="col-md-4">
+          <label for="email_notification">Subscription Notifications</label>
+          <input class="form-control" name="email_notification" type="text" id="email_notification" value="{$config.email_notification}"  size="45">
+          <p class="grey-text font-size" style="margin-top:0px;">Please enter email where you want to recieve email notification on each new subscription or whenever payment is recieved</p>
+  </div>
+  </div>
+
+
+  <div class="row">
+  <div class="col-md-4">
+          <label for="allow_demo">Notification Emails</label><br>
+          <label><input type="checkbox" name="notify_on_sub" id="notify_on_sub" {if $config.notify_on_sub=='yes'} checked="checked"{/if} value="yes"/>new subscription is purchased</label> 
+          <label><input type="checkbox" name="notify_on_payment" id="notify_on_payment"  {if $config.notify_on_payment=='yes'} checked="checked"{/if}  value="yes"/>When payment is recieved</label>
+          <p class="grey-text font-size" style="margin-top:0px;">Send Email When</p>
+   </div>
+  </div>
+
+<br>
+<div class="row">
+  <div class="col-md-4">
+          <label for="license_key">Paid Subscript License</label><br>
+           <input name="license_key" type="text" id="license_key" value="{$config.license_key}" class="form-control"/>
+           <p class="grey-text font-size" style="margin-top:0px;"> Enter your paid subscript module license obtained from ClipBucket client area</p>
+  </div>
+  <div class="col-md-4">
+           <label for="textarea">Pay to text</label><br>
+             <textarea id="textarea" cols="38" name="pay_to_text" rows="5">{$config.pay_to_text}</textarea>
+           <p class="grey-text font-size" style="margin-top:0px;">Pay to text written on invoice</p>
+  </div>
+  <div class="col-md-4">
+          <label for="allow_user_set_premium">Allow users to make their video premium</label>
+          <select name="allow_user_set_premium" id="allow_user_set_premium" class="form-control">
+          <option value="yes" {if $config.allow_user_set_premium!='no'} selected="selected"{/if}>Yes</option>
+          <option value="no" {if $config.allow_user_set_premium=='no'} selected="selected"{/if}>No</option>
+          </select>
+          <p class="grey-text font-size" style="margin-top:0px;">Let users choose weather they want to make video premium or not</p>
+  </div>
+</div><br><br>
+
+
+
+
+
+<div  class="row">
+  <div class="col-md-12">
+    <div class="tabbable">
+                        <ul class="nav nav-tabs" id="myTab">
+                           <!-- <li class="active">
+                                <a data-toggle="tab" href="#firstdata">
+                                    FirstData Gateway
+                                </a>
+                            </li>-->
+                            <li class="active">
+                                <a data-toggle="tab" href="#paypal">
+                                    Paypal Gateway
+                                </a>
+                            </li>
+                             <li class="">
+                                <a data-toggle="tab" href="#alertpay">
+                                    Alertpay Gateway
+                                </a>
+                            </li>
+                             <!-- <li class="">
+                                <a data-toggle="tab" href="#2checkout">
+                                    2Checkout Gateway
+                                </a>
+                                                         </li> -->
+                            </ul>
+  <div class="tab-content">
+
+   <!--   <div id="firstdata" class="tab-pane active">
+
+
+          <div class="row">
+            <div class="col-md-4">  
+              <label for="use_first_data">Use First Data</label>
+              <select name="use_first_data" id="use_first_data" class="form-control">
+              <option value="yes" {if $config.use_first_data!='no'} selected="selected"{/if}>Yes</option>
+              <option value="no" {if $config.use_first_data=='no'} selected="selected"{/if}>No</option>
+              </select>
+              <p class="grey-text font-size" style="margin-top:0px;">Allow users to choose Fisrt Data as payment gateway</p>
+            </div>
+            <div class="col-md-4">  
+              <label for="fd_api_login">First Data API LOGIN</label>
+              <input name="fd_api_login" type="text" id="fd_api_login" value="{$config.fd_api_login}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your first Data API LOGIN for authorization</p>
+            </div>
+            <div class="col-md-4">  
+              <label for="fd_api_key">First Data API KEY</label>
+              <input name="fd_api_key" type="text" id="fd_api_key" value="{$config.fd_api_key}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your first Data API KEY for authorization</p>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-md-4">  
+              <label for="fd_store_id">First Data store ID</label>
+               <input name="fd_store_id" type="text" id="fd_store_id" value="{$config.fd_store_id}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your first Data store ID(name)</p>
+            </div>
+            <div class="col-md-4">  
+              <label for="fd_currency">First Data Cuurency</label>
+             <select name="fd_currency" id="fd_currency"  class="form-control">
+              <option value="840" {if $config.currency=='840'} selected="selected"{/if}>[$] United States Dollar</option>
+              <option value="826" {if $config.currency=='826'} selected="selected"{/if}>[£] Great Britain Pound</option>
+              <option value="978" {if $config.currency=='978'} selected="selected"{/if}>[€] Euro</option>
+             </select>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your first Data currency</p>
+            </div>
+          </div>
+      </div>-->
+
+      <div id="paypal" class="tab-pane active">
+       <div class="row">
+            <div class="col-md-4">  
+              <label for="use_pay_pal">Use Paypal</label>
+              <select name="use_pay_pal" id="use_pay_pal" class="form-control">
+              <option value="yes" {if $config.use_pay_pal!='no'} selected="selected"{/if}>Yes</option>
+              <option value="no" {if $config.use_pay_pal=='no'} selected="selected"{/if}>No</option>
+             </select>
+              <p class="grey-text font-size" style="margin-top:0px;">Allow users to choose paypal as payment gateway</p>
+            </div>
+            <div class="col-md-4">  
+              <label for="paypal_email">Paypal Account Email</label>
+              <input name="paypal_email" type="text" id="paypal_email" value="{$config.paypal_email}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your paypal email account</p>
+            </div>
+            <div class="col-md-4">  
+              <label for="paypal_sandbox_email">Paypal Sandbox Email</label>
+              <input name="paypal_sandbox_email" type="text" id="paypal_sandbox_email" class="form-control" value="{$config.paypal_sandbox_email}" />
+              <p class="grey-text font-size" style="margin-top:0px;">Enter paypal sandbox email for testing purpose</p>
+            </div>
+            <div class="col-md-6">  
+              <label for="paypal_client_id">Client ID *</label>
+              <input name="paypal_client_id" type="text" id="paypal_client_id" value="{$config.paypal_client_id}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your paypal client id</p>
+            </div>
+            <div class="col-md-6">  
+              <label for="paypal_secret">Client Secret *</label>
+              <input name="paypal_secret" type="text" id="paypal_secret" value="{$config.paypal_secret}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Enter your paypal client secret</p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <label for="paypal_rest_api">Use Rest API</label>
+              <select name="paypal_rest_api" id="paypal_rest_api" class="form-control">
+              <option value="yes" {if $config.paypal_rest_api!='no'} selected="selected"{/if}>Yes</option>
+              <option value="no" {if $config.paypal_rest_api=='no'} selected="selected"{/if}>No</option>
+             </select>
+              <p class="grey-text font-size" style="margin-top:0px;">Allow users to choose new paypal integration</p>
+            
+            </div>
+          </div>
+      </div>
+      
+      <div id="alertpay" class="tab-pane">
+        <div class="row">
+            <div class="col-md-4">  
+              <label for="use_alertpay">Use AlertPay</label>
+              <select name="use_alertpay" id="use_alertpay" class="form-control">
+              <option value="yes" {if $config.use_alertpay!='no'} selected="selected"{/if}>Yes</option>
+              <option value="no" {if $config.use_alertpay=='no'} selected="selected"{/if}>No</option>
+              </select>
+              <p class="grey-text font-size" style="margin-top:0px;">Allow users to choose AlertPay as payment gateway</p>
+            </div>
+            <div class="col-md-4">  
+              <label for="paypal_email">Alertpay Marchant Email</label>
+              <input name="alertpay_email" type="text" id="alertpay_email" value="{$config.alertpay_email}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;"> Enter your alertpay marchange email</p>
+            </div>
+            <div class="col-md-4">  
+              <label for="paypal_sandbox_email">Alertpay Security ID</label>
+              <input name="alertpay_code" type="text" id="alertpay_code" value="{$config.alertpay_code}" class="form-control"/>
+              <p class="grey-text font-size" style="margin-top:0px;">Your alertpay security id</p>
+            </div>
+          </div>
+      </div>
+     <!--  <div id="2checkout" class="tab-pane">
+       <div class="row">
+       <div class="col-md-4">  
+             <label for="use_2co">Use 2Checkout</label>
+             <select name="use_2co" id="use_2co" class="form-control">
+             <option value="yes" {if $config.use_2co!='no'} selected="selected"{/if}>Yes</option>
+             <option value="no" {if $config.use_2co=='no'} selected="selected"{/if}>No</option>
+             </select>
+             <p class="grey-text font-size" style="margin-top:0px;">Allow user to choose 2checkout as payment gateway</p>
+       </div>
+       <div class="col-md-4">  
+             <label for="use_2co">2Checkout Vendor ID</label>
+             <input name="2co_vendor_id" type="text" id="2co_vendor_id" value="{$config.2co_vendor_id}" class="form-control"/>
+             <p class="grey-text font-size" style="margin-top:0px;">your 2co vendor ID</p>
+       </div>
+     </div>
+     </div> -->
+      </div>
+  </div>
+</div>
+</div>
+
+<br><br>
+<div class="row">
+  <div class="col-md-4">
+  <input type="submit" name="update" id="update" value="Update" class="btn btn-primary" />
+  </div>
+</div>
+</form>    
+
+
+
+
+
+<!--
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h2>Paid Subscription Configurations</h2><br />
+<br />
+
+
+<form name="subs_config" action="" method="post">
+<table width="100%" border="0" cellpadding="2" cellspacing="0" class="block">
+<tr>
+  <td width="301" valign="top"><strong>
+    <label for="smtp_host">Currency</label><br />
+    </strong>Select in which currency you want to charge user</td>
+  <td width="813" valign="top"><label for="currency"></label>
+    <select name="currency" id="currency">
+      <option value="USD" {if $config.currency=='USD'} selected="selected"{/if}>[$] United States Dollar</option>
+      <option value="GBP" {if $config.currency=='GBP'} selected="selected"{/if}>[£] Great Britain Pound</option>
+      <option value="EUR" {if $config.currency=='EUR'} selected="selected"{/if}>[€] Euro</option>
+    </select></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Enable Test Mode</strong><br />
+    If yes, all payments will be made using Test mode</td>
+  <td valign="top"><label for="test_mode"></label>
+    <select name="test_mode" id="test_mode">
+      <option value="enabled" {if $config.test_mode=='enabled'} selected="selected"{/if}>Yes</option>
+      <option value="disabled" {if $config.test_mode=='disabled'} selected="selected"{/if}>No</option>
+    </select></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Premium Subscription Type</strong><br /> 
+    if set to 'all' , all videos will be treated as premium, if set to 'selected', only selected videos will be treated as premium</td>
+  <td valign="top"><select name="premium_type" id="premium_type">
+    <option value="all" {if $config.premium_type=='all'} selected="selected"{/if}>All</option>
+    <option value="selected" {if $config.premium_type=='selected'} selected="selected"{/if}>Selected</option>
+  </select></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Allow non-premium members to watch videos?</strong><br />
+    Set time limit for non-premium members each day the can watch, set 0 to disable, set in minutes or videos</td>
+  <td valign="top"><label for="allow_demo"></label>
+    <input name="allow_demo" type="text" id="allow_demo" value="{$config.allow_demo}" />
+    
+    <select name="demo_allow_type" id="demo_allow_type">
+      <option value="videos" {if $config.demo_allow_type=='videos'} selected="selected" {/if}>Videos</option>
+      <option value="minutes" {if $config.demo_allow_type=='minutes'} selected="selected" {/if}>Minutes</option>
+    </select>
+    
+    </td>
+</tr>
+<tr>
+  <td valign="top"><strong>Show Premium icon on video thumb</strong><br />
+    This will show a premium or ppv icon on video thumb to let user know weather video is premium or ppv</td>
+  <td valign="top"><select name="show_prem_icon" id="show_prem_icon">
+    <option value="yes" {if $config.show_prem_icon!='no'} selected="selected"{/if}>Yes</option>
+    <option value="no" {if $config.show_prem_icon=='no'} selected="selected"{/if}>No</option>
+  </select></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Subscription Notifications</strong><br />
+    Please enter email where you want to recieve email notification on each new subscription or whenever payment is recieved</td>
+  <td valign="top"><label for="email_notification"></label>
+    <input name="email_notification" type="text" id="email_notification" value="{$config.email_notification}" /></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Notification Emails</strong></td>
+  <td valign="top">Send Email When <br />
+<label><input type="checkbox" name="notify_on_sub" 
+  	id="notify_on_sub" {if $config.notify_on_sub=='yes'} checked="checked"{/if} value="yes"/>    
+    new subscription is purchased</label> 
+    <br />
+    
+    <label><input type="checkbox" name="notify_on_payment" id="notify_on_payment"  {if $config.notify_on_payment=='yes'} checked="checked"{/if}  value="yes" />
+    When payment is recieved</label></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+  <td valign="top"><strong>Use First Data</strong><br/>
+    Allow users to choose Fisrt Data as payment gateway</td>
+  <td valign="top"><label for="use_first_data"></label>
+    <select name="use_first_data" id="use_first_data">
+      <option value="yes" {if $config.use_first_data!='no'} selected="selected"{/if}>Yes</option>
+      <option value="no" {if $config.use_first_data=='no'} selected="selected"{/if}>No</option>
+    </select></td>
+</tr>
+<tr>
+  <td valign="top"><strong>First Data API LOGIN</strong><br />
+    Enter your first Data API LOGIN for authorization</td>
+  <td valign="top"><label for="fd_api_login"></label>
+    <input name="fd_api_login" type="text" id="fd_api_login" value="{$config.fd_api_login}" /></td>
+</tr>
+<tr>
+  <td valign="top"><strong>First Data API KEY</strong><br />
+    Enter your first Data API KEY for authorization</td>
+  <td valign="top"><label for="fd_api_key"></label>
+    <input name="fd_api_key" type="text" id="fd_api_key" value="{$config.fd_api_key}" /></td>
+</tr>
+<tr>
+  <td valign="top"><strong>First Data store ID</strong><br />
+    Enter your first Data store ID(name)</td>
+  <td valign="top"><label for="fd_store_id"></label>
+    <input name="fd_store_id" type="text" id="fd_store_id" value="{$config.fd_store_id}" /></td>
+</tr>
+<tr>
+  <td valign="top"><strong>First Data Cuurency</strong><br />
+    Enter your first Data currency</td>
+  <td valign="top"><label for="fd_crrency"></label>
+    <select name="fd_currency" id="fd_currency">
+      <option value="840" {if $config.currency=='840'} selected="selected"{/if}>[$] United States Dollar</option>
+      <option value="826" {if $config.currency=='826'} selected="selected"{/if}>[£] Great Britain Pound</option>
+      <option value="978" {if $config.currency=='978'} selected="selected"{/if}>[€] Euro</option>
+    </select></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+  <td valign="top"><strong>Use Paypal</strong><br />
+    Allow users to choose paypal as payment gateway</td>
+  <td valign="top"><label for="use_pay_pal"></label>
+    <select name="use_pay_pal" id="use_pay_pal">
+      <option value="yes" {if $config.use_pay_pal!='no'} selected="selected"{/if}>Yes</option>
+      <option value="no" {if $config.use_pay_pal=='no'} selected="selected"{/if}>No</option>
+    </select></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Paypal Account Email</strong><br />
+    Enter your paypal email account</td>
+  <td valign="top"><label for="paypal_email"></label>
+    <input name="paypal_email" type="text" id="paypal_email" value="{$config.paypal_email}" /></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Paypal Sandbox Email</strong><br />
+    Enter paypal sandbox email for testing purpose</td>
+  <td valign="top"><label for="paypal_sandbox_email"></label>
+    <input name="paypal_sandbox_email" type="text" id="paypal_sandbox_email" value="{$config.paypal_sandbox_email}" /></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+  <td valign="top"><strong>User AlertPay</strong><br />
+    User Alertpay as a payment Option</td>
+  <td valign="top"><select name="use_alertpay" id="use_alertpay">
+    <option value="yes" {if $config.use_alertpay!='no'} selected="selected"{/if}>Yes</option>
+    <option value="no" {if $config.use_alertpay=='no'} selected="selected"{/if}>No</option>
+  </select></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Alertpay Marchant Email</strong><br />
+    Enter your alertpay marchange email</td>
+  <td valign="top"><input name="alertpay_email" type="text" id="alertpay_email" value="{$config.alertpay_email}" /></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Alertpay Security ID</strong><br />
+    Your alertpay security id</td>
+  <td valign="top"><input name="alertpay_code" type="text" id="alertpay_code" value="{$config.alertpay_code}" /></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+  <td valign="top"><strong>Use 2Checkout</strong><br />
+    Allow user to choose 2checkout as payment gateway</td>
+<td valign="top">
+<select name="use_2co" id="use_2co">
+  <option value="yes" {if $config.use_2co!='no'} selected="selected"{/if}>Yes</option>
+  <option value="no" {if $config.use_2co=='no'} selected="selected"{/if}>No</option>
+</select>
+</td>
+</tr>
+<tr>
+  <td valign="top"><strong>2Checkout Vendor ID</strong><br />
+    your 2co vendor ID</td>
+  <td valign="top"><input name="2co_vendor_id" type="text" id="2co_vendor_id" value="{$config.2co_vendor_id}" /></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+  <td valign="top"><strong>Paid Subscript License</strong><br />
+    Enter your paid subscript module license obtained from ClipBucket client area</td>
+  <td valign="top"><input name="license_key" type="text" id="license_key" value="{$config.license_key}" /></td>
+</tr>
+<tr>
+  <td valign="top"><strong>Pay to text</strong><br /> 
+    Pay to text written on invoice
+</td>
+  <td valign="top"><label for="textarea"></label>
+    <textarea name="textarea" id="textarea" cols="45" rows="5">{$config.pay_to_text}</textarea></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr>
+  <td height="30" colspan="2" valign="middle" style="font-size:13px; font-weight:bold">User options for premium videos</td>
+  </tr>
+<tr>
+  <td valign="top"><strong>Allow users to make their video premium</strong><br /> 
+    Let users choose weather they want to make video premium or not
+</td>
+  <td valign="top"><select name="allow_user_set_premium" id="allow_user_set_premium">
+    <option value="yes" {if $config.allow_user_set_premium!='no'} selected="selected"{/if}>Yes</option>
+    <option value="no" {if $config.allow_user_set_premium=='no'} selected="selected"{/if}>No</option>
+  </select></td>
+</tr>
+<tr>
+  <td valign="top">&nbsp;</td>
+  <td valign="top">&nbsp;</td>
+</tr>
+<tr> 
+  <td valign="top"><input type="submit" name="update" id="update" value="Update" class="button" /></td>
+  <td valign="top">&nbsp;</td>
+</tr>
+</table>
+</form>

@@ -1,0 +1,230 @@
+<!-- page specific plugin scripts -->
+<script src="{$theme}/assets/js/jquery.dataTables.min.js"></script>
+<script src="{$theme}/assets/js/jquery.dataTables.bootstrap.js"></script>
+<script>
+
+$(document).ready(function() {
+	$('#padding-video').dataTable();
+} );
+var url  = '{$mass_embed_url}/actions/cb_mass_embed.php';
+{literal}
+	function theform(vid)
+	{
+		var db = $('#vid-cats-'+vid+' input[type=checkbox]:checked').map(function(i,n) {
+        return $(n).val();
+    	}).get(); 
+		
+		$.post(url,
+		{
+			update_cat : 'yes',
+			vid : vid,
+			cat : db,
+		},
+		function(data)
+		{
+			if(data)
+			alert(data);
+			else
+			{
+				$('#cat-success-'+vid).show().delay(1000).fadeOut('slow');
+			}
+			
+		},'text');
+	}
+	
+	function toggleWpPost(vid)
+	{
+		if($('#wp_post_'+vid).val()=='yes')
+		{
+			$('#wp_post_'+vid).val('');
+			$('#wp_img_'+vid).hide();
+			$('#wpd_img_'+vid).show();
+		}else
+		{
+			$('#wp_post_'+vid).val('yes');
+			$('#wpd_img_'+vid).hide();
+			$('#wp_img_'+vid).show();
+		}
+	}
+	
+</script>
+{/literal}
+<div>
+	
+{if $cat_displayed!='yes'}
+<div align="right" style="margin-top:15px" class="mass_opt_links">
+<a href="javascript:void(0)" onclick="$('#video_category_box').toggle()">Choose Categories</a>
+</div>
+
+<div style="margin:10px 0px; display:none" id="video_category_box">
+	{include file="$EMBED_PLUG_DIR/cat_option.html"}
+    <div style="height:30px"></div>
+</div>
+{assign var='cat_displayed' value='yes'}
+{/if}
+
+{if $pending=='yes'}
+<div class="table-header">Other Pending Videos</div>
+{else}
+<div class="table-header">Embedded Videos</div>
+{/if}
+
+<div id="main_vids_div">
+	<form action="" method="post" name="mass_embed_vids">
+	<table class="table table-bordered table-striped manageUsersTable" id="padding-video">
+	 	<thead>
+			<tr>
+				<th>ID</th>
+				<th>Details</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>ID</th>
+				<th>Details</th>
+			</tr>
+		</tfoot>
+	{if $videos }
+	<tbody>
+	{foreach from=$videos item=video}
+	{if $video.title == ''}
+	{break}
+	{/if}
+		<tr>
+		<td><img src="{$mass_embed_url}/images/check.png"  style=" bottom:2px; left:2px" onclick="check_vid('{$video.videoid}')" id="check-{$video.videoid}"/>
+            <input name="vid_{$video.unique_id}" type="hidden" value="yes" id="vid_{$video.unique_id}" class="vid-check">
+            <input name="title_" type="hidden" value="{$video.title}" id="vid_{$video.title}" class="vid-check">
+            </label></td>
+		<td> 
+		<div class="thumb col-md-2">
+        	<label for="vid_{$video.unique_id}"><img src="{$video.thumb}" width="150" height="90" onclick="check_vid('{$video.videoid}')"/>
+            
+            
+        
+        </div>
+        <div class=" col-md-10">
+        <span class=" edit_vid_title heightlighter" id="title-{$video.videoid}" style="color:#4688cf">{$video.title} ({$video.duration|SetTime})</span>
+        <!-- 
+		<a href="javascript:void(0);" onClick="$('#watch_now_{$video.videoid}').slideToggle()">Watch Now</a> <a href="javascript:void(0)" onclick="$('#cats-{$video.videoid}').toggle()">Categories</a>-->
+		<br />
+		<!-- <a href="javascript:void(0)" onclick="$('#cats-{$video.videoid}').toggle()">Categories</a> -->
+        <div style="height:5px"></div>
+        
+      	<div id="cats-{$video.videoid}" class="cat_box_cont" style="display:none">
+            <div class="catUpdateSuccess" style="display: none;" id="cat-success-{$video.videoid}">Video category has been updated, successfully</div>
+            {*create_vid_cat_form assign='field' video=$video*}
+            {$field=create_vid_cat_form($video)}
+            <div id="vid-cats-{$video.videoid}">{$formObj->createField($field)}</div>
+            <a href='javascript:void(0)' onclick="theform('{$video.videoid}')">Update Category</a>
+        </div>     
+        
+        <div style=" float:left">
+        <div style="" id="desc-{$video.videoid}" class="cbmassEditDesc heightlighter">
+        	{$video.description|truncate:250}
+        </div>
+        <div style=""><strong>Tags</strong> : <span id="tags-{$video.videoid}" class="edit_vid_title heightlighter">{$video.tags}</span></div>
+        {$comments=$myquery->get_comments($video.videoid)}
+		{*$comments|print_r*}
+		{if $comments}
+        <div style=""><strong>Comments</strong> : 
+        	
+			{foreach from=$comments key=i item=comment}
+			<div>
+				<p>
+					{$comment.0.comment}
+					{*$comment|print_r*}
+				</p>
+			</div>
+			{/foreach}
+        </div>
+        {/if}
+        <div style="height:5px"></div>
+            <div align="center" id="watch_now_{$video.videoid}" style="display:none">
+				{assign var='vid' value=$video.videoid}
+                
+            </div>
+            
+        </div>
+        </div>	
+		</td>
+
+	</tr>
+   
+{/foreach}
+</tbody>
+{else}
+<div style="padding:10px; font-size:14px"><em><strong>Nothing to display</strong></em></div>
+
+{/if}
+
+
+</table>
+</div>
+<div style="height:30px"></div>
+<div class="col-md-3"></div>
+
+<div class="col-md-6"><button type="button" name="mass_embed" id="mass_embed" class="cbmassButtn btn btn-danger btn-block">Insert Videos</button></div>
+{$videos = $videos|@json_encode}
+<div class="col-md-3"></div>
+</form>
+</div>
+<div class="clearfix"></div>
+{*include file="$style_dir/blocks/pagination.html" *}
+<script>
+var cross_thumb = '{$mass_embed_url}/images/cross.png';
+var check_thumb = '{$mass_embed_url}/images/check.png';
+
+var videos = {$videos};
+
+$(document).ready(function(){
+	$("#mass_embed").on("click", function(){
+		   $.ajax({ 
+			 url: '',
+			 type: 'post',
+			dataType: 'html',
+			data: {
+				'pull_youtube': 'true',
+				'videos': videos
+
+			},
+			beforeSend: function() {
+				$('#mass_embed').text("Inerting videos..");
+            },
+			success: function(data) {
+				$('#mass_embed').text("Videos Inserted!");
+				$('#mass_embed').attr("disabled","disabled");
+				$('#main_vids_div').html("<div class='alert alert-success' role='alert'>Videos have been inserted successfully. Go to <a href='{$baseurl}/admin_area/video_manager.php'>Video Manager </a>to see them! or <a href=''>Embed More</a></div>");
+			},
+			error: function(xhr, desc, err) {
+			console.log(xhr);
+			console.log("Details: " + desc + "\nError:" + err);
+			}
+		}) // end ajax call
+
+	})
+});
+
+
+
+{literal}
+
+function check_vid(vid)
+{
+	if($('#vid_'+vid).val()=='yes')
+	{
+		$('#check-'+vid).attr('src',cross_thumb);
+		$('#vid_'+vid).val('');
+	}else
+	{
+		$('#check-'+vid).attr('src',check_thumb);
+		$('#vid_'+vid).val('yes');
+	}
+}
+		$('.edit_vid_title').attr('contenteditable','true');
+		$('.edit_vid_title').editable(baseurl+'/actions/cb_mass_embed.php', { 
+		 indicator : '<img src="'+baseurl+'/images/icons/progIndicator.gif">',
+		 tooltip   : 'Click to edit...',
+		}); 
+		
+		{/literal}
+</script></div>

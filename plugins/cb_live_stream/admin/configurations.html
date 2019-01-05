@@ -1,0 +1,79 @@
+<div class="heading">
+    <h2>Configurations</h2>
+</div>
+<div class="row" style="margin-left:20px;">
+	<form id="live-cofiguration" class="clearfix" method="post">
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="wowza_api_basepath">Wowza Api BasePath</label>
+				<input name="wowza_api_basepath" id="wowza_api_basepath" type="text"  class="form-control" value="{config(wowza_api_basepath)}" required/>
+				<span class="smallText" style="font-size:11px;">Wowza Api BasePath e.g http://localhost:8087</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="wowza_server_name">Server Name</label>
+				<input type="text" name="wowza_server_name" class="form-control" value="{config(wowza_server_name)}" >
+				<span class="smallText" style="font-size:11px;">Server Name e.g _defaultServer_</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="wowza_api_version">Wowza Api Version</label>
+				<input type="text" name="wowza_api_version" class="form-control" value="{config(wowza_api_version)}" >
+				<span class="smallText" style="font-size:11px;">Wowza Api Version e.g v2</span>
+			
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="size">Server Virtiual Host</label>
+				<input type="text" name="wowza_server_vhost" class="form-control" value="{config(wowza_server_vhost)}">
+				<span class="smallText" style="font-size:11px;">Virtual Host</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="wowza_player_ip">Player Ip Address</label>
+				<input type="text" name="wowza_player_ip" class="form-control" value="{config(wowza_player_ip)}" >
+				<span class="smallText" style="font-size:11px;">Player Ip Address e.g 10.1.1.60</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="wowza_player_port">Player Port</label>
+				<input type="text" name="wowza_player_port" class="form-control" value="{config(wowza_player_port)}" >
+				<span class="smallText" style="font-size:11px;">Port e.g 1935</span>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="wowza_file_directory">File Directory</label>
+				<input type="text" name="wowza_file_directory" class="form-control" value="{config(wowza_file_directory)}">
+				<span class="smallText" style="font-size:11px;">/usr/local/WowzaStreamingEngine-4.7.1/content</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="wowza_source_username">Wowza Source Username</label>
+				<input type="text" name="wowza_source_username" class="form-control" value="{config(wowza_source_username)}" >
+				<span class="smallText" style="font-size:11px;">e.g your_username</span>
+			</div>
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="wowza_source_password">Wowza Source Password</label>
+				<input type="text" name="wowza_source_password" class="form-control" value="{config(wowza_source_password)}" >
+				<span class="smallText" style="font-size:11px;">e.g your_password</span>
+			</div>
+		</div>
+		<div class="row">
+			{$wowza_connect_api = config(wowza_connect_api)}
+			<div class="col-md-4 col-lg-4 form-group">
+				<label for="wowza_connect_api">Connect With Wowza API</label><br>
+				<select class="form-control" name="wowza_connect_api">
+					<option value="yes" {if $wowza_connect_api == 'yes'} selected {/if}>Yes</option>
+					<option value="no" {if $wowza_connect_api == 'no'} selected {/if}>No</option>
+				</select>
+				<span class="smallText" style="font-size:11px;">Check this to connect this plugin to Wowza APIs</span>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-md-4 col-lg-4 form-group ">
+				<input type="submit" class="form-control btn btn-info btn-sm" name="udpate-configs" value="Update Configurations" />
+			</div>
+		</div>
+	</form>
+</div>
+
+
+
+

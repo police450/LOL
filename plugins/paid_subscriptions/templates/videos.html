@@ -1,0 +1,18 @@
+<div class="cb-box container">
+ <div class="account_box clearfix" style="min-height:100px">
+ 	<div><h3 style="display:inline-block; float:
+    left">Videos in {$package.pkg_title}</h3><div style="display:inline-block; float:right; margin-top:10px; font-size:14px"><a href="?s=premium&p=subscriptions"><span class="btn btn-primary">Back to subscriptions</span></a></div>
+    <div class="clear clearfix"></div>
+    </div>
+    
+    {section name=v_list loop=$videos}
+        {include file="$style_dir/blocks/videos/video.html" video=$videos[v_list]}
+    {sectionelse}
+        {lang code='no_results_found'}
+    {/section}
+    
+    <div class="clearfix"></div>
+    {include file="$style_dir/blocks/pagination.html"}
+ </div>	
+ <div class="clear"></div>
+</div>

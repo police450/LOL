@@ -1,0 +1,317 @@
+<div class="heading">
+    <h2>Create Ad</h2>
+</div>
+<div style="margin:2% 0 2% 0;">
+	<span class="alert ad-form-msg" style="display:none"></span>
+</div>
+<div class="ultimate-ad-form-container" style="margin:0 0 10% 0;">
+	
+	<form id="add-uad" method="post" enctype="multipart/form-data">
+		<div class="row form-group clearfix">
+			<div class="col-md-6 ad-types">
+				<label>
+		 	 		<strong>Select Ad Type</strong>
+		 	 	</label>
+		 	 	{$ad_types = $cbuads->ad_types}
+		 	 	<select class="form-control" name="ad_type" id="ad-type">
+		 	 		{foreach $cbuads->ad_types as $key=>$ads}
+		 	 			<option value="{$key}">{$ads}</option>
+		 	 		{/foreach}
+		 	 	</select>
+			</div>	
+			<div class="col-md-6 linear-type" style="display: none">
+				<label>
+		 	 		<strong>Linear Ad Type</strong>
+		 	 	</label>
+		 	 	<select class="form-control" name="linear_type" id="linear-type">
+		 	 		<option value="">----</option>
+		 	 		<option value="pre-roll">Pre-Roll</option>
+		 	 		<option value="mid-roll">Mid-Roll</option>
+		 	 		<option value="post-roll">Post-Roll</option>
+		 	 	</select>
+			</div>
+		</div>
+		<div class="row form-group clearfix">
+			<div class="col-md-6 ad-tag">
+				<label>
+		 	 		<strong>Ad Tag</strong>
+		 	 	</label>
+		 	 	<textarea name="ad-code" class="form-control" id="ad-tag" placeholder="https://pubads.g.doubleclick.net/gampad/ads......"></textarea>
+			</div>	
+			<div class="col-md-1 ad-image" style="display:none">
+				<label><strong>..OR..</strong></label>
+			</div>
+			<div class="col-md-5 ad-image" style="display:none">
+				<label>
+		 	 		<strong>Browse From Computer</strong>
+		 	 	</label>
+		 	 	<input type="file" name="ad_image" id="ad-image">
+			</div>	
+		</div>
+		<div class="row banner-row clearfix" style="margin:25px 0 25px 0;display: none">
+		  	<div class="col-lg-6 col-md-6 col-sm-12 pull-right">
+		 		<img src="" width="728" height="90" id="banner-ad-img"> 	
+	  	  	</div>
+	  	  	<div>Remove</div>
+	  	</div>
+		<div class="row form-group clearfix skip-group" style="display:none">
+			<div class="col-md-6 skippable">
+				<label>
+		 	 		<strong>Skippable</strong>
+		 	 	</label>
+		 	 	<select class="form-control skippable" name="skippable" id="skippable" >
+		 	 		<option value="yes">Yes</option>
+		 	 		<option value="no">No</option>
+		 	 	</select>
+			</div>	
+			<div class="col-md-6 skip-time" >
+				<label>
+		 	 		<strong>Skip Time</strong>
+		 	 	</label>
+		 	 	<input type="number"  class="form-control" name="skip-time" id="skip-time" maxlength="15">
+			</div>	
+		</div>
+		<div class="row form-group clearfix">
+	  	  	<div class="col-lg-6 col-md-6 col-sm-6">
+		 	 	<label>
+		 	 		<strong>Description</strong>
+		 	 	</label>
+		 	 	<textarea name="ad-desc" class="form-control" required placeholder="Enter Description here..." >{$ad.ad_desc}</textarea>  	
+	  	  	</div>
+	  	  	<div class="col-md-6">
+		 	 	<label>
+		 	 		<strong>Target Impressions</strong>
+		 	 		
+		 	 	</label>
+		 	 	<input name="ad-t-imp" class="form-control" value="{$ad.target_imp}" required type="number" min="0" placeholder="300">  
+	  	  	</div>
+	  	</div>
+		<div class="row form-group clearfix">
+			<div class="col-md-6 ad-time" style="display:none">
+				<label>
+		 	 		<strong>Ad Time</strong>
+		 	 	</label>
+		 	 	<input type="number" name="ad_time" id="ad-time" class="form-control" placeholder="50" max="100" min="0">
+		 	 	<span class="small-text">( This time percentage will play this Ad at the provided value )</span>
+			</div>	
+		</div>
+		<div class="row clearfix ad-time-span form-group">
+	  		<div class="col-lg-6 col-md-6 col-sm-3">
+	  			<label>
+		 	 		<strong>Start DateTime</strong>
+		 	 	</label>
+		 	 	<br><small>( m/d/Y g:i a ) </small>
+		 	 	<div class='input-group date' id='datetimepicker6'>
+		 	 		<input type="text" name="ad-start-datetime" id="ad-start-datetime" class="form-control" required >
+	                <span class="input-group-addon">
+	                    <span class="glyphicon glyphicon-calendar"></span>
+	                </span>
+	            </div>
+			</div>
+	  	 	<div class="col-lg-6 col-md-6 col-sm-3">
+	  	 		<label>
+		 	 		<strong>End DateTime</strong>
+		 	 	</label>
+		 	 	<br><small>( m/d/Y g:i a ) </small>
+		  	  	<div class='input-group date' id='datetimepicker7'>
+		  	  		<input type="text" name="ad-end-datetime" id="ad-end-datetime" class="form-control" required >
+	                <span class="input-group-addon">
+	                    <span class="glyphicon glyphicon-calendar"></span>
+	                </span>
+	            </div>
+		 	</div>
+	  	</div>
+	  	{$categories = pullCategories('videos')}
+	  	<div class="row clearfix form-group">
+	  	  	<div class="col-md-6 category">
+				<label>
+		 	 		<strong>Select Category</strong>
+		 	 	</label>
+		 	 	<br>
+		 	 	<select name="category_id[]" id="category-id" data-search-live="true" class="selectpicker" multiple="multiple">
+		 	 		{if $categories}
+		 	 			{foreach $categories as $cat}
+		 	 				<option value="{$cat.category_id}">{$cat.category_name}</option>
+		 	 			{/foreach}
+		 	 		{/if}
+		 	 	</select>
+		 	 	<br>
+		 	 	<span class="small-text">( Will be served with any video category if nothing is selected )</span>
+			</div>
+			<div class="col-md-6 country" >
+				<label>
+		 	 		<strong>Select Country</strong>
+		 	 	</label><br>
+		 	 	{$countries = $Cbucket->get_countries(iso2)}
+		 	 	<select  name="country[]" id="country" data-search-live="true" class="selectpicker" multiple="multiple">
+		 	 		{if $countries}
+		 	 			{foreach $countries as $key=>$country}
+		 	 				<option value="{$key}">{$country}</option>
+		 	 			{/foreach}
+		 	 		{/if}
+		 	 	</select>
+		 	 	<br>
+		 	 	<span class="small-text">( Will be served in all regions if nothing is selected )</span>
+			</div>
+	  	</div>
+	  	<div class="row clearfix form-group">
+	  	  	<div class="col-lg-6 col-md-6 col-sm-6">
+	  	  		<div class="form-group clearfix">
+			 	 	<label>
+			 	 		<strong>Active</strong>
+			 	 	</label>
+			 	 	<select name="ad-status" class="form-control">
+			 	 		<option value="0" > No </option>
+			 	 		<option value="1" selected > Yes </option>
+			 	 	</select>
+		 	 	</div>
+	  	  	</div>
+	  	  	<br>
+	  	  	<div class="col-md-6">
+	  	  		<div class="form-group clearfix ">
+			 	 	<input type="submit" class="btn btn-sm btn-success" value="Create Ad" id="save-ad" name="save-ad" >
+		  	  	</div>
+	  	  	</div>
+	  	</div>
+	</form>
+</div>
+<style type="text/css">
+	.ad-time-span > div{
+		position: relative;
+	}
+	.ad-time-span > div:first-child:after{
+		content: "To";
+		position: absolute;
+		width: 30px;
+		height: 34px;
+		line-height: 34px;
+		text-align: center;
+		bottom: 0;
+		right: -15px;
+	}
+</style>
+<script type="text/javascript">
+var ad_exists = "{$ad_exists}";
+$(document).ready(function(){
+
+ 	$('#datetimepicker6').datetimepicker();
+    $('#datetimepicker7').datetimepicker({
+        useCurrent: false
+    });
+    $("#datetimepicker6").on("dp.change", function (e) {
+        $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+    });
+    $("#datetimepicker7").on("dp.change", function (e) {
+        $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+    });
+
+
+    $('#ad-code').popover();
+    $('#ad-code').on('change', function() { 
+		var _this = $(this);
+    	var popover = _this.attr('data-content',_this.val()).data('bs.popover');
+		popover.setContent();	
+	});
+
+	$('#ad-type').on('change', function() { 
+		var _this = $(this);
+		var _linearTypeCont = $(".linear-type");
+		var _linearAd = $("#linear-type");
+		var _adTag  = $("#ad-tag");
+		var _adImage = $(".ad-image");
+		//setting up linear ads fields 
+    	if (_this.val() == '1'){
+    		_adImage.hide();
+    		$(".ad-time").hide();
+    		$(".linear-type").hide();
+    		$(".skip-group").hide();
+    		$(".skippable").attr("required",false);
+    		$(".skip-time").attr("required",false);
+    		_linearAd.attr("required",false);
+    		_adTag.attr("placeholder","https://pubads.g.doubleclick.net/gampad/ads......");
+    	}else if (_this.val() == '2'){
+    		$(".linear-type").show();
+    		_adImage.hide();
+    		$(".ad-time").hide();
+    		$(".skip-group").show();
+    		$(".skippable").attr("required",true);
+    		$(".skip-time").attr("required",true);
+    		_linearAd.attr("required",true);
+    		_adTag.attr("placeholder","http://myvideo.mp4");
+    	}else{
+    		$(".linear-type").hide();
+    		_adImage.show();
+    		$(".ad-time").show();
+    		$(".skip-group").hide();
+    		$(".skippable").attr("required",false);
+    		$(".skip-time").attr("required",false);
+    		_linearAd.attr("required",false);
+    		_adTag.attr("placeholder",'http://myimage.jpeg    OR    <script>MySnippet\<\/script>');
+    	}
+
+	});
+
+	$('#linear-type').on('change', function() { 
+		var _this = $(this);
+		//setting up linear ads fields 
+    	if (_this.val() == 'mid-roll'){
+    		$(".ad-time").show();
+    	}else{
+    		$(".ad-time").hide();
+    	}
+
+	});
+
+	$('#add-uad').on("submit",function(e){
+		e.preventDefault();
+		var ad_form = $(this);
+		var ad_data = new FormData(ad_form[0]);
+		ad_data.append('mode','save_ad');
+
+	
+	
+		$.ajax({
+			url : uads_ajax,
+			data : ad_data ,
+			type : "post",
+			datatype : "json",
+			contentType: false, 
+    		processData: false, 
+			beforeSend : function(data){
+				$('#save-ad').attr("disabled",true);
+				$('#save-ad').val("Saving...");
+			},
+			Complete : function(data){
+				
+			},
+			success : function(data){
+				$('#save-ad').attr("disabled",false);
+				$('#save-ad').val("Save Ad");
+				data = $.parseJSON( data );
+		
+				if (data.msg){
+					$('.ad-form-msg').addClass('alert-success');
+					$('.ad-form-msg').html(data.msg);
+					$("input[type=text], textarea, input[type=number]" ).val("");
+					if (ad_exists == 'no'){
+						$('.ad-settings').fadeIn(100);
+					}
+					if(data.banner){
+						$(".banner-row").show();
+						$("#banner-ad-img").attr("src",data.banner+'?'+Math.random());
+					}
+					
+				}else{
+					$('.ad-form-msg').addClass('alert-danger');
+					$('.ad-form-msg').html(data.err);
+					
+				}
+				$('.ad-form-msg').slideDown(500);
+				setTimeout(function(){ $('.ad-form-msg').slideUp(500); }, 5000);
+			}	
+		});
+		
+	});
+
+});	
+</script>

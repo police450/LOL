@@ -1,0 +1,69 @@
+
+<div class="col-md-4">
+  <div class="panel well panel-success" >
+    <div class="panel-heading" style="text-transform:uppercase;" ><h5><strong>{$bill_plan.plan_name}</strong></h5></div>
+
+    <div class="panel panel-body">
+      <div style=" text-align:justify; ">{substr($bill_plan.plan_description,0,127)}...</div>
+    </div>
+    <a href="" class="btn btn-primary btn-block" title="" data-toggle="modal" data-target="#myModal{$bill_plan.plan_id}"> view details</a>
+  </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal{$bill_plan.plan_id}" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Package Details</h4>
+      </div>
+      <div class="modal-body">
+        <table class="table table-striped table-bordered">
+          <input type="hidden" name="plan_id" id="plan_id" value="{$bill_plan.plan_id}"/>
+          <input type="hidden" name="plan_name" id="plan_name" value="{$bill_plan.plan_name}"/>
+          <input type="hidden" name="plan_description" id="plan_description" value="{$bill_plan.plan_description}"/>
+          <input type="hidden" name="package_id" id="package_id" value="{$bill_plan.package_id}"/>
+
+          <tr><td ><strong>title</strong></td><td >{$bill_plan.plan_name}</td></tr>
+          <tr><td ><strong>Description</strong></td><td >{$bill_plan.plan_description}</td></tr>
+          <tr><td ><strong>Type</strong></td><td >{$bill_plan.plan_type}</td></tr>
+          <tr><td ><strong>price</strong></td><td >{$paidSub->currency|currency}{$bill_plan.plan_amount} for each {$bill_plan.plan_pd_frequency}!</td></tr>
+          <tr><td ><strong>Valid for</strong></td><td >
+            {if $bill_plan.plan_type =='FIXED'}
+            {$bill_plan.plan_frequency_interval*$bill_plan.plan_cycles} {$bill_plan.plan_pd_frequency}(s)
+            {else}
+            <p>Life time</p>
+            {/if}
+          </td></tr>
+          <tr><td ><strong>Total expense</strong></td><td >
+            {if $bill_plan.plan_type =='FIXED'}
+            {$paidSub->currency|currency}{$bill_plan.plan_amount*$bill_plan.plan_frequency_interval*$bill_plan.plan_cycles} 
+            {else}
+            <p>Depends upon usage</p>
+            {/if}
+          </td></tr>
+          
+        </table>
+      </div>
+      <div class="modal-footer">
+        <input type="submit" class="btn btn-success"  value="Like it? Pay now" name="select_plan" />
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+

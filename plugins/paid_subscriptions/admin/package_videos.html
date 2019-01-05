@@ -1,0 +1,31 @@
+<div class="cb-box container">
+  <div class="row">
+    <div class="col-md-6">
+    {* Getting list of videos *}
+    {assign var=pkg_videos value=$paidSub->getPackageVideos($package.package_id)}
+    {if $pkg_videos}
+    <div style="height:25px"></div>
+    <h2>Videos Included in this package</h2>
+    <div style="margin-left:20px; margin-top:10px;" id="pkg_videos_{$package.package_id}">
+        {foreach from=$pkg_videos item=video}
+            <div style="padding-bottom:5px;
+             margin-bottom:5px; vertical-align:central" id="pkg_vid_{$package.package_id}_{$video.videoid}">
+                <img src="{$paid_subs_url}/images/icons/vids.png" 
+                width="16" height="16" style="float:left; 
+                vertical-align:central; margin-right:5px"/> 
+                <strong>{$video.title}</strong>
+                 | <a href="edit_video.php?video={$video.videoid}">Edit video</a>
+              <div class="clear clearfix"></div>
+            </div>
+        {/foreach}
+           
+    </div>
+    {/if}
+    </div>
+  <div class="col-md-5">
+    <div style="display:inline-block; float:right">
+      <em><a href="{$queryString}" style="font-family:Georgia, 'Times New Roman', Times, serif; font-size:12px">
+      <span class="btn btn-primary">&#8249;&#8212; Back to manage packages</span></a></em></div>
+  </div>
+  </div>
+</div>

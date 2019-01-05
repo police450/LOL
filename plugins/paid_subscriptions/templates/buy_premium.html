@@ -1,0 +1,84 @@
+<div id="main">
+ <div class="cb-box container">
+	<div class="alert-warning br5 well" style="font-size:15px; font-weight:bold; margin-bottom:20px">WATCH PREMIUM CONTENT - HIGH QUALITY</div>
+
+<div class="premium_vids">
+{foreach from=$premium_vids item=pvid}
+	
+    <div style="margin-bottom:10px">
+        <div style="overflow:hidden;position:relative;height:130px">
+            <img src="{get_thumb vdetails=$pvid size=big}" width="240" style="position:absolute;top:-25px"/>
+        </div>
+        <div style="font-size:14px;font-weight:bold;margin-top:5px">{$pvid.title}</div>
+    </div>
+    
+{/foreach}
+</div>
+
+<div class="">
+	
+    {include file="$paid_subs_dir/templates/block/error.html" style="display:none"}
+    
+	<form name="package_select" method="post">
+	{* Getting Subscription Package *}
+    
+    {if $pkg_counts.subs>0}
+    <div class="packages_container">
+    <h3>Subscription Package</h3>
+    {foreach from=$packges item=package}
+    	{if $package.pkg_type=='subs'}
+        	{include file="$paid_subs_dir/templates/block/premium_block.html"}
+    	{/if}
+    {/foreach}
+    </div>
+    {/if}
+    
+    {* Getting PPV Package *}
+    {if $pkg_counts.ppv>0}
+    <div class="packages_container">
+    <h3>PPV Package</h3>
+    {foreach from=$packges item=package}
+    	{if $package.pkg_type=='ppv'}
+        	{include file="$paid_subs_dir/templates/block/premium_block.html"}
+    	{/if}
+    {/foreach}
+    </div>
+    {/if}
+    
+    {* Getting Minutes Package *}
+    {if $pkg_counts.mins>0}
+    <div class="packages_container">
+	<h3>Minutes Package</h3>
+    {foreach from=$packges item=package}
+    	{if $package.pkg_type=='mins'}
+        	{include file="$paid_subs_dir/templates/block/premium_block.html"}
+    	{/if}
+    {/foreach}
+    </div>
+    {/if}
+    
+    {* Getting Videos Package *}
+    {if $pkg_counts.vids>0}
+    <div class="packages_container">
+	<h3>Videos Package</h3>
+    {foreach from=$packges item=package}
+    	{if $package.pkg_type=='vids'}
+        	{include file="$paid_subs_dir/templates/block/premium_block.html"}
+    	{/if}
+    {/foreach}
+    </div>
+    {/if}
+    
+    {if $no_pkgs=='yes'}
+    	<div style="padding:10px 0px; font-style:italic; font-weight:bold" align="center">
+        	No premium packages
+        </div>
+    {else}
+    <input type="submit" class="btn btn-primary btn-lg"  value="CONTINUE WITH YOUR SELECTED PACKAGE" name="select_package" />
+    {/if}
+    </form>
+    <div class="clear"></div>
+</div>
+<div class="clear"></div>
+</div>
+</div>

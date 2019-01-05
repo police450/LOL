@@ -1,0 +1,38 @@
+<div align="center" class="cb-box container">
+  <div style="margin:auto" a>
+    	<div style="margin-bottom:20px"><span style="font-size:15px;" class="label label-success">You are about to watch</span>
+        <br><br>
+    <span style="font-size:18px; ">{$vdo.title}</span>
+    </div>
+ 
+
+      <div style="display:inline-block; position:relative; margin-bottom:15px">
+      	<img src="{get_thumb vdetails=$vdo size='632x395'}" width="312" height="216" />
+        <div style="display:inline-block; position:absolute; right:5px; bottom:5px; background-color:#333333; padding:3px; color:#fff; font-size:14px;" class="br5">{$vdo.duration|SetTime}</div>
+        
+        
+      </div>
+      
+      <div style="width:500px; font-size:13px">
+        <p>This is a premium video and you are allowed to watch 
+        
+        {if $demo.allowed_type=='videos'}
+        	<strong>{$demo.allowed_left} more videos </strong>
+        {else}
+        
+       		 <strong>{$demo.allowed_left|SetTime} more time </strong>
+        {/if}
+        
+        
+        for today, to watch even more videos please <a href="{$baseurl}/module.php?s=premium&p=buy&v={$vdo.videoid}">click here</a> to buy a premium package.</p>
+        <form id="form1" name="form1" method="post" action="">
+          <input type="hidden" value="{$package.subscription_id}" name="subs_id" />
+          <input type="hidden" value="yes" name="watch_prem_video" />
+          <input type="hidden" value="{$vdo.videoid}" name="videoid" />
+          <input type="submit" name="button" id="button" value="Watch this video now" class="btn btn-primary"/>
+        </form>
+        <p>&nbsp;</p>
+    </div>
+    </div>
+    
+</div>
